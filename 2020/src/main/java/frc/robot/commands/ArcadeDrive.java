@@ -23,10 +23,23 @@ public class ArcadeDrive extends CommandBase {
    *
    * @param subsystem 
    */
-  public ArcadeDrive(Double left, Double right, DriveTrain drivetrain ) {
+  public ArcadeDrive(Double left, Double right, DriveTrain drivetrain) {
     m_drivetrain = drivetrain;
-    m_left = left;
-    m_right = right;
+    m_left = left * left * left;
+    m_right = right * right * right;
+
+    double saturatedInput;
+    double greaterInput = Math.max(Math.abs(m_left), Math.abs(m_right));
+    double lesserInput = Math.abs(m_left) + Math.abs(m_right) - greaterInput;
+    if (greaterInput > 0.0){
+        saturatedInput = (lesserInput / greaterInput) + 1.0;
+    } else{
+        saturatedInput = 1.0;
+    }
+
+    m_left = m_left / saturatedInput;
+    m_right = m_right / saturatedInput;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
   }
@@ -39,7 +52,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.drive(m_left, m_right);
+    m_drivetrain.drive(m_left + m_right, m_left - m_right);
   }
 
   // Called once the command ends or is interrupted.
