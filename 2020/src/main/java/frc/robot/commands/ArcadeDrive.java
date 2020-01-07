@@ -7,23 +7,23 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ArcadeDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveTrain;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class ArcadeDrive extends CommandBase {
   private final DriveTrain m_drivetrain;
-  private final DoubleSupplier m_left;
-  private final DoubleSupplier m_right;
+  private final Double m_left;
+  private final Double m_right;
 
   /**
    * Creates a new ArcadeDrive Command.
    *
    * @param subsystem 
    */
-  public ArcadeDrive(DoubleSupplier left, DoubleSupplier right, DriveTrain drivetrain ) {
+  public ArcadeDrive(Double left, Double right, DriveTrain drivetrain ) {
     m_drivetrain = drivetrain;
     m_left = left;
     m_right = right;
@@ -39,7 +39,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.drive(m_left.getAsDouble(), m_right.getAsDouble());
+    m_drivetrain.drive(m_left, m_right);
   }
 
   // Called once the command ends or is interrupted.
