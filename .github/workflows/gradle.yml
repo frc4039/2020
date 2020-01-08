@@ -20,12 +20,12 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
         java-version: 11
     - name: Grant execute for gradlew
-      run: chmod +x gradlew
+      run: chmod +x 2020/gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./2020/gradlew build
