@@ -22,9 +22,9 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final int kLeftDriveMotor1Port = 0;
-        public static final int kLeftDriveMotor2Port = 1;
-        public static final int kRightDriveMotor1Port = 2;
-        public static final int kRightDriveMotor2Port = 3;
+        public static final int kLeftDriveMotor1Port = 10;
+        public static final int kLeftDriveMotor2Port = 11;
+        public static final int kRightDriveMotor1Port = 12;
+        public static final int kRightDriveMotor2Port = 13;
     }
 }
