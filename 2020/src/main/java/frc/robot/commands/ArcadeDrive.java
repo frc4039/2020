@@ -15,8 +15,8 @@ import frc.robot.subsystems.DriveTrain;
  */
 public class ArcadeDrive extends CommandBase {
   private final DriveTrain m_drivetrain;
-  private final Double m_left;
-  private final Double m_right;
+  private Double m_left;
+  private Double m_right;
 
   /**
    * Creates a new ArcadeDrive Command.
