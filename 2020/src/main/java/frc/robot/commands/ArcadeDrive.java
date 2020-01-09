@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
@@ -15,30 +17,19 @@ import frc.robot.subsystems.DriveTrain;
  */
 public class ArcadeDrive extends CommandBase {
   private final DriveTrain m_drivetrain;
-  private final Double m_left;
-  private final Double m_right;
+  private DoubleSupplier left;
+  private DoubleSupplier right;
 
   /**
    * Creates a new ArcadeDrive Command.
    *
    * @param subsystem 
    */
-  public ArcadeDrive(Double left, Double right, DriveTrain drivetrain) {
+  public ArcadeDrive(DoubleSupplier left, DoubleSupplier right, DriveTrain drivetrain) {
     m_drivetrain = drivetrain;
-    m_left = left * left * left;
-    m_right = right * right * right;
-
-    double saturatedInput;
-    double greaterInput = Math.max(Math.abs(m_left), Math.abs(m_right));
-    double lesserInput = Math.abs(m_left) + Math.abs(m_right) - greaterInput;
-    if (greaterInput > 0.0){
-        saturatedInput = (lesserInput / greaterInput) + 1.0;
-    } else{
-        saturatedInput = 1.0;
-    }
-
-    m_left = m_left / saturatedInput;
-    m_right = m_right / saturatedInput;
+    this.left = left;
+    this.right = right;
+    
     
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
@@ -52,6 +43,22 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    double m_left= left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
+    double m_right = right.getAsDouble()*right.getAsDouble()*right.getAsDouble();
+
+    double saturatedInput;
+    double greaterInput = Math.max(Math.abs(m_left), Math.abs(m_right));
+    double lesserInput = Math.abs(m_left) + Math.abs(m_right) - greaterInput;
+    if (greaterInput > 0.0){
+        saturatedInput = (lesserInput / greaterInput) + 1.0;
+    } else{
+        saturatedInput = 1.0;
+    }
+
+    m_left = m_left / saturatedInput;
+    m_right = m_right / saturatedInput;
+
     m_drivetrain.drive(m_left + m_right, m_left - m_right);
   }
 
