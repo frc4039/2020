@@ -19,6 +19,7 @@ public class DriveTrain extends SubsystemBase {
   //     new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless));
 
   private CANSparkMax m_leftMotor1;
+  private CANSparkMax m_leftMotor2;
   private CANSparkMax m_rightMotor1;
   private CANSparkMax m_rightMotor2;
 
