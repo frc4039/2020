@@ -21,6 +21,17 @@ public final class Constants {
         public static final int kOperatorController = 1;
     }
 
+    public static final class ShooterConstants {
+        public static final int kShooterMotor1Port = 20;
+        public static final int kShooterMotor2Port = 21;
+
+        public static final double kShooter25 = 0.25;
+        public static final double kShooter50 = 0.50;
+        public static final double kShooter75 = 0.75;
+        public static final double kShooter100 = 1.00;
+
+    }
+
     public static final class DriveConstants {
         public static final int kLeftDriveMotor1Port = 10;
         public static final int kLeftDriveMotor2Port = 11;
