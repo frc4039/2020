@@ -9,27 +9,48 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Shoot;
 import frc.robot.Constants.GeneralConstants;
-
+import frc.robot.Constants.ShooterConstants;;
 
 public class RobotContainer {
   // The robot's subsystems and comzzmands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
+  private final Shooter m_shooter = new Shooter();
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
+  XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new ArcadeDrive(() -> m_driverController.getY(Hand.kLeft),
-    () -> m_driverController.getY(Hand.kRight), m_drivetrain));
+    () -> m_driverController.getX(Hand.kRight), m_drivetrain));
 
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
+    // Shoots 25%
+    new JoystickButton(m_operatorController, Button.kX.value)
+      .whenHeld(new Shoot(ShooterConstants.kShooter25, m_shooter));
+
+    // Shoots 50%
+    new JoystickButton(m_operatorController, Button.kY.value)
+      .whenHeld(new Shoot(ShooterConstants.kShooter50, m_shooter));
+
+    // Shoots 75%
+    new JoystickButton(m_operatorController, Button.kA.value)
+      .whenHeld(new Shoot(ShooterConstants.kShooter75, m_shooter));
+
+    // Shoots 100%
+    new JoystickButton(m_operatorController, Button.kB.value)
+      .whenHeld(new Shoot(ShooterConstants.kShooter100, m_shooter));
   }
 }
