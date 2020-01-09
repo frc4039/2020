@@ -42,15 +42,15 @@ public class RobotContainer {
       .whenHeld(new Shoot(ShooterConstants.kShooter25, m_shooter));
 
     // Shoots 50%
-    new JoystickButton(m_operatorController, Button.kX.value)
+    new JoystickButton(m_operatorController, Button.kY.value)
       .whenHeld(new Shoot(ShooterConstants.kShooter50, m_shooter));
 
     // Shoots 75%
-    new JoystickButton(m_operatorController, Button.kX.value)
+    new JoystickButton(m_operatorController, Button.kA.value)
       .whenHeld(new Shoot(ShooterConstants.kShooter75, m_shooter));
 
     // Shoots 100%
-    new JoystickButton(m_operatorController, Button.kX.value)
+    new JoystickButton(m_operatorController, Button.kB.value)
       .whenHeld(new Shoot(ShooterConstants.kShooter100, m_shooter));
   }
 }
