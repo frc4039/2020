@@ -28,6 +28,9 @@ public class DriveTrain extends SubsystemBase {
     m_leftMotor2 = new CANSparkMax(DriveConstants.kLeftDriveMotor2Port, MotorType.kBrushless);
     m_rightMotor1 = new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless);
     m_rightMotor2 = new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless);
+
+    m_leftMotor1.setInverted(true);
+    m_leftMotor2.setInverted(true);
     
     m_leftMotor2.follow(m_leftMotor1);
     m_rightMotor2.follow(m_rightMotor1);
