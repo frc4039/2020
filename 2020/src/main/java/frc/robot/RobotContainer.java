@@ -39,18 +39,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Shoots 25%
     new JoystickButton(m_operatorController, Button.kX.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooter25, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM6380, m_shooter));
 
     // Shoots 50%
     new JoystickButton(m_operatorController, Button.kY.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooter50, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM11760, m_shooter));
 
     // Shoots 75%
     new JoystickButton(m_operatorController, Button.kA.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooter75, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM15000, m_shooter));
 
     // Shoots 100%
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooter100, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM18000, m_shooter));
   }
 }
