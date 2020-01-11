@@ -37,5 +37,7 @@ public final class Constants {
         public static final int kLeftDriveMotor2Port = 11;
         public static final int kRightDriveMotor1Port = 12;
         public static final int kRightDriveMotor2Port = 13;
+        public static final double kDistancePerTick = 5;
+        public static final boolean kGyroReversed = false;
     }
 }
