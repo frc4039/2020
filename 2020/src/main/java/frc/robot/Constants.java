@@ -34,6 +34,14 @@ public final class Constants {
 
     }
 
+    public static final class IntakeConstants {
+        public static final int kIntakeMotorPort = 22;
+        public static final double kIntake25 = 0.25;
+        public static final double kIntake50 = 0.50;
+        public static final double kIntake75 = 0.75;
+        public static final double kIntake100 = 1.00;
+    }
+
     public static final class DriveConstants {
         public static final int kLeftDriveMotor1Port = 10;
         public static final int kLeftDriveMotor2Port = 11;
