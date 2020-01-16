@@ -19,17 +19,27 @@ public final class Constants {
     public static final class GeneralConstants {
         public static final int kDriverController = 0;
         public static final int kOperatorController = 1;
+
+        public static final double TicksPerRev = 4096.0;
     }
 
     public static final class ShooterConstants {
         public static final int kShooterMotor1Port = 20;
         public static final int kShooterMotor2Port = 21;
 
-        public static final double kShooter25 = 0.25;
-        public static final double kShooter50 = 0.50;
-        public static final double kShooter75 = 0.75;
-        public static final double kShooter100 = 1.00;
+        public static final double kShooterRPM18000 = 18000;
+        public static final double kShooterRPM15000 = 15000;
+        public static final double kShooterRPM11760 = 11760;
+        public static final double kShooterRPM6380 = 6380;
 
+    }
+
+    public static final class IntakeConstants {
+        public static final int kIntakeMotorPort = 22;
+        public static final double kIntake25 = 0.25;
+        public static final double kIntake50 = 0.50;
+        public static final double kIntake75 = 0.75;
+        public static final double kIntake100 = 1.00;
     }
 
     public static final class DriveConstants {
