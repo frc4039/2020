@@ -32,6 +32,12 @@ public final class Constants {
         public static final double kShooterRPM11760 = 11760;
         public static final double kShooterRPM6380 = 6380;
 
+        public static final double kF = 0.013;
+        public static final double kP = 0.12;
+
+        public static final int kPIDLoopIdx = 0; 
+        public static final int kTimeoutMs = 30;
+
     }
 
     public static final class IntakeConstants {

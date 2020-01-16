@@ -29,7 +29,13 @@ public class Shooter extends SubsystemBase {
         
     m_shooterMotor2.follow(m_shooterMotor1);
 
-    m_shooterMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    m_shooterMotor1.configFactoryDefault();
+    m_shooterMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, ShooterConstants.kPIDLoopIdx, ShooterConstants.kTimeoutMs);
+    
+    m_shooterMotor1.setSensorPhase(true);
+
+    m_shooterMotor1.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kF, ShooterConstants.kTimeoutMs);
+    m_shooterMotor1.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kP, ShooterConstants.kTimeoutMs);
   }
 
   public void shoot(double rpm) {
