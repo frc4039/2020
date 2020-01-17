@@ -46,6 +46,11 @@ public class DriveTrain extends SubsystemBase {
 
     m_leftMotor.setInverted(true);
     m_rightMotor.setInverted(false);
+
+    m_leftMotor1.setSmartCurrentLimit(60);
+    m_leftMotor2.setSmartCurrentLimit(60);
+    m_rightMotor1.setSmartCurrentLimit(60);
+    m_rightMotor2.setSmartCurrentLimit(60);
   }
 
   public void drive(double left, double right) {
