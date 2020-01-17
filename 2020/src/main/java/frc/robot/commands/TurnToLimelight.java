@@ -19,16 +19,16 @@ public class TurnToLimelight extends PIDCommand {
   /**
    * Creates a new Limelight.
    */
-  public TurnToLimelight(double targetLimelight, DriveTrain drivebase) {
+  public TurnToLimelight(DriveTrain drivetrain) {
     super(
         // The controller that the command will use
         new PIDController(VisionConstants.kP, VisionConstants.kI, VisionConstants.kD),
         // This should return the measurement
         () -> 0,
         // This should return the setpoint (can also be a constant)
-        drivebase::getLimelight,
+        drivetrain::getLimelight,
         // This uses the output
-        output -> drivebase.arcadeDrive(0, output), drivebase);
+        output -> drivetrain.arcadeDrive(0, output), drivetrain);
 
     getController().setTolerance(VisionConstants.kTurnToleranceDeg, VisionConstants.kTurnRateToleranceDegPerS);
     // Use addRequirements() here to declare subsystem dependencies.
