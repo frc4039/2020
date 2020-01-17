@@ -8,6 +8,8 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -34,6 +36,8 @@ public class DriveTrain extends SubsystemBase {
 
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
+  private NetworkTable table;
+
   private final DifferentialDriveOdometry m_odometry;
 
   public DriveTrain() {
@@ -46,6 +50,8 @@ public class DriveTrain extends SubsystemBase {
 
     m_leftMotor.setInverted(true);
     m_rightMotor.setInverted(false);
+
+    table = NetworkTableInstance.getDefault().getTable("limelight");
   }
 
   public void drive(double left, double right) {
@@ -111,5 +117,9 @@ public class DriveTrain extends SubsystemBase {
 
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  public double getLimelight() {
+    return table.getEntry("tx").getDouble(0.0) / 27;
   }
 }
