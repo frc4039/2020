@@ -18,6 +18,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;;
@@ -73,5 +74,9 @@ public class RobotContainer {
     // Intake 100%
     new POVButton(m_operatorController, 270)
       .whenHeld(new Intake(IntakeConstants.kIntake25, m_intaker));
+
+    // Limelight
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+      .whenHeld(new TurnToLimelight(m_drivetrain).withTimeout(6));
   }
 }
