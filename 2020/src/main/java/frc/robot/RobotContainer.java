@@ -24,7 +24,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;;
 
 public class RobotContainer {
-  // The robot's subsystems and comzzmands are defined here...
+  // The robot's subsystems and commands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Intaker m_intaker = new Intaker();
@@ -45,19 +45,19 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Shoots 25%
     new JoystickButton(m_operatorController, Button.kX.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM6380, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM1125, m_shooter));
 
     // Shoots 50%
     new JoystickButton(m_operatorController, Button.kY.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM11760, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM2250, m_shooter));
 
     // Shoots 75%
     new JoystickButton(m_operatorController, Button.kA.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM15000, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM3375, m_shooter));
 
     // Shoots 100%
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM18000, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM4500, m_shooter));
 
     // Intakes 25%
     new POVButton(m_operatorController, 0)
