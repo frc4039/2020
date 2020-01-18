@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot(double rpm) {
-    m_shooterMotor1.set(ControlMode.Velocity, RPMtoTicks(rpm));
+    m_shooterMotor1.set(ControlMode.PercentOutput, rpm);
   }
 
   public void stop() {
