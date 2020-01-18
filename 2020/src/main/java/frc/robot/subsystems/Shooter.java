@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot(double rpm) {
-    m_shooterMotor1.set(ControlMode.PercentOutput, rpm);
+    m_shooterMotor1.set(ControlMode.Velocity, RPMtoTicks(rpm));
   }
 
   public void stop() {
@@ -52,6 +52,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public double RPMtoTicks(double rpm) {
-    return rpm*GeneralConstants.TicksPerRev;
+    /**
+     * Units that ControlMode.velocity expects to be in revolutions per 100ms, NOT per second.
+     * Reference:
+     * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/VelocityClosedLoop/src/main/java/frc/robot/Robot.java#L123
+     */
+    return rpm * GeneralConstants.TicksPerRev / 600.0;
   }
 }
