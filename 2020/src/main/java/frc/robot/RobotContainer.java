@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Climb;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.Constants.GeneralConstants;
@@ -27,6 +30,7 @@ public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Intaker m_intaker = new Intaker();
+  private final Climber m_climber = new Climber();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
@@ -37,7 +41,7 @@ public class RobotContainer {
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new ArcadeDrive(() -> m_driverController.getY(Hand.kLeft),
     () -> m_driverController.getX(Hand.kRight), m_drivetrain));
-
+    m_climber.setDefaultCommand(new Climb(() -> m_operatorController.getTriggerAxis(Hand.kLeft),() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
     configureButtonBindings();
   }
 

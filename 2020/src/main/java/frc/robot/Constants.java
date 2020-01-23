@@ -56,4 +56,10 @@ public final class Constants {
         public static final double kDistancePerTick = 5;
         public static final boolean kGyroReversed = false;
     }
+
+    public static final class ClimberConstants {
+        public static final int kClimberMotor1Port = 31;
+        public static final int kClimberMotor2Port = 32;
+        public static final double kTriggerDeadzone = 0.05;
+    }
 }
