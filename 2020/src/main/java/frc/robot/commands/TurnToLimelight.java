@@ -29,7 +29,7 @@ public class TurnToLimelight extends PIDCommand {
          () -> 0,
         // This uses the output
         output -> drivetrain.arcadeDrive(0, output), drivetrain);
-    getController().setTolerance(VisionConstants.kTurnToleranceDeg, VisionConstants.kTurnRateToleranceDegPerS);
+    getController().setTolerance(VisionConstants.kTolerance, VisionConstants.kRateTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }

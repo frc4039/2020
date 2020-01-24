@@ -44,7 +44,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     m_drivetrain.printDriveValues();
-    double m_left= left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
+    double m_left = left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
     double m_right = right.getAsDouble()*right.getAsDouble()*right.getAsDouble();
 
     double saturatedInput;
@@ -59,7 +59,8 @@ public class ArcadeDrive extends CommandBase {
     m_left = m_left / saturatedInput;
     m_right = m_right / saturatedInput;
 
-    m_drivetrain.drive(m_left - m_right, m_left + m_right);
+    m_drivetrain.drive(m_right - m_left, m_right + m_left);
+    
   }
 
   // Called once the command ends or is interrupted.

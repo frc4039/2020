@@ -49,8 +49,8 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-    m_leftMotor.setInverted(true);
-    m_rightMotor.setInverted(false);
+    //m_leftMotor.setInverted(true);
+    //m_rightMotor.setInverted(true);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     table.getEntry("pipeline").setNumber(6);
@@ -80,7 +80,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot) {
-    //m_drive.arcadeDrive(fwd, rot);
+    m_drive.arcadeDrive(fwd, rot);
     SmartDashboard.putNumber("Arcade Drive Rotation", rot);
   }
 
@@ -123,7 +123,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLimelight() {
-    return table.getEntry("tx").getDouble(0.0) / 27;
+    return -table.getEntry("tx").getDouble(0.0) / 27;
   }
 
   public void printDriveValues() {
