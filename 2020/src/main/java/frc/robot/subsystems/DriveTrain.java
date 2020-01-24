@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless);
@@ -79,6 +80,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
+    SmartDashboard.putNumber("Arcade Drive Rotation", rot);
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -121,5 +123,9 @@ public class DriveTrain extends SubsystemBase {
 
   public double getLimelight() {
     return table.getEntry("tx").getDouble(0.0) / 27;
+  }
+
+  public void printDriveValues() {
+    SmartDashboard.putNumber("limelightx", getLimelight());
   }
 }

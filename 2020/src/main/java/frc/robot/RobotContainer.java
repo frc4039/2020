@@ -43,6 +43,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+    m_drivetrain.printDriveValues();
+    
     // Shoots 25%
     new JoystickButton(m_operatorController, Button.kX.value)
       .whenHeld(new Shoot(ShooterConstants.kShooterRPM1125, m_shooter));

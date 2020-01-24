@@ -24,9 +24,9 @@ public class TurnToLimelight extends PIDCommand {
         // The controller that the command will use
         new PIDController(VisionConstants.kP, VisionConstants.kI, VisionConstants.kD),
         // This should return the measurement
-        () -> 0,
-        // This should return the setpoint (can also be a constant)
         drivetrain::getLimelight,
+        // This should return the setpoint (can also be a constant)
+         () -> 0,
         // This uses the output
         output -> drivetrain.arcadeDrive(0, output), drivetrain);
 
