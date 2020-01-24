@@ -53,6 +53,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor.setInverted(false);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
+    table.getEntry("pipeline").setNumber(6);
   }
 
   public void drive(double left, double right) {
@@ -79,7 +80,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot) {
-    m_drive.arcadeDrive(fwd, rot);
+    //m_drive.arcadeDrive(fwd, rot);
     SmartDashboard.putNumber("Arcade Drive Rotation", rot);
   }
 

@@ -79,6 +79,6 @@ public class RobotContainer {
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
-      .whenHeld(new TurnToLimelight(m_drivetrain).withTimeout(6));
+    .whileHeld(new TurnToLimelight(m_drivetrain).withTimeout(6));
   }
 }
