@@ -19,6 +19,7 @@ public class Intaker extends SubsystemBase {
 
   public Intaker() {
     m_intakeMotor = new VictorSPX(IntakeConstants.kIntakeMotorPort);
+    m_intakeMotor.setInverted(true);
   
   }
 

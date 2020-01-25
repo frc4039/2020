@@ -26,13 +26,16 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
     m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
+
+    m_shooterMotor1.setInverted(true);
+    m_shooterMotor2.setInverted(true);
+    
+    m_shooterMotor1.setSensorPhase(true);
         
     m_shooterMotor2.follow(m_shooterMotor1);
 
     m_shooterMotor1.configFactoryDefault();
     m_shooterMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, ShooterConstants.kPIDLoopIdx, ShooterConstants.kTimeoutMs);
-    
-    m_shooterMotor1.setSensorPhase(true);
 
     m_shooterMotor1.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kF, ShooterConstants.kTimeoutMs);
     m_shooterMotor1.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kP, ShooterConstants.kTimeoutMs);
