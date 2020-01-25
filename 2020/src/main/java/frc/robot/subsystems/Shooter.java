@@ -52,6 +52,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public double RPMtoTicks(double rpm) {
-    return rpm*GeneralConstants.TicksPerRev;
+    /**
+     * Units that ControlMode.velocity expects to be in ticks per 100ms, NOT per minute.
+     * Reference:
+     * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/VelocityClosedLoop/src/main/java/frc/robot/Robot.java#L123
+     */
+    return rpm * GeneralConstants.TicksPerRev / 600.0;
   }
 }
