@@ -27,17 +27,16 @@ public final class Constants {
         public static final int kShooterMotor1Port = 20;
         public static final int kShooterMotor2Port = 21;
 
-        public static final double kShooterRPM4500 = 4500;
-        public static final double kShooterRPM3375 = 3375;
-        public static final double kShooterRPM2250 = 2250;
-        public static final double kShooterRPM1125 = 1125;
+        public static final double kShooterRPM4 = 4500;
+        public static final double kShooterRPM3 = 3375;
+        public static final double kShooterRPM2 = 2250;
+        public static final double kShooterRPM1 = 1125;
 
         public static final double kF = 0.013;
         public static final double kP = 0.12;
 
         public static final int kPIDLoopIdx = 0; 
         public static final int kTimeoutMs = 30;
-
     }
 
     public static final class IntakeConstants {
@@ -46,6 +45,12 @@ public final class Constants {
         public static final double kIntake50 = 0.50;
         public static final double kIntake75 = 0.75;
         public static final double kIntake100 = 1.00;
+    }
+
+    public static final class StirrerConstants {
+        public static final int kStirrerMotorPort = 23;
+		public static final double kStirrerPercent = 1.00;
+		public static final int kStirrerCurrentLimit = 40;
     }
 
     public static final class VisionConstants {
