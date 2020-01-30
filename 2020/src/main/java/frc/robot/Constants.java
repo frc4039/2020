@@ -27,13 +27,14 @@ public final class Constants {
         public static final int kShooterMotor1Port = 20;
         public static final int kShooterMotor2Port = 21;
 
-        public static final double kShooterRPM4 = 4500;
+        public static final double kShooterRPM5 = 4500;
+        public static final double kShooterRPM4 = 4250;
         public static final double kShooterRPM3 = 3375;
         public static final double kShooterRPM2 = 2250;
         public static final double kShooterRPM1 = 1125;
 
-        public static final double kF = 0.013;
-        public static final double kP = 0.12;
+        public static final double kF = 0.015;
+        public static final double kP = 0.02;
 
         public static final int kPIDLoopIdx = 0; 
         public static final int kTimeoutMs = 30;
@@ -59,6 +60,11 @@ public final class Constants {
         public static final double kD = 0;
         public static final double kTolerance = 0;
         public static final double kRateTolerance = 0;
+    }
+
+    public static final class FeederConstants {
+        public static final int kFeederMotorPort = 24;
+        public static final double kPercentFeed = 0.5;
     }
 
     public static final class DriveConstants {

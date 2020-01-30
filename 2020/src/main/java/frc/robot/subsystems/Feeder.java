@@ -7,30 +7,30 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.StirrerConstants;
+import frc.robot.Constants.FeederConstants;
 
-public class Stirrer extends SubsystemBase {
-  private CANSparkMax m_stirrerMotor;
-  
-  public Stirrer() {
-    m_stirrerMotor = new CANSparkMax(StirrerConstants.kStirrerMotorPort, MotorType.kBrushless);
-    m_stirrerMotor.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
-  }
+public class Feeder extends SubsystemBase {
+  private VictorSPX m_feederMotor;
 
-  public void stir(double speed) {
-    m_stirrerMotor.set(speed);
-  }
-
-  public void stop() {
-    m_stirrerMotor.set(0);
+  public Feeder() {
+    m_feederMotor = new VictorSPX(FeederConstants.kFeederMotorPort);
+    m_feederMotor.setInverted(true);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
+  }
+
+  public void feed() {
+    m_feederMotor.set(ControlMode.PercentOutput, FeederConstants.kPercentFeed);
+  }
+
+  public void stop() {
+    m_feederMotor.set(ControlMode.PercentOutput, 0);
   }
 }

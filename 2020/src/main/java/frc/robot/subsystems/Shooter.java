@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1.setInverted(false);
     m_shooterMotor2.setInverted(true);
     
-    m_shooterMotor1.setSensorPhase(true);
+    m_shooterMotor1.setSensorPhase(false);
         
     m_shooterMotor2.follow(m_shooterMotor1);
 

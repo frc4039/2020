@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -8,30 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intaker;
+import frc.robot.subsystems.Feeder;
 
-/**
- * An example command that uses an example subsystem.
- */
-public class Intake extends CommandBase {
-  private final Intaker m_intaker;
-  // private final Stirrer m_stirrer;
-  private double m_speed;
+public class Feed extends CommandBase {
+  Feeder m_feederSubsystem = new Feeder();
+  double m_speed;
+  Feeder m_feeder;
 
-
-
-  /**
-   * Creates a new ArcadeDrive Command.
-   *
-   * @param subsystem 
-   */
-  public Intake(double speed, Intaker intaker) {
+  public Feed(double speed, Feeder feeder) {
     m_speed = speed;
-    m_intaker = intaker;
-    // m_stirrer = stirrer;
+    m_feeder = feeder;
 
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_intaker);
+    addRequirements(m_feederSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -43,15 +31,13 @@ public class Intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intaker.intake(m_speed);
-    // m_stirrer.stir();
+    m_feederSubsystem.feed();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intaker.stop();
-    // m_stirrer.stop();
+    m_feederSubsystem.stop();
   }
 
   // Returns true when the command should end.
