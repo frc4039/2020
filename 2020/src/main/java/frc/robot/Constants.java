@@ -61,6 +61,11 @@ public final class Constants {
         public static final double kRateTolerance = 0;
     }
 
+    public static final class FeederConstants {
+        public static final int kFeederMotorPort = 24;
+        public static final double kPercentFeed = 0.5;
+    }
+
     public static final class DriveConstants {
         public static final int kLeftDriveMotor1Port = 10;
         public static final int kLeftDriveMotor2Port = 11;
