@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -16,10 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.StirrerConstants;
 
 public class Stirrer extends SubsystemBase {
-  /**
-   * Creates a new Stirrer.
-   */
-
   private CANSparkMax m_stirrerMotor;
   
   public Stirrer() {
@@ -27,8 +21,8 @@ public class Stirrer extends SubsystemBase {
     m_stirrerMotor.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
   }
 
-  public void stir() {
-    m_stirrerMotor.set(StirrerConstants.kStirrerPercent);
+  public void stir(double speed) {
+    m_stirrerMotor.set(speed);
   }
 
   public void stop() {
