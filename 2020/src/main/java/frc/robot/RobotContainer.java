@@ -47,40 +47,17 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_drivetrain.printDriveValues();
     
-    // Shoots 25%
-    new JoystickButton(m_operatorController, Button.kY.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM1, m_shooter));
-
-    // Shoots 50%
-    new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM2, m_shooter));
-
-    // Shoots 75%
+    // Shoots
     new JoystickButton(m_operatorController, Button.kA.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM3, m_shooter));
-
-    // Shoots 100%
-    new JoystickButton(m_operatorController, Button.kX.value)
       .whenHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
 
-    new JoystickButton(m_driverController, Button.kA.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM1, m_shooter));
+    // Intakes
+    new JoystickButton(m_operatorController, Button.kB.value)
+      .whenHeld(new Intake(IntakeConstants.kIntake100, m_intaker));
 
-    // Intakes 25%
-    new POVButton(m_operatorController, 0)
-      .whenHeld(new Intake(IntakeConstants.kIntake100, m_intaker, m_stirrer));
-
-    // Intakes 50%
-    new POVButton(m_operatorController, 90)
-      .whenHeld(new Intake(IntakeConstants.kIntake75, m_intaker, m_stirrer));
-
-    // Intakes 75%
-    new POVButton(m_operatorController, 180)
-      .whenHeld(new Intake(-IntakeConstants.kIntake100, m_intaker, m_stirrer));
-    
-    // Intake 100%
-    new POVButton(m_operatorController, 270)
-      .whenHeld(new Intake(-IntakeConstants.kIntake75, m_intaker, m_stirrer));
+    // Stir
+    new JoystickButton(m_operatorController, Button.kY.value)
+      .whileHeld(new Intake(IntakeConstants.kIntake100, m_stirrer));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
