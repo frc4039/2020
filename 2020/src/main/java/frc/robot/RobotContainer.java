@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Feed;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.Stir;
@@ -31,6 +33,7 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Intaker m_intaker = new Intaker();
   private final Stirrer m_stirrer = new Stirrer();
+  private final Feeder m_feeder = new Feeder();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
@@ -59,6 +62,14 @@ public class RobotContainer {
     // Stir
     new JoystickButton(m_operatorController, Button.kY.value)
       .whileHeld(new Stir(IntakeConstants.kIntake100, m_stirrer));
+
+    new JoystickButton(m_operatorController, Button.kX.value)
+      .whileHeld(new Feed(IntakeConstants.kIntake100, m_feeder));
+
+
+    // Shoots 
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)

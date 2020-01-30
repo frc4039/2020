@@ -18,6 +18,7 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
     m_feederMotor = new VictorSPX(FeederConstants.kFeederMotorPort);
+    m_feederMotor.setInverted(true);
   }
 
   @Override

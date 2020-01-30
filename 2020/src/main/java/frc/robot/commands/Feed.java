@@ -12,8 +12,13 @@ import frc.robot.subsystems.Feeder;
 
 public class Feed extends CommandBase {
   Feeder m_feederSubsystem = new Feeder();
+  double m_speed;
+  Feeder m_feeder;
 
-  public Feed() {
+  public Feed(double speed, Feeder feeder) {
+    m_speed = speed;
+    m_feeder = feeder;
+
     addRequirements(m_feederSubsystem);
   }
 
