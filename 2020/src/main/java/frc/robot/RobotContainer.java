@@ -19,6 +19,7 @@ import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.Stir;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -57,13 +58,10 @@ public class RobotContainer {
 
     // Stir
     new JoystickButton(m_operatorController, Button.kY.value)
-      .whileHeld(new Intake(IntakeConstants.kIntake100, m_stirrer));
+      .whileHeld(new Stir(IntakeConstants.kIntake100, m_stirrer));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
-
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whileHeld(new Intake(IntakeConstants.kIntake100, m_intaker, m_stirrer));
   }
 }
