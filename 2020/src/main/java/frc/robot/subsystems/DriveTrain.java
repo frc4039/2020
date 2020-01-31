@@ -55,6 +55,8 @@ public class DriveTrain extends SubsystemBase {
     table = NetworkTableInstance.getDefault().getTable("limelight");
     table.getEntry("pipeline").setNumber(6);
 
+    // add gyro inversion
+
     // m_leftMotor1.setSmartCurrentLimit(60);
     // m_leftMotor2.setSmartCurrentLimit(60);
     // m_rightMotor1.setSmartCurrentLimit(60);
@@ -69,6 +71,7 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+    printDriveValues();
   }
 
   public Pose2d getPose() {
@@ -133,5 +136,6 @@ public class DriveTrain extends SubsystemBase {
 
   public void printDriveValues() {
     SmartDashboard.putNumber("limelightx", getLimelight());
+    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
   }
 }

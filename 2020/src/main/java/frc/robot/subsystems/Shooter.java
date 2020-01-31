@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GeneralConstants;
 // import edu.wpi.first.wpilibj.SpeedController;
@@ -51,7 +52,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    printShooterValues();
   }
 
   public double RPMtoTicks(double rpm) {
@@ -60,6 +61,18 @@ public class Shooter extends SubsystemBase {
      * Reference:
      * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/VelocityClosedLoop/src/main/java/frc/robot/Robot.java#L123
      */
-    return rpm * GeneralConstants.TicksPerRev / 600.0;
+    return rpm * ShooterConstants.kGearRatio * GeneralConstants.TicksPerRev / 600.0;
+  }
+
+  public double TicksToRPM(double ticks) {
+    return ticks * 600 / GeneralConstants.TicksPerRev / ShooterConstants.kGearRatio;
+  }
+
+  public void printShooterValues() {
+    SmartDashboard.putNumber("Shooter RPM", TicksToRPM(m_shooterMotor1.getSelectedSensorVelocity()));
+  }
+
+  public double returnCurrentRPM() {
+    return TicksToRPM(m_shooterMotor1.getSelectedSensorVelocity());
   }
 }
