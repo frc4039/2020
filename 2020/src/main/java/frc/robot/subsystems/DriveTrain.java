@@ -64,6 +64,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double left, double right) {
+    m_drive.setSafetyEnabled(false);
     m_leftMotor.set(left);
     m_rightMotor.set(right);
   }

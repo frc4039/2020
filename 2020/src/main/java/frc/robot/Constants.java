@@ -33,7 +33,7 @@ public final class Constants {
         public static final double kShooterRPM2 = 2250;
         public static final double kShooterRPM1 = 1125;
 
-        public static final double kF = 0.01;
+        public static final double kF = 0.008;
         public static final double kP = 0.02;
 
         public static final int kPIDLoopIdx = 0; 
