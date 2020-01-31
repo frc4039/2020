@@ -49,8 +49,9 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    m_drivetrain.printDriveValues();
     
+    // Operator Controls---------------------------------------------
+
     // Shoots
     new JoystickButton(m_operatorController, Button.kA.value)
       .whenHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
@@ -66,6 +67,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kX.value)
       .whileHeld(new Feed(IntakeConstants.kIntake100, m_feeder));
 
+    // Driver Controls-------------------------------------------------
 
     // Shoots 
     new JoystickButton(m_driverController, Button.kA.value)

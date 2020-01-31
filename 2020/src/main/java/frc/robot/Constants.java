@@ -33,11 +33,13 @@ public final class Constants {
         public static final double kShooterRPM2 = 2250;
         public static final double kShooterRPM1 = 1125;
 
-        public static final double kF = 0.015;
+        public static final double kF = 0.008;
         public static final double kP = 0.02;
 
         public static final int kPIDLoopIdx = 0; 
         public static final int kTimeoutMs = 30;
+
+        public static final double kGearRatio = 64 / 20;
     }
 
     public static final class IntakeConstants {

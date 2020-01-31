@@ -41,7 +41,7 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.shoot(m_rpm);
+      m_shooter.shoot(m_rpm);
   }
 
   // Called once the command ends or is interrupted.
