@@ -44,15 +44,12 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int kIntakeMotorPort = 22;
-        public static final double kIntake25 = 0.25;
-        public static final double kIntake50 = 0.50;
-        public static final double kIntake75 = 0.75;
-        public static final double kIntake100 = 1.00;
+        public static final double kIntakePercent = 1.00;
     }
 
     public static final class StirrerConstants {
         public static final int kStirrerMotorPort = 23;
-		public static final double kStirrerPercent = 1.00;
+		public static final double kStirrerPercent = 1.0;
 		public static final int kStirrerCurrentLimit = 40;
     }
 
@@ -66,7 +63,8 @@ public final class Constants {
 
     public static final class FeederConstants {
         public static final int kFeederMotorPort = 24;
-        public static final double kPercentFeed = 0.5;
+        public static final double kFeederPercent = 1.0;
+        public static final int kBreakBeamPort = 9;
     }
 
     public static final class DriveConstants {

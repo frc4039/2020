@@ -23,9 +23,11 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.Stir;
 import frc.robot.commands.TurnToLimelight;
+import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.StirrerConstants;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -50,6 +52,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     
+
     // Operator Controls---------------------------------------------
 
     // Shoots
@@ -58,14 +61,15 @@ public class RobotContainer {
 
     // Intakes
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new Intake(IntakeConstants.kIntake100, m_intaker));
+      .whenHeld(new Intake(IntakeConstants.kIntakePercent, m_intaker));
 
     // Stir
     new JoystickButton(m_operatorController, Button.kY.value)
-      .whileHeld(new Stir(IntakeConstants.kIntake100, m_stirrer));
+      .whileHeld(new Stir(StirrerConstants.kStirrerPercent, m_stirrer));
 
+    // Feed
     new JoystickButton(m_operatorController, Button.kX.value)
-      .whileHeld(new Feed(IntakeConstants.kIntake100, m_feeder));
+      .whenHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
 
     // Driver Controls-------------------------------------------------
 
