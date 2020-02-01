@@ -67,8 +67,9 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kY.value)
       .whileHeld(new Stir(StirrerConstants.kStirrerPercent, m_stirrer));
 
+    // Feed
     new JoystickButton(m_operatorController, Button.kX.value)
-      .whileHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
+      .whenHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
 
     // Driver Controls-------------------------------------------------
 
