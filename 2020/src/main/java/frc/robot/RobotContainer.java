@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
+import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Feed;
 import frc.robot.commands.Intake;
@@ -25,6 +27,7 @@ import frc.robot.commands.Stir;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StirrerConstants;
@@ -36,6 +39,7 @@ public class RobotContainer {
   private final Intaker m_intaker = new Intaker();
   private final Stirrer m_stirrer = new Stirrer();
   private final Feeder m_feeder = new Feeder();
+  private final Hood m_hood = new Hood();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
@@ -80,5 +84,18 @@ public class RobotContainer {
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
+
+    //Move Servo
+    new POVButton(m_operatorController, 0)
+      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
+
+    new POVButton(m_operatorController, 90)
+      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos2, m_hood));
+
+    new POVButton(m_operatorController, 180)
+      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos3, m_hood));
+
+    new POVButton(m_operatorController, 270)
+      .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
   }
 }

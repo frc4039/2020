@@ -20,7 +20,7 @@ public class Shoot extends CommandBase {
 
 
   /**
-   * Creates a new ArcadeDrive Command.
+   * Creates a new Shoot Command.
    *
    * @param subsystem 
    */

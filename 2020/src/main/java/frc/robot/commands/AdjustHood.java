@@ -8,41 +8,44 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Feeder;
+import frc.robot.Constants.HoodConstants;
+import frc.robot.subsystems.Hood;
 
-public class Feed extends CommandBase {
-  public double m_speed;
-  public final Feeder m_feeder;
+public class AdjustHood extends CommandBase {
+  /**
+   * Creates a new AdjustHood.
+   */
+  public final Hood m_hood;
+  public double m_pos;
+  
+  public AdjustHood(double pos, Hood hood) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_pos = pos;
+    m_hood = hood;
 
-  public Feed(double speed, Feeder feeder) {
-    m_speed = speed;
-    m_feeder = feeder;
-
-    addRequirements(m_feeder);
+    addRequirements(m_hood);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed();
-    m_feeder.printFeederValues();
+    m_hood.setPosition(m_pos);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.stop();
+    m_hood.setPosition(HoodConstants.kFullRetract);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_feeder.getBreakBeam();
+    return false;
   }
 }

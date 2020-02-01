@@ -67,6 +67,16 @@ public final class Constants {
         public static final int kBreakBeamPort = 9;
     }
 
+    public static final class HoodConstants {
+        public static final int kServoPort1 = 0;
+        public static double kFullRetract = 0.0;
+        public static double kFullExtend = 1.0;
+        public static double kPos1 = 0.25;
+        public static double kPos2 = 0.50;
+        public static double kPos3 = 0.75;
+        
+    }
+
     public static final class DriveConstants {
         public static final int kLeftDriveMotor1Port = 10;
         public static final int kLeftDriveMotor2Port = 11;
