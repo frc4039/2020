@@ -15,10 +15,13 @@ import frc.robot.Constants.FeederConstants;
 
 public class Feeder extends SubsystemBase {
   private VictorSPX m_feederMotor;
+  private DigitalInput m_BreakBeam;
 
   public Feeder() {
     m_feederMotor = new VictorSPX(FeederConstants.kFeederMotorPort);
     m_feederMotor.setInverted(true);
+
+    m_BreakBeam = new DigitalInput(FeederConstants.kBreakBeamPort);
   }
 
   @Override
@@ -32,5 +35,9 @@ public class Feeder extends SubsystemBase {
 
   public void stop() {
     m_feederMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void getBreakBeam() {
+    m_BreakBeam.get();
   }
 }
