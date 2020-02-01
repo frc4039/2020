@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
 public class Feed extends CommandBase {
-  Feeder m_feederSubsystem = new Feeder();
   double m_speed;
   Feeder m_feeder;
 
@@ -19,7 +18,7 @@ public class Feed extends CommandBase {
     m_speed = speed;
     m_feeder = feeder;
 
-    addRequirements(m_feederSubsystem);
+    addRequirements(m_feeder);
   }
 
   // Called when the command is initially scheduled.
@@ -31,13 +30,14 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feederSubsystem.feed();
+    m_feeder.feed();
+    m_feeder.printFeederValues();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feederSubsystem.stop();
+    m_feeder.stop();
   }
 
   // Returns true when the command should end.

@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FeederConstants;
 
@@ -30,14 +32,18 @@ public class Feeder extends SubsystemBase {
   }
 
   public void feed() {
-    m_feederMotor.set(ControlMode.PercentOutput, FeederConstants.kPercentFeed);
+    m_feederMotor.set(ControlMode.PercentOutput, FeederConstants.kFeederPercent);
   }
 
   public void stop() {
     m_feederMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void getBreakBeam() {
-    m_BreakBeam.get();
+  public boolean getBreakBeam() {
+    return m_BreakBeam.get();
+  }
+
+  public void printFeederValues() {
+    SmartDashboard.putBoolean("Break Beam Status", getBreakBeam());
   }
 }
