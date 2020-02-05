@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -23,6 +24,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Feed;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.SpinControlPanel;
 import frc.robot.commands.Stir;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.FeederConstants;
@@ -40,6 +42,7 @@ public class RobotContainer {
   private final Stirrer m_stirrer = new Stirrer();
   private final Feeder m_feeder = new Feeder();
   private final Hood m_hood = new Hood();
+  private final ControlPanel m_controlPanel = new ControlPanel(); 
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
@@ -74,6 +77,10 @@ public class RobotContainer {
     // Feed
     new JoystickButton(m_operatorController, Button.kX.value)
       .whenHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
+
+    // Color Sensor
+    new JoystickButton(m_operatorController, Button.kBack.value)
+      .whenHeld(new SpinControlPanel(m_controlPanel));
 
     // Driver Controls-------------------------------------------------
 
