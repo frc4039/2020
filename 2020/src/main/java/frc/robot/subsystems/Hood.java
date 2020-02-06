@@ -17,10 +17,14 @@ public class Hood extends SubsystemBase {
    */
 
   private Servo m_servo1;
+  private Servo m_servo2;
 
   public Hood() {
     m_servo1 = new Servo(HoodConstants.kServoPort1);
     m_servo1.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    
+    m_servo2 = new Servo(HoodConstants.kServoPort2);
+    m_servo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
   }
 
   @Override
@@ -30,5 +34,6 @@ public class Hood extends SubsystemBase {
 
   public void setPosition(double pos) {
     m_servo1.setPosition(pos);
+    m_servo2.setPosition(pos);
   }
 }

@@ -69,6 +69,7 @@ public final class Constants {
 
     public static final class HoodConstants {
         public static final int kServoPort1 = 0;
+        public static final int kServoPort2 = 1;
         public static double kFullRetract = 0.0;
         public static double kFullExtend = 1.0;
         public static double kPos1 = 0.25;
