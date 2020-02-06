@@ -63,8 +63,8 @@ public final class Constants {
 
     public static final class FeederConstants {
         public static final int kFeederMotorPort = 24;
-        public static final double kFeederPercent = 1.0;
-        public static final int kBreakBeamPort = 9;
+        public static final double kFeederPercent = 0.5;
+        public static final int kBreakBeamPort = 0;
     }
 
     public static final class HoodConstants {
@@ -74,7 +74,6 @@ public final class Constants {
         public static double kPos1 = 0.25;
         public static double kPos2 = 0.50;
         public static double kPos3 = 0.75;
-        
     }
 
     public static final class DriveConstants {
