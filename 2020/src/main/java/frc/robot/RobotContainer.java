@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -20,11 +21,13 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Climb;
 import frc.robot.commands.Feed;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.Stir;
 import frc.robot.commands.TurnToLimelight;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.HoodConstants;
@@ -40,6 +43,7 @@ public class RobotContainer {
   private final Stirrer m_stirrer = new Stirrer();
   private final Feeder m_feeder = new Feeder();
   private final Hood m_hood = new Hood();
+  private final Climber m_climber = new Climber();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
@@ -74,6 +78,14 @@ public class RobotContainer {
     // Feed
     new JoystickButton(m_operatorController, Button.kX.value)
       .whenHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
+
+    //extend
+    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
+      .toggleWhenPressed(new Climb(m_climber, ClimberConstants.kExtended));
+
+    //retract
+    new JoystickButton(m_operatorController, Button.kBumperRight.value)
+      .toggleWhenPressed(new Climb(m_climber, ClimberConstants.kRetracted));
 
     // Driver Controls-------------------------------------------------
 
