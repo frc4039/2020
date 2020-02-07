@@ -59,7 +59,7 @@ public class ArcadeDrive extends CommandBase {
     m_left = m_left / saturatedInput;
     m_right = m_right / saturatedInput;
 
-    m_drivetrain.drive(m_right - m_left, m_right + m_left);
+    m_drivetrain.drive(m_right - m_left, -m_left - m_right);
     
   }
 
