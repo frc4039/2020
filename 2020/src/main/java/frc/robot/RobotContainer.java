@@ -20,10 +20,9 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.Feed;
-import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.Stir;
+import frc.robot.commands.SmartIntake;
+import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
@@ -61,19 +60,23 @@ public class RobotContainer {
 
     // Shoots
     new JoystickButton(m_operatorController, Button.kA.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+      .whenHeld(new Shoot(ShooterConstants.kShooterRPM3, m_shooter));
 
-    // Intakes
+    // // Intakes
+    // new JoystickButton(m_operatorController, Button.kB.value)
+    //   .whenHeld(new Intake(IntakeConstants.kIntakePercent, m_intaker));
+
+    // Smart Intake
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new Intake(IntakeConstants.kIntakePercent, m_intaker));
+      .whenHeld(new SmartIntake(IntakeConstants.kIntakePercent, FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent, m_intaker, m_feeder, m_stirrer));
 
-    // Stir
-    new JoystickButton(m_operatorController, Button.kY.value)
-      .whileHeld(new Stir(StirrerConstants.kStirrerPercent, m_stirrer));
-
-    // Feed
+    // Revv the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
-      .whenHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
+      .toggleWhenPressed(new Shoot(ShooterConstants.kShooterRPM3, m_shooter));
+
+    // SmartShoot
+    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
+      .whileHeld(new SmartShoot(ShooterConstants.kShooterRPM3, StirrerConstants.kStirrerPercent, m_feeder, m_shooter, m_stirrer));
 
     // Driver Controls-------------------------------------------------
 
