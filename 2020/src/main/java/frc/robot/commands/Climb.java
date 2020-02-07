@@ -6,16 +6,18 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 public class Climb extends CommandBase {
-private DoubleSupplier m_leftTrigger;
-private DoubleSupplier m_rightTrigger;
-private Climber m_Climber;
-    public Climb(DoubleSupplier leftTrigger, DoubleSupplier rightTrigger, Climber m_Climb){
-    m_leftTrigger = leftTrigger;
-    m_rightTrigger = rightTrigger;
-    m_Climber = m_Climb;
+    private DoubleSupplier m_leftTrigger;
+    private DoubleSupplier m_rightTrigger;
+    private Climber m_Climber;
 
-    addRequirements(m_Climber);
+    public Climb(DoubleSupplier leftTrigger, DoubleSupplier rightTrigger, Climber m_Climb){
+        m_leftTrigger = leftTrigger;
+        m_rightTrigger = rightTrigger;
+        m_Climber = m_Climb;
+
+        addRequirements(m_Climber);
     }
+
     @Override
     public void execute() {
         if (m_leftTrigger.getAsDouble() > ClimberConstants.kTriggerDeadzone) {
@@ -25,4 +27,6 @@ private Climber m_Climber;
             m_Climber.raise(m_rightTrigger.getAsDouble());
         }
     }
+
+    
 }
