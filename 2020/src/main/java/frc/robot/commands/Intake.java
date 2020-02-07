@@ -7,66 +7,51 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intaker;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class ArcadeDrive extends CommandBase {
-  private final DriveTrain m_drivetrain;
-  private DoubleSupplier left;
-  private DoubleSupplier right;
+public class Intake extends CommandBase {
+  private final Intaker m_intaker;
+  // private final Stirrer m_stirrer;
+  private double m_speed;
+
+
 
   /**
    * Creates a new ArcadeDrive Command.
    *
    * @param subsystem 
    */
-  public ArcadeDrive(DoubleSupplier left, DoubleSupplier right, DriveTrain drivetrain) {
-    m_drivetrain = drivetrain;
-    this.left = left;
-    this.right = right;
-    
-    
+  public Intake(double speed, Intaker intaker) {
+    m_speed = speed;
+    m_intaker = intaker;
+    // m_stirrer = stirrer;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_drivetrain);
+    addRequirements(m_intaker);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.printDriveValues();
-    double m_left = left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
-    double m_right = right.getAsDouble()*right.getAsDouble()*right.getAsDouble();
-
-    double saturatedInput;
-    double greaterInput = Math.max(Math.abs(m_left), Math.abs(m_right));
-    double lesserInput = Math.abs(m_left) + Math.abs(m_right) - greaterInput;
-    if (greaterInput > 0.0){
-        saturatedInput = (lesserInput / greaterInput) + 1.0;
-    } else{
-        saturatedInput = 1.0;
-    }
-
-    m_left = m_left / saturatedInput;
-    m_right = m_right / saturatedInput;
-
-    m_drivetrain.drive(m_right - m_left, -m_left - m_right);
-    
+    m_intaker.intake(m_speed);
+    // m_stirrer.stir();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drivetrain.drive(0, 0);
+    m_intaker.stop();
+    // m_stirrer.stop();
   }
 
   // Returns true when the command should end.
