@@ -23,13 +23,13 @@ public class Stirrer extends SubsystemBase {
     m_stirrerMotor1.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
     m_stirrerMotor2.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
 
-    m_stirrerMotor1.setInverted(false);
-    m_stirrerMotor2.setInverted(true);
+    m_stirrerMotor1.setInverted(true);
+    m_stirrerMotor2.setInverted(false);
   }
 
   public void stir(double speed) {
-    m_stirrerMotor1.set(speed);
-    m_stirrerMotor2.set(speed);
+    m_stirrerMotor1.set(0.5);
+    m_stirrerMotor2.set(0.25);
   }
 
   public void stop() {
