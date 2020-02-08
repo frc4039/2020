@@ -8,6 +8,8 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless);
@@ -34,6 +37,8 @@ public class DriveTrain extends SubsystemBase {
 
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
+  private NetworkTable table;
+
   private final DifferentialDriveOdometry m_odometry;
 
   public DriveTrain() {
@@ -45,15 +50,21 @@ public class DriveTrain extends SubsystemBase {
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
     m_leftMotor.setInverted(true);
-    m_rightMotor.setInverted(false);
+    m_rightMotor.setInverted(true);
 
-    m_leftMotor1.setSmartCurrentLimit(60);
-    m_leftMotor2.setSmartCurrentLimit(60);
-    m_rightMotor1.setSmartCurrentLimit(60);
-    m_rightMotor2.setSmartCurrentLimit(60);
+    table = NetworkTableInstance.getDefault().getTable("limelight");
+    table.getEntry("pipeline").setNumber(6);
+
+    // add gyro inversion
+
+    // m_leftMotor1.setSmartCurrentLimit(60);
+    // m_leftMotor2.setSmartCurrentLimit(60);
+    // m_rightMotor1.setSmartCurrentLimit(60);
+    // m_rightMotor2.setSmartCurrentLimit(60);
   }
 
   public void drive(double left, double right) {
+    m_drive.setSafetyEnabled(false);
     m_leftMotor.set(left);
     m_rightMotor.set(right);
   }
@@ -61,6 +72,7 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+    printDriveValues();
   }
 
   public Pose2d getPose() {
@@ -78,6 +90,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
+    SmartDashboard.putNumber("Arcade Drive Rotation", rot);
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -116,5 +129,14 @@ public class DriveTrain extends SubsystemBase {
 
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  public double getLimelight() {
+    return -table.getEntry("tx").getDouble(0.0) / 27;
+  }
+
+  public void printDriveValues() {
+    SmartDashboard.putNumber("limelightx", getLimelight());
+    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
   }
 }

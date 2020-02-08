@@ -43,8 +43,8 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double m_left= left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
+    m_drivetrain.printDriveValues();
+    double m_left = left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
     double m_right = right.getAsDouble()*right.getAsDouble()*right.getAsDouble();
 
     double saturatedInput;
@@ -59,7 +59,8 @@ public class ArcadeDrive extends CommandBase {
     m_left = m_left / saturatedInput;
     m_right = m_right / saturatedInput;
 
-    m_drivetrain.drive(m_left - m_right, m_left + m_right);
+    m_drivetrain.drive(m_right - m_left, -m_left - m_right);
+    
   }
 
   // Called once the command ends or is interrupted.
