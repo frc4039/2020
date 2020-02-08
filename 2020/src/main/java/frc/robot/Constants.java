@@ -61,5 +61,21 @@ public final class Constants {
         public static final int kClimberMotor1Port = 31;
         public static final int kClimberMotor2Port = 32;
         public static final double kTriggerDeadzone = 0.05;
+        public static final int kTimeoutMs = 30;
+        public static final double kNeutralDeadband = 0.001;
+        public static final int kSlotDistance = 0;
+        public static final int kSlotTurning = 1;
+        public static final double kDistanceF = 0.01;
+        public static final double kDistanceP = 0;
+        public static final double kDistanceI = 0;
+        public static final double kDistanceD = 0;
+        public static final int kDistanceIZone = 100;
+        public static final int kTurnIZone = 200;
+        public static final double kTurnF = 0.01;
+        public static final double kTurnP = 0;
+        public static final double kTurnI = 0;
+        public static final double kTurnD = 0;
+        public static final double kDistancePeakOutput = 0.5;
+        public static final double kTurnPeakOutput = 1.0;
     }
 }
