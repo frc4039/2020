@@ -89,13 +89,13 @@ public class Climber extends SubsystemBase {
   }
 
   public void raise(double inches) {
-    m_Motor1.set(ControlMode.Position, inchesToTicks(inches));
     m_Motor2.set(ControlMode.Position, inchesToTicks(inches));
+    m_Motor1.follow(m_Motor2);
   }
 
   public void lower(double inches){
-    m_Motor1.set(ControlMode.Position, inchesToTicks(inches));
-    m_Motor2.set(ControlMode.Position, inchesToTicks(inches));
+    m_Motor2.set(ControlMode.Position, -inchesToTicks(inches));
+    m_Motor1.follow(m_Motor2);
   }
 
   public double inchesToTicks(double inches) {
