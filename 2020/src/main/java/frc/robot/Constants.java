@@ -48,7 +48,8 @@ public final class Constants {
     }
 
     public static final class StirrerConstants {
-        public static final int kStirrerMotorPort = 23;
+        public static final int kStirrerMotor1Port = 23;
+        public static final int kStirrerMotor2Port = 28;
 		public static final double kStirrerPercent = 1.0;
 		public static final int kStirrerCurrentLimit = 40;
     }
