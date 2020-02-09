@@ -23,9 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless);
-  private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.kLeftDriveMotor2Port, MotorType.kBrushless);;
-  private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless);;
-  private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless);;
+  private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.kLeftDriveMotor2Port, MotorType.kBrushless);
+  private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless);
+  private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless);
 
   private final SpeedController m_leftMotor = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
   private final SpeedController m_rightMotor = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
@@ -42,6 +42,12 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
 
   public DriveTrain() {
+
+    m_leftMotor1.restoreFactoryDefaults();
+    m_leftMotor2.restoreFactoryDefaults();
+    m_rightMotor1.restoreFactoryDefaults();
+    m_rightMotor2.restoreFactoryDefaults();
+
     resetEncoders();
 
     m_leftEncoder.setPositionConversionFactor(DriveConstants.kDistancePerTick);
