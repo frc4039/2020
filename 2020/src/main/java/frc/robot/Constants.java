@@ -40,11 +40,16 @@ public final class Constants {
         public static final int kTimeoutMs = 30;
 
         public static final double kGearRatio = 64 / 20;
+
+        public static final boolean kShooterInversion1 = true;
+        public static final boolean kShooterInversion2 = false;
     }
 
     public static final class IntakeConstants {
         public static final int kIntakeMotorPort = 22;
         public static final double kIntakePercent = 1.00;
+
+        public static final boolean kIntakeInversion = false;
     }
 
     public static final class StirrerConstants {
@@ -65,6 +70,8 @@ public final class Constants {
         public static final int kFeederMotorPort = 24;
         public static final double kFeederPercent = 0.5;
         public static final int kBreakBeamPort = 0;
+
+        public static final boolean kFeederInversion = true;
     }
 
     public static final class HoodConstants {
@@ -84,5 +91,8 @@ public final class Constants {
         public static final int kRightDriveMotor2Port = 13;
         public static final double kDistancePerTick = 5;
         public static final boolean kGyroReversed = false;
+
+        public static final boolean kLeftInversion = true;
+        public static final boolean kRightInversion = true;
     }
 }

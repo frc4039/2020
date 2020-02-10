@@ -55,8 +55,10 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-    m_leftMotor.setInverted(true);
-    m_rightMotor.setInverted(true);
+    m_leftMotor.setInverted(DriveConstants.kLeftInversion);
+    m_rightMotor.setInverted(DriveConstants.kRightInversion);
+    // m_leftMotor.setInverted(true);
+    // m_rightMotor.setInverted(true);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     table.getEntry("pipeline").setNumber(6);
