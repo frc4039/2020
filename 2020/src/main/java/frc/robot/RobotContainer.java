@@ -24,6 +24,7 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TurnToLimelight;
+import frc.robot.commands.setShootPosition;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.HoodConstants;
@@ -60,7 +61,7 @@ public class RobotContainer {
 
     // Shoots
     new JoystickButton(m_operatorController, Button.kA.value)
-      .whenHeld(new Shoot(ShooterConstants.kShooterRPM3, m_shooter));
+      .whenHeld(new Shoot(m_shooter));
 
     // // Intakes
     // new JoystickButton(m_operatorController, Button.kB.value)
@@ -72,23 +73,35 @@ public class RobotContainer {
 
     // Revv the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
-      .toggleWhenPressed(new Shoot(ShooterConstants.kShooterRPM3, m_shooter));
+      .toggleWhenPressed(new Shoot(m_shooter));
 
     // SmartShoot
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
       .whileHeld(new SmartShoot(ShooterConstants.kShooterRPM3, StirrerConstants.kStirrerPercent, m_feeder, m_shooter, m_stirrer));
 
+
+    // Set Shoot RPM
+      new POVButton(m_operatorController, 0)
+      .toggleWhenPressed(new setShootPosition(1, m_shooter));
+
+      new POVButton(m_operatorController, 270)
+      .toggleWhenPressed(new setShootPosition(2, m_shooter));
+
+      new POVButton(m_operatorController, 180)
+      .toggleWhenPressed(new setShootPosition(3, m_shooter));
+
     // Driver Controls-------------------------------------------------
 
     // Shoots 
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+      .whileHeld(new Shoot(m_shooter));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
     //Move Servo
+    /*
     new POVButton(m_operatorController, 0)
       .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
 
@@ -100,5 +113,6 @@ public class RobotContainer {
 
     new POVButton(m_operatorController, 270)
       .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
+      */
   }
 }

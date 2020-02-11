@@ -33,6 +33,10 @@ public final class Constants {
         public static final double kShooterRPM2 = 2250;
         public static final double kShooterRPM1 = 1125;
 
+        public static final int kTargetZone = 1;
+        public static final int kNearTrench = 2;
+        public static final int kInitiationLine = 3;
+
         public static final double kF = 0.008;
         public static final double kP = 0.02;
 
