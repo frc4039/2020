@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Stirrer;
@@ -26,9 +27,10 @@ public class SmartIntake extends ParallelCommandGroup {
     m_feedSpeed = feedSpeed;
 
     addCommands(
-      new Stir(m_stirSpeed, m_stirrer),
       new Intake(m_intakeSpeed, m_intaker),
-      new Feed(m_feedSpeed, m_feeder)
+      new ParallelRaceGroup(new Stir(m_stirSpeed, m_stirrer),
+                            new Feed(m_feedSpeed, m_feeder))
+      
     );
   }
 }

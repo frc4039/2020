@@ -14,19 +14,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.StirrerConstants;
 
 public class Stirrer extends SubsystemBase {
-  private CANSparkMax m_stirrerMotor;
+  private CANSparkMax m_stirrerMotor1;
+  private CANSparkMax m_stirrerMotor2;
   
   public Stirrer() {
-    m_stirrerMotor = new CANSparkMax(StirrerConstants.kStirrerMotorPort, MotorType.kBrushless);
-    m_stirrerMotor.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
+    m_stirrerMotor1 = new CANSparkMax(StirrerConstants.kStirrerMotor1Port, MotorType.kBrushless);
+    m_stirrerMotor2 = new CANSparkMax(StirrerConstants.kStirrerMotor2Port, MotorType.kBrushless);
+    m_stirrerMotor1.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
+    m_stirrerMotor2.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
+
+    m_stirrerMotor1.setInverted(false);
+    m_stirrerMotor2.setInverted(true);
   }
 
   public void stir(double speed) {
-    m_stirrerMotor.set(speed);
+    m_stirrerMotor1.set(0.5);
+    m_stirrerMotor2.set(0.25);
   }
 
   public void stop() {
-    m_stirrerMotor.set(0);
+    m_stirrerMotor1.set(0);
+    m_stirrerMotor2.set(0);
   }
 
   @Override
