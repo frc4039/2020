@@ -30,7 +30,10 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed();
+    if (m_feeder.getBreakBeam()) {
+      m_feeder.feed();
+    }
+
     m_feeder.printFeederValues();
   }
 
