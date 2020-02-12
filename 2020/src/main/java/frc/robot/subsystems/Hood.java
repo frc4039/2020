@@ -36,4 +36,9 @@ public class Hood extends SubsystemBase {
     m_servo1.setPosition(pos);
     m_servo2.setPosition(pos);
   }
+
+   public void getPosition(){
+     m_servo1.getPosition();
+     m_servo2.getPosition();
+  }
 }

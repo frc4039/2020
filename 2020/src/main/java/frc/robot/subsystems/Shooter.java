@@ -34,8 +34,10 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
     m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
 
-    m_shooterMotor1.setInverted(true);
-    m_shooterMotor2.setInverted(false);
+    m_shooterMotor1.setInverted(ShooterConstants.kShooterInversion1);
+    m_shooterMotor2.setInverted(ShooterConstants.kShooterInversion2);
+    // m_shooterMotor1.setInverted(true);
+    // m_shooterMotor2.setInverted(false);
     
     m_shooterMotor1.setSensorPhase(false);
         
