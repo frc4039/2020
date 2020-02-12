@@ -39,7 +39,7 @@ public class RobotContainer {
   private final Intaker m_intaker = new Intaker();
   private final Stirrer m_stirrer = new Stirrer();
   private final Feeder m_feeder = new Feeder();
-  private final Hood m_hood = new Hood();
+  //private final Hood m_hood = new Hood();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);

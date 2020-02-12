@@ -31,11 +31,11 @@ public class setShootPosition extends CommandBase {
   @Override
   public void initialize() {
     if (m_shootingPosition == ShooterConstants.kTargetZone) {
-      m_shooter.setSetPoint(ShooterConstants.kShooterRPM4, HoodConstants.kPos3);
-    } else if (m_shootingPosition == ShooterConstants.kShooterRPM3) {
+      m_shooter.setSetPoint(ShooterConstants.kShooterRPM2, HoodConstants.kPos3);
+    } else if (m_shootingPosition == ShooterConstants.kNearTrench) {
       m_shooter.setSetPoint(ShooterConstants.kShooterRPM3, HoodConstants.kPos3);
     } else if (m_shootingPosition == ShooterConstants.kInitiationLine) {
-      m_shooter.setSetPoint(ShooterConstants.kShooterRPM2, HoodConstants.kPos3);
+      m_shooter.setSetPoint(ShooterConstants.kShooterRPM4, HoodConstants.kPos3);
     }
   }
 
