@@ -101,5 +101,6 @@ public final class Constants {
         public static final int kRightDriveMotor2Port = 13;
         public static final double kDistancePerTick = 5;
         public static final boolean kGyroReversed = false;
+        public static final double kVoltageRampRate = 0.3; // s / maxVoltage
     }
 }
