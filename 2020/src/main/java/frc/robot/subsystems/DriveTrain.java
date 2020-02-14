@@ -90,9 +90,9 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double left, double right) {
-    //m_drive.setSafetyEnabled(false);
-    //m_leftMotor1.set(left);
-    //m_rightMotor1.set(right);
+    m_drive.feed();
+    m_leftMotor1.set(left);
+    m_rightMotor1.set(right);
   }
 
   public Pose2d getPose() {
