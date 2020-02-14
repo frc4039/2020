@@ -100,4 +100,10 @@ public final class Constants {
         public static final boolean kLeftInversion = true;
         public static final boolean kRightInversion = true;
     }
+
+    public static final class ControlPanelConstants {
+        public static final int kControlPanelMotorPort = 29;
+        public static final double kWheelCircumferance = 3;
+        public static final double kControlPanelCircumference = 100;
+    }
 }
