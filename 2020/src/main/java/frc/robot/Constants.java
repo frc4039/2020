@@ -99,7 +99,7 @@ public final class Constants {
         public static final int kRightDriveMotor1Port = 12;
         public static final int kRightDriveMotor2Port = 13;
 
-        public static final double kGearRatio = (14/58)*(16/32);
+        public static final double kGearRatio = 0.12068966; //(14/58) * (16/32);
         public static final double kWheelDiameter = 0.157; //nominal 0.1587
         public static final double kEncoderConstant = kWheelDiameter * Math.PI * kGearRatio;
         
@@ -111,7 +111,7 @@ public final class Constants {
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
         public static final double kPDriveVel = 1.93;
         
-        public static final boolean kLeftInversion = false;
+        public static final boolean kLeftInversion = true;
         public static final boolean kRightInversion = false;
     }
 

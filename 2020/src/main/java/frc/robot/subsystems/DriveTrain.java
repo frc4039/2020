@@ -56,10 +56,10 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor1.setIdleMode(IdleMode.kBrake);
     m_rightMotor2.setIdleMode(IdleMode.kBrake);  
 
-    m_leftMotor1.setInverted(false);
-    m_leftMotor2.setInverted(false);
-    m_rightMotor1.setInverted(false);
-    m_rightMotor2.setInverted(false);
+    m_leftMotor1.setInverted(DriveConstants.kLeftInversion);
+    m_leftMotor2.setInverted(DriveConstants.kLeftInversion);
+    m_rightMotor1.setInverted(DriveConstants.kRightInversion);
+    m_rightMotor2.setInverted(DriveConstants.kRightInversion);
 
     m_leftMotor2.follow(m_leftMotor1);
     m_rightMotor2.follow(m_rightMotor1);
@@ -69,12 +69,14 @@ public class DriveTrain extends SubsystemBase {
 
     m_leftEncoder.setPositionConversionFactor(DriveConstants.kEncoderConstant);
     m_rightEncoder.setPositionConversionFactor(DriveConstants.kEncoderConstant);
-    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant);
-    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant);
+    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
+    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
     m_drive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
+
+    m_drive.setRightSideInverted(false);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     table.getEntry("pipeline").setNumber(6);
@@ -107,12 +109,12 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot) {
-    m_drive.arcadeDrive(-fwd, rot);
+    m_drive.arcadeDrive(-fwd, rot); 
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     m_leftMotor1.setVoltage(leftVolts);
-    m_rightMotor1.setVoltage(-rightVolts);    
+    m_rightMotor1.setVoltage(rightVolts);    
     m_drive.feed();
   }
 
