@@ -72,10 +72,10 @@ public final class Constants {
         public static final int kClimberMotorRightPort = 31;
 		public static final int kTimeoutMs = 0;
 		public static final int kPIDLoopIdx = 0;
-		public static final double kP = 0;
+		public static final double kP = 1;
 		public static final double kF = 0;
 		public static final double kI = 0;
-		public static final double kD = 0;
+		public static final double kD = 20;
 		public static final boolean kExtended = true;
         public static final boolean kRetracted = false;
         public static final double kGearRatio = 36.0;
