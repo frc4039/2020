@@ -2,24 +2,25 @@
 /* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import frc.robot.Constants.DriveConstants;
 
 public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless);
@@ -27,19 +28,16 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless);
   private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless);
 
-  private final SpeedController m_leftMotor = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
-  private final SpeedController m_rightMotor = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
-
   private final CANEncoder m_leftEncoder = m_leftMotor1.getEncoder();
   private final CANEncoder m_rightEncoder = m_rightMotor1.getEncoder();
 
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
-  private NetworkTable table;
-
   private final DifferentialDriveOdometry m_odometry;
+
+  private final DifferentialDrive m_drive;
+
+  private NetworkTable table;
 
   public DriveTrain() {
 
@@ -48,39 +46,53 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor1.restoreFactoryDefaults();
     m_rightMotor2.restoreFactoryDefaults();
 
+    m_leftMotor1.setSmartCurrentLimit(60);
+    m_leftMotor2.setSmartCurrentLimit(60);
+    m_rightMotor1.setSmartCurrentLimit(60);
+    m_rightMotor2.setSmartCurrentLimit(60);
+
+    m_leftMotor1.setIdleMode(IdleMode.kBrake);
+    m_leftMotor2.setIdleMode(IdleMode.kBrake);
+    m_rightMotor1.setIdleMode(IdleMode.kBrake);
+    m_rightMotor2.setIdleMode(IdleMode.kBrake);  
+
+    m_leftMotor1.setInverted(DriveConstants.kLeftInversion);
+    m_leftMotor2.setInverted(DriveConstants.kLeftInversion);
+    m_rightMotor1.setInverted(DriveConstants.kRightInversion);
+    m_rightMotor2.setInverted(DriveConstants.kRightInversion);
+
+    m_leftMotor2.follow(m_leftMotor1);
+    m_rightMotor2.follow(m_rightMotor1);
+
+    m_gyro.zeroYaw();
     resetEncoders();
 
-    m_leftEncoder.setPositionConversionFactor(DriveConstants.kDistancePerTick);
-    m_rightEncoder.setPositionConversionFactor(DriveConstants.kDistancePerTick);
+    m_leftEncoder.setPositionConversionFactor(DriveConstants.kEncoderConstant);
+    m_rightEncoder.setPositionConversionFactor(DriveConstants.kEncoderConstant);
+    m_leftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
+    m_rightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-    m_leftMotor.setInverted(DriveConstants.kLeftInversion);
-    m_rightMotor.setInverted(DriveConstants.kRightInversion);
-    // m_leftMotor.setInverted(true);
-    // m_rightMotor.setInverted(true);
+    m_drive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
+
+    m_drive.setRightSideInverted(false);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     table.getEntry("pipeline").setNumber(6);
 
-    // add gyro inversion
-
-    // m_leftMotor1.setSmartCurrentLimit(60);
-    // m_leftMotor2.setSmartCurrentLimit(60);
-    // m_rightMotor1.setSmartCurrentLimit(60);
-    // m_rightMotor2.setSmartCurrentLimit(60);
-  }
-
-  public void drive(double left, double right) {
-    m_drive.setSafetyEnabled(false);
-    m_leftMotor.set(left);
-    m_rightMotor.set(right);
   }
 
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
     printDriveValues();
+  }
+
+  public void drive(double left, double right) {
+    m_drive.feed();
+    m_leftMotor1.set(left);
+    m_rightMotor1.set(right);
   }
 
   public Pose2d getPose() {
@@ -97,13 +109,13 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot) {
-    m_drive.arcadeDrive(fwd, rot);
-    SmartDashboard.putNumber("Arcade Drive Rotation", rot);
+    m_drive.arcadeDrive(-fwd, rot); 
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_leftMotor.setVoltage(leftVolts);
-    m_rightMotor.setVoltage(-rightVolts);    
+    m_leftMotor1.setVoltage(leftVolts);
+    m_rightMotor1.setVoltage(rightVolts);    
+    m_drive.feed();
   }
 
   public void resetEncoders() {
@@ -139,6 +151,15 @@ public class DriveTrain extends SubsystemBase {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
+  public double normalizeJoystickWithDeadband(double val, double deadband) {
+		val = (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+
+		if (val != 0)
+			val = Math.signum(val) * ((Math.abs(val) - deadband) / (1.0 - deadband));
+
+		return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+	}
+
   public double getLimelight() {
     return -table.getEntry("tx").getDouble(0.0) / 27;
   }
@@ -146,5 +167,7 @@ public class DriveTrain extends SubsystemBase {
   public void printDriveValues() {
     SmartDashboard.putNumber("limelightx", getLimelight());
     SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+    SmartDashboard.putNumber("Left Encoder", m_leftEncoder.getPosition());
+    SmartDashboard.putNumber("Right Encoder", m_rightEncoder.getPosition());
   }
 }
