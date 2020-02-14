@@ -80,6 +80,8 @@ public final class Constants {
         public static final boolean kRetracted = false;
         public static final double kGearRatio = 36.0;
         public static final double kShaftDiameter = 1.0 / 2.0;
+        public static final int kLeftLimitSwitchPort = 2;
+        public static final int kRightLimitSwitchPort = 3;
     }
 
     public static final class HoodConstants {

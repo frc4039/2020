@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -22,10 +23,15 @@ public class Climber extends SubsystemBase {
    */
   private final TalonFX m_climberMotorLeft;
   private final TalonFX m_climberMotorRight;
+  private final DigitalInput m_leftLimitSwitch;
+  private final DigitalInput m_rightLimitSwitch;
 
   public Climber() {
     m_climberMotorLeft = new TalonFX(ClimberConstants.kClimberMotorLeftPort);
     m_climberMotorRight = new TalonFX(ClimberConstants.kClimberMotorRightPort);
+    m_leftLimitSwitch = new DigitalInput(ClimberConstants.kLeftLimitSwitchPort);
+    m_rightLimitSwitch = new DigitalInput(ClimberConstants.kRightLimitSwitchPort);
+    
 
     m_climberMotorLeft.setInverted(true);
     m_climberMotorRight.setInverted(false);
@@ -51,6 +57,10 @@ public class Climber extends SubsystemBase {
   public void toggleClimb(double inches) {
     m_climberMotorLeft.set(ControlMode.Position, inchesToTicks(inches));
     m_climberMotorRight.follow(m_climberMotorLeft);
+  }
+
+  public boolean isSwitchToggled() {
+    return m_leftLimitSwitch.get() || m_rightLimitSwitch.get();
   }
 
   public void stop() {
