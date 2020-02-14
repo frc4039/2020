@@ -151,6 +151,15 @@ public class DriveTrain extends SubsystemBase {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
+  public double normalizeJoystickWithDeadband(double val, double deadband) {
+		val = (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+
+		if (val != 0)
+			val = Math.signum(val) * ((Math.abs(val) - deadband) / (1.0 - deadband));
+
+		return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+	}
+
   public double getLimelight() {
     return -table.getEntry("tx").getDouble(0.0) / 27;
   }
