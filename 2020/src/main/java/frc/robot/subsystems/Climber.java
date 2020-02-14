@@ -48,12 +48,9 @@ public class Climber extends SubsystemBase {
     m_climberMotorLeft.config_kD(ClimberConstants.kPIDLoopIdx, ClimberConstants.kD, ClimberConstants.kTimeoutMs);
   }
 
-  public void extend() {
-    m_climberMotorLeft.set(ControlMode.Position, ClimberConstants.kExtended);
-  }
-
-  public void retract() {
-    m_climberMotorLeft.set(ControlMode.Position, ClimberConstants.kRetracted);
+  public void toggleClimb(double inches) {
+    m_climberMotorLeft.set(ControlMode.Position, inchesToTicks(inches));
+    m_climberMotorRight.follow(m_climberMotorLeft);
   }
 
   public void stop() {
@@ -66,6 +63,9 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+  }
+
+  public double inchesToTicks(double inches) {
+    return inches * 4096.0 * ClimberConstants.kGearRatio * ClimberConstants.kShaftDiameter * Math.PI;
   }
 }

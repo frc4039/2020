@@ -7,18 +7,19 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 public class Climb extends CommandBase {
   private final Climber m_climber;
-  private final boolean please_extend;
+  private final double m_inches;
   /**
    * Creates a new Climb.
    */
-  public Climb(Climber climber, boolean please_extend) {
+  public Climb(Climber climber, double inches) {
     m_climber = climber;
-    this.please_extend = please_extend;
+    m_inches = inches;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_climber);
   }
@@ -31,12 +32,8 @@ public class Climb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(please_extend){
-      m_climber.extend();
-    }
-    else if(!please_extend){
-      m_climber.retract();
-    }
+    m_climber.toggleClimb(m_inches);
+    SmartDashboard.putNumber("Climber position setpoint", m_climber.inchesToTicks(m_inches));
   }
 
   // Called once the command ends or is interrupted.

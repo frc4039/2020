@@ -81,11 +81,11 @@ public class RobotContainer {
 
     //extend
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .toggleWhenPressed(new Climb(m_climber, ClimberConstants.kExtended));
+      .toggleWhenPressed(new Climb(m_climber, 2));
 
     //retract
     new JoystickButton(m_operatorController, Button.kBumperRight.value)
-      .toggleWhenPressed(new Climb(m_climber, ClimberConstants.kRetracted));
+      .toggleWhenPressed(new Climb(m_climber, 0));
 
     // Driver Controls-------------------------------------------------
 

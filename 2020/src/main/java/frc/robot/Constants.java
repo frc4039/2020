@@ -77,7 +77,9 @@ public final class Constants {
 		public static final double kI = 0;
 		public static final double kD = 0;
 		public static final boolean kExtended = true;
-		public static final boolean kRetracted = false;
+        public static final boolean kRetracted = false;
+        public static final double kGearRatio = 36.0;
+        public static final double kShaftDiameter = 1.0 / 2.0;
     }
 
     public static final class HoodConstants {
