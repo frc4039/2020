@@ -30,7 +30,6 @@ public class SmartIntake extends ParallelCommandGroup {
       new Intake(m_intakeSpeed, m_intaker),
       new ParallelRaceGroup(new Stir(m_stirSpeed, m_stirrer),
                             new Feed(m_feedSpeed, m_feeder))
-      
     );
   }
 }

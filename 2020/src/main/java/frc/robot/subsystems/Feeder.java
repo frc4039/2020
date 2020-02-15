@@ -17,19 +17,21 @@ import frc.robot.Constants.FeederConstants;
 
 public class Feeder extends SubsystemBase {
   private CANSparkMax m_feederMotor;
-  private DigitalInput m_BreakBeam;
+  private DigitalInput m_BreakBeam1;
+  private DigitalInput m_BreakBeam2;
 
   public Feeder() {
     m_feederMotor = new CANSparkMax(FeederConstants.kFeederMotorPort, MotorType.kBrushless);
     m_feederMotor.setInverted(FeederConstants.kFeederInversion);
     //m_feederMotor.setInverted(true);
 
-    m_BreakBeam = new DigitalInput(FeederConstants.kBreakBeamPort);
+    m_BreakBeam1 = new DigitalInput(FeederConstants.kBreakBeamPort1);
+    m_BreakBeam2 = new DigitalInput(FeederConstants.kBreakBeamPort2);
   }
 
   @Override
   public void periodic() {
-    
+    printFeederValues();
   }
 
   public void feed() {
@@ -41,10 +43,11 @@ public class Feeder extends SubsystemBase {
   }
 
   public boolean getBreakBeam() {
-    return m_BreakBeam.get();
+    return m_BreakBeam1.get() || m_BreakBeam2.get();
   }
 
   public void printFeederValues() {
-    SmartDashboard.putBoolean("Break Beam Status", getBreakBeam());
+    SmartDashboard.putBoolean("Top Break Beam Status", m_BreakBeam1.get());
+    SmartDashboard.putBoolean("Bottom Break Beam Status", m_BreakBeam2.get());
   }
 }
