@@ -31,11 +31,15 @@ public final class Constants {
         public static final int kShooterMotor1Port = 20;
         public static final int kShooterMotor2Port = 21;
 
-        public static final double kShooterRPM5 = 4500;
-        public static final double kShooterRPM4 = 4250;
-        public static final double kShooterRPM3 = 3375;
-        public static final double kShooterRPM2 = 2250;
-        public static final double kShooterRPM1 = 1125;
+        // public static final double kShooterRPM5 = 4250;
+        // public static final double kShooterRPM4 = 4250;
+        // public static final double kShooterRPM3 = 3375;
+        // public static final double kShooterRPM2 = 2250;
+        // public static final double kShooterRPM1 = 1125;
+
+        public static final double kTrenchShotRPM = 4500;
+        public static final double kWallShotRPM = 3475;
+        public static final double k10FtShotRPM = 4250;
 
         public static final int kTargetZone = 1;
         public static final int kNearTrench = 2;

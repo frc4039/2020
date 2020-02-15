@@ -19,8 +19,7 @@ public class SmartShoot extends CommandBase {
   Shooter m_shooter;
   Stirrer m_stirrer;
 
-  public SmartShoot(double shooterRPM, double stirSpeed, Feeder feeder, Shooter shooter, Stirrer stirrer) {
-    m_rpm = shooterRPM;
+  public SmartShoot(double stirSpeed, Feeder feeder, Shooter shooter, Stirrer stirrer) {
     m_feeder = feeder;
     m_shooter = shooter;
     m_stirrer = stirrer;
