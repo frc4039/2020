@@ -97,7 +97,7 @@ public class RobotContainer {
 
     // SmartShoot
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .whileHeld(new SmartShoot(ShooterConstants.kShooterRPM3, StirrerConstants.kStirrerPercent, m_feeder, m_shooter, m_stirrer));
+      .whileHeld(new SmartShoot(StirrerConstants.kStirrerPercent, m_feeder, m_shooter, m_stirrer));
 
 
     // Set Shoot RPM
