@@ -78,7 +78,8 @@ public final class Constants {
     public static final class FeederConstants {
         public static final int kFeederMotorPort = 24;
         public static final double kFeederPercent = 0.5;
-        public static final int kBreakBeamPort = 0;
+        public static final int kBreakBeamPort1 = 0;
+        public static final int kBreakBeamPort2 = 1;
 
         public static final boolean kFeederInversion = true;
     }
