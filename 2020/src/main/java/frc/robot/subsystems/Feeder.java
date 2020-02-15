@@ -7,10 +7,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FeederConstants;
@@ -38,13 +40,20 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(FeederConstants.kFeederPercent);
   }
 
+  public void spinBackwards() {
+    m_feederMotor.set(-FeederConstants.kFeederPercent);
+  }
+
   public void stop() {
+
     m_feederMotor.set(0);
   }
 
   public boolean getBreakBeam() {
     return m_BreakBeam1.get() || m_BreakBeam2.get();
   }
+
+
 
   public void printFeederValues() {
     SmartDashboard.putBoolean("Top Break Beam Status", m_BreakBeam1.get());
