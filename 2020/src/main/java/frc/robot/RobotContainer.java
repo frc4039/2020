@@ -35,6 +35,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutoDrive;
+import frc.robot.commands.AutoRoutine;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
@@ -136,58 +138,12 @@ public class RobotContainer {
       */
   }
 
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {    
+    return new AutoRoutine(m_shooter, m_feeder, m_stirrer, m_drivetrain);
+  }
 
-    // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                       DriveConstants.kvVoltSecondsPerMeter,
-                                       DriveConstants.kaVoltSecondsSquaredPerMeter),
-            DriveConstants.kDriveKinematics,
-            10);
-
-    // Create config for trajectory
-    TrajectoryConfig config =
-        new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                             AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
-
-    // An example trajectory to follow.  All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(
-            new Translation2d(1, 1),
-            new Translation2d(2, -1)
-        ),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        // Pass config
-        config
-    );
-
-    RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
-        m_drivetrain::getPose,
-        new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                   DriveConstants.kvVoltSecondsPerMeter,
-                                   DriveConstants.kaVoltSecondsSquaredPerMeter),
-        DriveConstants.kDriveKinematics,
-        m_drivetrain::getWheelSpeeds,
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        m_drivetrain::tankDriveVolts,
-        m_drivetrain
-    );
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
+  public void zeroDriveTrain() {
+    m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+    m_drivetrain.zeroHeading();
   }
 }

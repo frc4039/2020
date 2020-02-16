@@ -7,7 +7,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -120,6 +123,28 @@ public final class Constants {
         public static final double kMaxSpeedMetersPerSecond = 0.5;
 		public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
 		public static final double kRamseteB = 2;
-		public static final double kRamseteZeta = 0.7;
+        public static final double kRamseteZeta = 0.7;
+        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
+            new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                        DriveConstants.kvVoltSecondsPerMeter,
+                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            10);
+
+        public static TrajectoryConfig getConfig() {
+                final TrajectoryConfig config =
+                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(DriveConstants.kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint);
+            return config;
+        }
+
+        public static TrajectoryConfig getReverseConfig() {
+            return getConfig().setReversed(true);
+        }
     }
 }
