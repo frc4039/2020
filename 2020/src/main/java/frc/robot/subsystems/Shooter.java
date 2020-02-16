@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
 
   private TalonSRX m_shooterMotor1;
   private TalonSRX m_shooterMotor2;
-  private double rpmSetPoint;
+  private double m_rpmSetPoint;
   private double hoodSetPoint;
   private Servo m_servo1;
   private Servo m_servo2;
@@ -55,12 +55,12 @@ public class Shooter extends SubsystemBase {
     m_servo2 = new Servo(HoodConstants.kServoPort2);
     m_servo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
 
-    rpmSetPoint = ShooterConstants.kWallShotRPM;
+    m_rpmSetPoint = ShooterConstants.kWallShotRPM;
     hoodSetPoint = HoodConstants.kPos3; // CHECK THESE POSITIONS IF THEY ARE RIGHT
   }
 
   public void shoot() {
-    m_shooterMotor1.set(ControlMode.Velocity, RPMtoTicks(rpmSetPoint));
+    m_shooterMotor1.set(ControlMode.Velocity, RPMtoTicks(m_rpmSetPoint));
   }
 
   public void stop() {
@@ -68,7 +68,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSetPoint(double rpm, double hood) {
-    rpmSetPoint = rpm;
+    m_rpmSetPoint = rpm;
     hoodSetPoint = hood;
   }
 
@@ -96,15 +96,16 @@ public class Shooter extends SubsystemBase {
   }
 
   public void printShooterValues() {
-    SmartDashboard.putNumber("Shooter RPM", TicksToRPM(m_shooterMotor1.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("Shooter RPM", returnCurrentRPM());
+    SmartDashboard.putNumber("RPM Set Point", m_rpmSetPoint);
     SmartDashboard.putNumber("Hood Set Point", hoodSetPoint);
 
-    if (rpmSetPoint == ShooterConstants.kWallShotRPM) {
+    if (m_rpmSetPoint == ShooterConstants.kWallShotRPM) {
         SmartDashboard.putString("RPM Setpoint", "Wall shot (3475)");
     }
         
     
-    else if (rpmSetPoint == ShooterConstants.k10FtShotRPM) {
+    else if (m_rpmSetPoint == ShooterConstants.k10FtShotRPM) {
         SmartDashboard.putString("RPM Set Point", "10 ft shot (4250)");
     }
 
@@ -115,5 +116,9 @@ public class Shooter extends SubsystemBase {
 
   public double returnCurrentRPM() {
     return TicksToRPM(m_shooterMotor1.getSelectedSensorVelocity());
+  }
+
+  public double getSetpoint() {
+    return m_rpmSetPoint;
   }
 }
