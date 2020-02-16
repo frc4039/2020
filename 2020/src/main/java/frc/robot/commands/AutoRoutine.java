@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
@@ -32,13 +33,13 @@ public class AutoRoutine extends SequentialCommandGroup {
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(-1, 0)
-            // new Translation2d(2, -1)
+            new Translation2d(Units.inchesToMeters(65) / 2, -Units.inchesToMeters(65) / 2),
+            new Translation2d(0, -Units.inchesToMeters(65))
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-2, 0, new Rotation2d(0)),
+        new Pose2d(-Units.inchesToMeters(35), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
         // Pass config
-        AutoConstants.getReverseConfig()
+        AutoConstants.getConfig()
     );
   /**
    * Creates a new AutoRoutine.
@@ -46,6 +47,8 @@ public class AutoRoutine extends SequentialCommandGroup {
   public AutoRoutine(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new SmartShoot(StirrerConstants.kStirrerPercent, feeder, shooter, stirrer).withTimeout(5), new AutoDrive(drivetrain, exampleTrajectory));
+    super(
+          // new SmartShoot(StirrerConstants.kStirrerPercent, feeder, shooter, stirrer).withTimeout(5), 
+          new AutoDrive(drivetrain, exampleTrajectory));
   }
 }
