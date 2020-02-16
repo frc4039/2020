@@ -17,7 +17,6 @@ public class Feed extends CommandBase {
   public Feed(double speed, Feeder feeder) {
     m_speed = speed;
     m_feeder = feeder;
-
     addRequirements(m_feeder);
   }
 
@@ -30,11 +29,12 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_feeder.getBreakBeam()) {
-      m_feeder.feed();
-    }
-
     m_feeder.printFeederValues();
+
+    // if (m_feeder.getBreakBeam()) {
+      m_feeder.feed();
+
+    // }
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +46,6 @@ public class Feed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_feeder.getBreakBeam();
+    return m_feeder.finishedArraging();
   }
 }
