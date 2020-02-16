@@ -102,13 +102,13 @@ public class RobotContainer {
 
     // Set Shoot RPM
       new POVButton(m_operatorController, 0)
-      .toggleWhenPressed(new setShootPosition(1, m_shooter));
+        .toggleWhenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter));
 
       new POVButton(m_operatorController, 270)
-      .toggleWhenPressed(new setShootPosition(2, m_shooter));
+        .toggleWhenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter));
 
       new POVButton(m_operatorController, 180)
-      .toggleWhenPressed(new setShootPosition(3, m_shooter));
+        .toggleWhenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter));
 
     // Driver Controls-------------------------------------------------
 

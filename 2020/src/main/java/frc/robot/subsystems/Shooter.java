@@ -55,8 +55,8 @@ public class Shooter extends SubsystemBase {
     m_servo2 = new Servo(HoodConstants.kServoPort2);
     m_servo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
 
-    m_rpmSetPoint = ShooterConstants.kShooterRPM4;
-    hoodSetPoint = HoodConstants.kPos3;
+    m_rpmSetPoint = ShooterConstants.kWallShotRPM;
+    hoodSetPoint = HoodConstants.kPos3; // CHECK THESE POSITIONS IF THEY ARE RIGHT
   }
 
   public void shoot() {
@@ -99,6 +99,19 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM", returnCurrentRPM());
     SmartDashboard.putNumber("RPM Set Point", m_rpmSetPoint);
     SmartDashboard.putNumber("Hood Set Point", hoodSetPoint);
+
+    if (m_rpmSetPoint == ShooterConstants.kWallShotRPM) {
+        SmartDashboard.putString("RPM Setpoint", "Wall shot (3475)");
+    }
+        
+    
+    else if (m_rpmSetPoint == ShooterConstants.k10FtShotRPM) {
+        SmartDashboard.putString("RPM Set Point", "10 ft shot (4250)");
+    }
+
+    else {
+        SmartDashboard.putString("RPM Set Point", "Trench shot (4500)");
+    }
   }
 
   public double returnCurrentRPM() {
