@@ -1,0 +1,9 @@
+Operator Controller, A Button (Hold, interruptable): Shoot
+Operator Controller, B Button (Hold, interruptable): SmartIntake (IntakeConstants.kIntakePercent, FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent)
+Operator Controller, X Button (Toggle on/off): Shoot
+Operator Controller, Left Bumper Button (Hold): SmartShoot (ShooterConstants.kShooterRPM3, StirrerConstants.kStirrerPercent)
+Operator Controller, D-Pad Up (Toggle on/off): setShootPosition (1)
+Operator Controller, D-Pad Right (Toggle on/off): setShootPosition (2)
+Operator Controller, D-Pad Down (Toggle on/off): setShootPosition (3)
+Driver Controller, A Button (Hold): Shoot
+Driver Controller, Left Bumper Button (Hold): TurnToLimelight
