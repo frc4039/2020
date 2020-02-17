@@ -17,6 +17,7 @@ import com.revrobotics.ColorSensorV3;
 public class ColorSensor extends SubsystemBase {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private static ColorSensorV3 m_colorSensor;
+  private Color detectedColor;
 
   public ColorSensor() {
     m_colorSensor = new ColorSensorV3(i2cPort);
@@ -24,7 +25,7 @@ public class ColorSensor extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Color detectedColor = m_colorSensor.getColor();
+    detectedColor = m_colorSensor.getColor();
   
     SmartDashboard.putNumber("Red", detectedColor.red);
     SmartDashboard.putNumber("Green", detectedColor.green);
