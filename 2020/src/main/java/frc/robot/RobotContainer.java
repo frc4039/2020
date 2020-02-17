@@ -35,6 +35,7 @@ import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
 import frc.robot.Constants.AutoConstants;
@@ -116,20 +117,17 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
-    //Move Servo
-    /*
-    new POVButton(m_operatorController, 0)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
+    new POVButton(m_driverController, 0)
+      .whenPressed(new TurnToAngle(0, m_drivetrain));
 
-    new POVButton(m_operatorController, 90)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos2, m_hood));
+    new POVButton(m_driverController, 90)
+      .whenPressed(new TurnToAngle(90, m_drivetrain));
 
-    new POVButton(m_operatorController, 180)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos3, m_hood));
+    new POVButton(m_driverController, 180)
+      .whenPressed(new TurnToAngle(180, m_drivetrain));
 
-    new POVButton(m_operatorController, 270)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
-      */
+    new POVButton(m_driverController, 270)
+      .whenPressed(new TurnToAngle(-90, m_drivetrain));
   }
 
   public Command getAutonomousCommand() {
