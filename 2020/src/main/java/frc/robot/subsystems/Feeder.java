@@ -17,7 +17,7 @@ import frc.robot.Constants.FeederConstants;
 
 public class Feeder extends SubsystemBase {
   private CANSparkMax m_feederMotor;
-  private DigitalInput m_BreakBeam1;
+  private static DigitalInput m_BreakBeam1;
   private static DigitalInput m_BreakBeam2;
 
   public Feeder() {
@@ -46,7 +46,7 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(0);
   }
 
-  public boolean getBreakBeam() {
+  public static boolean getBreakBeam() {
     return m_BreakBeam1.get() || m_BreakBeam2.get();
   }
 
