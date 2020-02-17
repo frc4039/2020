@@ -68,7 +68,10 @@ public final class Constants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
 		public static final double kStirrerPercent = 1.0;
-		public static final int kStirrerCurrentLimit = 40;
+        public static final int kStirrerCurrentLimit = 40;
+        
+        public static final boolean kStirrerInversion1 = false;
+        public static final boolean kStirrerInversion2 = true;
     }
 
     public static final class VisionConstants {
