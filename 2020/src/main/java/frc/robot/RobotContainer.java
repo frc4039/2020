@@ -7,48 +7,32 @@
 
 package frc.robot;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
-import frc.robot.commands.AdjustHood;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoDrive;
-import frc.robot.commands.AutoRoutine;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
-import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StirrerConstants;
 
 public class RobotContainer {
@@ -62,6 +46,8 @@ public class RobotContainer {
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
+
+  SendableChooser<Command> autoSelector = new SendableChooser<Command>();
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -69,9 +55,15 @@ public class RobotContainer {
   public RobotContainer() {
     //m_drivetrain.setDefaultCommand(new ArcadeDrive(() -> m_driverController.getY(Hand.kLeft),
     //() -> m_driverController.getX(Hand.kRight), m_drivetrain));
+    autoSelector.addOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain));
+    autoSelector.setDefaultOption("dsd", new PrintCommand("hello"));
+    autoSelector.addOption("trenchshot", new PrintCommand("hola"));
+    autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
+    SmartDashboard.putData("Auto Selector", autoSelector);
+
 
     m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.arcadeDrive(m_driverController.getY(Hand.kLeft),
-      m_driverController.getX(Hand.kRight)), m_drivetrain));
+    m_driverController.getX(Hand.kRight)), m_drivetrain));
 
     configureButtonBindings();
   }
@@ -139,7 +131,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {    
-    return new AutoRoutine(m_shooter, m_feeder, m_stirrer, m_drivetrain);
+    return (Command) autoSelector.getSelected();
   }
 
   public void zeroDriveTrain() {

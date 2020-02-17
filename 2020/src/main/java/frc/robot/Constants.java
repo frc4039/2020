@@ -129,22 +129,16 @@ public final class Constants {
                 new SimpleMotorFeedforward(DriveConstants.ksVolts,
                                         DriveConstants.kvVoltSecondsPerMeter,
                                         DriveConstants.kaVoltSecondsSquaredPerMeter),
-            DriveConstants.kDriveKinematics,
-            10);
+                DriveConstants.kDriveKinematics,
+                10
+            );
 
-        public static TrajectoryConfig getConfig() {
-                final TrajectoryConfig config =
+        public static final TrajectoryConfig config =
                 new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
                                     AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(DriveConstants.kDriveKinematics)
                     // Apply the voltage constraint
                     .addConstraint(autoVoltageConstraint);
-            return config;
-        }
-
-        public static TrajectoryConfig getReverseConfig() {
-            return getConfig().setReversed(true);
-        }
     }
 }
