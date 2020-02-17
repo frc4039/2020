@@ -123,9 +123,9 @@ public class MakeButtonList {
 		buttonNames.put("whileActiveOnce", "(Hold, interruptable)");
 		buttonNames.put("whileActiveContinuous", "(Hold)");
 		buttonNames.put("whenReleased", "(When button is released)");
-		buttonNames.put("whenPressed", "(Runs command once, only on initial press)");
+		buttonNames.put("whenPressed", "(When pressed)");
 		buttonNames.put("whenInactive", "(Runs when not held)");
-		buttonNames.put("whenActive", "(Activates on press, no cancel)");
+		buttonNames.put("whenActive", "(When activated)");
 		buttonNames.put("toggleWhenActive", "(Toggles on/off)");
 		buttonNames.put("cancelWhenPressed", "(Cancels command when pressed)");
 		buttonNames.put("cancelWhenActive", "(Cancels command when activated)");
