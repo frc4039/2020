@@ -43,8 +43,8 @@ public class Climber extends SubsystemBase {
 
     m_climberMotorLeft.configFactoryDefault();
 
-    m_climberMotorLeft.setNeutralMode(NeutralMode.Brake);
-    m_climberMotorRight.setNeutralMode(NeutralMode.Brake);
+    m_climberMotorLeft.setNeutralMode(NeutralMode.Coast);
+    m_climberMotorRight.setNeutralMode(NeutralMode.Coast);
 
     m_climberMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     m_climberMotorRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -87,10 +87,10 @@ public class Climber extends SubsystemBase {
   }
 
   public double inchesToTicks(double inches) {
-    return inches * 4096.0 * ClimberConstants.kGearRatio / ClimberConstants.kShaftDiameter / Math.PI;
+    return inches * 2048.0 * ClimberConstants.kGearRatio / ClimberConstants.kShaftDiameter / Math.PI;
   }
 
   public double ticksToInches(double ticks){
-    return ticks * ClimberConstants.kShaftDiameter * Math.PI / 4096.0 / ClimberConstants.kGearRatio;
+    return ticks * ClimberConstants.kShaftDiameter * Math.PI / 2048.0 / ClimberConstants.kGearRatio;
   }
 }
