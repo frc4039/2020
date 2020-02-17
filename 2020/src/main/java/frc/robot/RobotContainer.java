@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -116,6 +117,9 @@ public class RobotContainer {
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
+
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whenPressed(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
 
     new POVButton(m_driverController, 0)
       .whenPressed(new TurnToAngle(0, m_drivetrain));
