@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
@@ -18,7 +17,7 @@ public class Climb extends CommandBase {
   /**
    * Creates a new Climb.
    */
-  public Climb(Climber climber, double inches) {
+  public Climb(double inches, Climber climber) {
     m_climber = climber;
     m_inches = inches;
     
@@ -29,19 +28,12 @@ public class Climb extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_climber.setClimberPosition(m_inches);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!m_climber.isSwitchToggled()) {
-        m_climber.toggleClimb(m_inches);
-        SmartDashboard.putNumber("Climber position setpoint", m_climber.inchesToTicks(m_inches));
-    }
-
-    else {
-        m_climber.stop();
-    }
   }
 
   // Called once the command ends or is interrupted.

@@ -23,14 +23,15 @@ public class Climber extends SubsystemBase {
    */
   private final TalonFX m_climberMotorLeft;
   private final TalonFX m_climberMotorRight;
-  private final DigitalInput m_leftLimitSwitch;
-  private final DigitalInput m_rightLimitSwitch;
+
+  //private final DigitalInput m_leftLimitSwitch;
+  //private final DigitalInput m_rightLimitSwitch;
 
   public Climber() {
     m_climberMotorLeft = new TalonFX(ClimberConstants.kClimberMotorLeftPort);
     m_climberMotorRight = new TalonFX(ClimberConstants.kClimberMotorRightPort);
-    m_leftLimitSwitch = new DigitalInput(ClimberConstants.kLeftLimitSwitchPort);
-    m_rightLimitSwitch = new DigitalInput(ClimberConstants.kRightLimitSwitchPort);
+    //m_leftLimitSwitch = new DigitalInput(ClimberConstants.kLeftLimitSwitchPort);
+    //m_rightLimitSwitch = new DigitalInput(ClimberConstants.kRightLimitSwitchPort);
     
 
     m_climberMotorLeft.setInverted(true);
@@ -54,21 +55,31 @@ public class Climber extends SubsystemBase {
     m_climberMotorLeft.config_kD(ClimberConstants.kPIDLoopIdx, ClimberConstants.kD, ClimberConstants.kTimeoutMs);
   }
 
-  public void toggleClimb(double inches) {
+  public void setClimberPosition(double inches) {
     m_climberMotorLeft.set(ControlMode.Position, inchesToTicks(inches));
     m_climberMotorRight.follow(m_climberMotorLeft);
   }
 
+  /*
   public boolean isSwitchToggled() {
     return m_leftLimitSwitch.get() || m_rightLimitSwitch.get();
   }
+  */
 
   public void stop() {
     m_climberMotorLeft.set(ControlMode.PercentOutput, 0);
   }
 
+  public void zeroClimber() {
+    m_climberMotorLeft.setSelectedSensorPosition(0);
+    m_climberMotorRight.setSelectedSensorPosition(0);
+  }
+
   public void printClimberValues() {
-    SmartDashboard.putNumber("Climber Position", (m_climberMotorLeft.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("Left Climber Position Ticks", m_climberMotorLeft.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Climber Position Ticks", m_climberMotorRight.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Left Climber Position Inches",  ticksToInches(m_climberMotorLeft.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("Right Climber Position Inches",  ticksToInches(m_climberMotorRight.getSelectedSensorPosition()));
   }
 
   @Override
@@ -76,6 +87,10 @@ public class Climber extends SubsystemBase {
   }
 
   public double inchesToTicks(double inches) {
-    return inches * 4096.0 * ClimberConstants.kGearRatio * ClimberConstants.kShaftDiameter * Math.PI;
+    return inches * 4096.0 * ClimberConstants.kGearRatio / ClimberConstants.kShaftDiameter / Math.PI;
+  }
+
+  public double ticksToInches(double ticks){
+    return ticks * ClimberConstants.kShaftDiameter * Math.PI / 4096.0 / ClimberConstants.kGearRatio;
   }
 }

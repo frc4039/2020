@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.subsystems.Climber;
@@ -79,6 +80,8 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kX.value)
       .whenHeld(new Feed(FeederConstants.kFeederPercent, m_feeder));
 
+
+    /*
     //extend
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
       .toggleWhenPressed(new Climb(m_climber, 2));
@@ -86,18 +89,33 @@ public class RobotContainer {
     //retract
     new JoystickButton(m_operatorController, Button.kBumperRight.value)
       .toggleWhenPressed(new Climb(m_climber, 0));
+    */
 
     // Driver Controls-------------------------------------------------
 
     // Shoots 
+    //new JoystickButton(m_driverController, Button.kA.value)
+      //.whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+
+    //cancel climber
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+      .whenPressed(new InstantCommand(m_climber::stop, m_climber));
+
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whenPressed(new InstantCommand(m_climber::zeroClimber, m_climber));
+
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenHeld(new Climb(2, m_climber));
+
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenHeld(new Climb(-2, m_climber));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
     //Move Servo
+    /*
     new POVButton(m_operatorController, 0)
       .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
 
@@ -109,5 +127,10 @@ public class RobotContainer {
 
     new POVButton(m_operatorController, 270)
       .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
+      */
+  }
+
+  public void printValues(){
+    m_climber.printClimberValues();
   }
 }
