@@ -81,6 +81,14 @@ public final class Constants {
         public static final double kRateTolerance = 0;
     }
 
+    public static final class TurningConstants {
+        public static final double kP = 0.25;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kTolerance = 1;
+        public static final double kRateTolerance = 10;
+    }
+
     public static final class FeederConstants {
         public static final int kFeederMotorPort = 24;
 

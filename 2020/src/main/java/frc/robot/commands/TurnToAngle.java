@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants.TurningConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveTrain;
 
@@ -22,7 +23,7 @@ public class TurnToAngle extends PIDCommand {
   public TurnToAngle(double angle, DriveTrain m_drivetrain) {
     super(
         // The controller that the command will use
-        new PIDController(VisionConstants.kP, VisionConstants.kI, VisionConstants.kD),
+        new PIDController(TurningConstants.kP, TurningConstants.kI, TurningConstants.kD),
         // This should return the measurement
         m_drivetrain::getHeading,
         // This should return the setpoint (can also be a constant)
@@ -36,7 +37,7 @@ public class TurnToAngle extends PIDCommand {
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().enableContinuousInput(-180, 180);
-    getController().setTolerance(VisionConstants.kTolerance, VisionConstants.kRateTolerance);
+    getController().setTolerance(TurningConstants.kTolerance, TurningConstants.kRateTolerance);
   }
 
   // Returns true when the command should end.
