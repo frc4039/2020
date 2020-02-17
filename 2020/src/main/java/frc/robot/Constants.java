@@ -116,6 +116,10 @@ public final class Constants {
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
         public static final double kPDriveVel = 1.93;
         
+        public static final double kOpenLoopRampRate = 0.3; //1114 had 0.2 in 2019
+        public static final int kCurrentLimitStall = 60; //1114 had 60 in 2019
+        public static final int kCurrentLimitFree = 10; //1114 had 10 in 2019
+        
         public static final boolean kLeftInversion = true;
         public static final boolean kRightInversion = false;
     }
