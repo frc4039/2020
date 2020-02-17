@@ -67,8 +67,10 @@ public final class Constants {
     public static final class StirrerConstants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
-		public static final double kStirrerPercent = 1.0;
-		public static final int kStirrerCurrentLimit = 40;
+
+        public static final double kStirrerPercent = 1.0;
+        
+		public static final int kStirrerCurrentLimit = 30;
     }
 
     public static final class VisionConstants {
@@ -81,18 +83,23 @@ public final class Constants {
 
     public static final class FeederConstants {
         public static final int kFeederMotorPort = 24;
+
         public static final double kFeederPercent = 0.5;
+
         public static final int kBreakBeamPort1 = 0;
         public static final int kBreakBeamPort2 = 7;
 
         public static final boolean kFeederInversion = true;
+		public static final double kCurrentLimit = 30;
     }
 
     public static final class HoodConstants {
         public static final int kServoPort1 = 0;
         public static final int kServoPort2 = 1;
+
         public static double kFullRetract = 0.0;
         public static double kFullExtend = 1.0;
+        
         public static double kPos1 = 0.25;
         public static double kPos2 = 0.50;
         public static double kPos3 = 0.75;

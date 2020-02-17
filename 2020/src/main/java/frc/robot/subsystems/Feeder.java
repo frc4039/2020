@@ -26,11 +26,14 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
     m_feederMotor = new CANSparkMax(FeederConstants.kFeederMotorPort, MotorType.kBrushless);
+
     m_feederMotor.setInverted(FeederConstants.kFeederInversion);
-    //m_feederMotor.setInverted(true);
+
+    m_feederMotor.setOpenLoopRampRate(FeederConstants.kCurrentLimit);
 
     m_BreakBeam1 = new DigitalInput(FeederConstants.kBreakBeamPort1);
     m_BreakBeam2 = new DigitalInput(FeederConstants.kBreakBeamPort2);
+    
     m_timer = new Timer();
   }
 
