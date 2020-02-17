@@ -14,7 +14,7 @@ import frc.robot.subsystems.Intaker;
 /**
  * An example command that uses an example subsystem.
  */
-public class Intake extends CommandBase {
+public class ReverseIntake extends CommandBase {
   private final Intaker m_intaker;
   // private final Stirrer m_stirrer;
 
@@ -23,7 +23,7 @@ public class Intake extends CommandBase {
    *
    * @param subsystem 
    */
-  public Intake(Intaker intaker) {
+  public ReverseIntake(Intaker intaker) {
     m_intaker = intaker;
     // m_stirrer = stirrer;
 
@@ -40,15 +40,13 @@ public class Intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intaker.intake(IntakeConstants.kIntakePercent);
-    // m_stirrer.stir();
+    m_intaker.intake(-IntakeConstants.kIntakePercent);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_intaker.stop();
-    // m_stirrer.stop();
   }
 
   // Returns true when the command should end.

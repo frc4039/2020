@@ -35,6 +35,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
@@ -89,7 +90,7 @@ public class RobotContainer {
 
     // Smart Intake
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new SmartIntake(IntakeConstants.kIntakePercent, FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent, m_intaker, m_feeder, m_stirrer));
+      .whenHeld(new SmartIntake(FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent, m_intaker, m_feeder, m_stirrer));
 
     // Revv the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
@@ -119,6 +120,10 @@ public class RobotContainer {
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
+
+    //Reverse the intake
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .toggleWhenPressed(new ReverseIntake(m_intaker));
 
     //Move Servo
     /*
