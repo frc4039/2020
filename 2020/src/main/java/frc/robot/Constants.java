@@ -67,6 +67,49 @@ public final class Constants {
         public static final int kBreakBeamPort = 0;
     }
 
+    public static final class ClimberConstants {
+        public static final int kClimberMotorLeftPort = 30;
+        public static final int kClimberMotorRightPort = 31;
+
+		public static final int kTimeoutMs = 0;
+        public static final int kPIDLoopIdx = 0;
+        
+		public static final double kP = 1;
+		public static final double kF = 0;
+		public static final double kI = 0;
+        public static final double kD = 20;
+        
+		public static final boolean kExtended = true;
+        public static final boolean kRetracted = false;
+
+        public static final double kGearRatio = 36.0;
+        public static final double kShaftDiameter = 0.744;
+
+        public static final int kLeftLimitSwitchPort = 2;
+        public static final int kRightLimitSwitchPort = 3;
+
+        public static final double kNeutralDeadband = 0.001;
+
+        public static final int kSlotDistance = 0;
+        public static final int kSlotTurning = 1;
+
+        public static final int PID_PRIMARY = 0;
+        public static final int PID_TURN = 1;
+        public static final double kDistanceF = 0;
+        public static final double kDistanceP = 0.5;
+        public static final double kDistanceI = 0;
+        public static final double kDistanceD = 10;
+        public static final int kDistanceIZone = 100;
+        public static final int kTurnIZone = 200;
+        public static final double kTurnF = 0;
+        public static final double kTurnP = 0.025; //0.1
+        public static final double kTurnI = 0;
+        public static final double kTurnD = 0.05;
+
+        public static final double kDistancePeakOutput = 0.8;
+        public static final double kTurnPeakOutput = 1.0;
+    }
+
     public static final class HoodConstants {
         public static final int kServoPort1 = 0;
         public static final int kServoPort2 = 1;
@@ -84,27 +127,6 @@ public final class Constants {
         public static final int kRightDriveMotor2Port = 13;
         public static final double kDistancePerTick = 5;
         public static final boolean kGyroReversed = false;
-    }
-
-    public static final class ClimberConstants {
-        public static final int kClimberMotor1Port = 31;
-        public static final int kClimberMotor2Port = 32;
-        public static final double kTriggerDeadzone = 0.05;
-        public static final int kTimeoutMs = 30;
-        public static final double kNeutralDeadband = 0.001;
-        public static final int kSlotDistance = 0;
-        public static final int kSlotTurning = 1;
-        public static final double kDistanceF = 0.01;
-        public static final double kDistanceP = 0;
-        public static final double kDistanceI = 0;
-        public static final double kDistanceD = 0;
-        public static final int kDistanceIZone = 100;
-        public static final int kTurnIZone = 200;
-        public static final double kTurnF = 0.01;
-        public static final double kTurnP = 0;
-        public static final double kTurnI = 0;
-        public static final double kTurnD = 0;
-        public static final double kDistancePeakOutput = 0.5;
-        public static final double kTurnPeakOutput = 1.0;
+        public static final double kVoltageRampRate = 0.3; // s / maxVoltage
     }
 }

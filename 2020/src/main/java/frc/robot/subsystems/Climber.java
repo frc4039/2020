@@ -1,42 +1,55 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class Climber extends SubsystemBase {
-  private TalonFX m_Motor1 = new TalonFX(ClimberConstants.kClimberMotor1Port);
-  private TalonFX m_Motor2 = new TalonFX(ClimberConstants.kClimberMotor2Port);
+  private TalonFX m_Motor1 = new TalonFX(ClimberConstants.kClimberMotorLeftPort);
+  private TalonFX m_Motor2 = new TalonFX(ClimberConstants.kClimberMotorRightPort);
 
 
   public Climber() {
-    m_Motor1.setInverted(true);
-    m_Motor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    m_Motor1.configFactoryDefault();
+    m_Motor2.configFactoryDefault();
+    
+    m_Motor1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     m_Motor2.configRemoteFeedbackFilter(m_Motor1.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor, 1);
     
     m_Motor2.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor1, ClimberConstants.kTimeoutMs);				// Feedback Device of Remote Talon
-    m_Motor2.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.CTRE_MagEncoder_Relative, ClimberConstants.kTimeoutMs);	// Quadrature Encoder of current Talon
+    m_Motor2.configSensorTerm(SensorTerm.Sum1, FeedbackDevice.IntegratedSensor, ClimberConstants.kTimeoutMs);	// Quadrature Encoder of current Talon
 
 		m_Motor2.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor1, ClimberConstants.kTimeoutMs);
-		m_Motor2.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.CTRE_MagEncoder_Relative, ClimberConstants.kTimeoutMs);
+		m_Motor2.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.IntegratedSensor, ClimberConstants.kTimeoutMs);
     
-    m_Motor2.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, 0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, ClimberConstants.PID_PRIMARY, ClimberConstants.kTimeoutMs);
 
     m_Motor2.configSelectedFeedbackCoefficient(	0.5, 0,	ClimberConstants.kTimeoutMs);	
 
-    m_Motor2.configSelectedFeedbackSensor(FeedbackDevice.SensorDifference, 1, ClimberConstants.kTimeoutMs);
+    m_Motor2.configSelectedFeedbackSensor(FeedbackDevice.SensorDifference, ClimberConstants.PID_TURN, ClimberConstants.kTimeoutMs);
 
     m_Motor2.configSelectedFeedbackCoefficient(	1, 1,	ClimberConstants.kTimeoutMs);	
-
-    m_Motor1.setSensorPhase(true);
-    m_Motor2.setSensorPhase(true);
 
     m_Motor1.setInverted(true);
     m_Motor2.setInverted(false);
@@ -47,7 +60,7 @@ public class Climber extends SubsystemBase {
 
     m_Motor2.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, ClimberConstants.kTimeoutMs);
 
-    m_Motor1.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, ClimberConstants.kTimeoutMs);
+    m_Motor1.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 20, ClimberConstants.kTimeoutMs);
 
     m_Motor2.configNeutralDeadband(ClimberConstants.kNeutralDeadband, ClimberConstants.kTimeoutMs);
 
@@ -81,24 +94,44 @@ public class Climber extends SubsystemBase {
 
     m_Motor1.getSensorCollection().setIntegratedSensorPosition(0, ClimberConstants.kTimeoutMs);
     m_Motor2.getSensorCollection().setIntegratedSensorPosition(0, ClimberConstants.kTimeoutMs);
+
+    m_Motor2.selectProfileSlot(ClimberConstants.kSlotDistance, ClimberConstants.PID_PRIMARY);
+    m_Motor2.selectProfileSlot(ClimberConstants.kSlotTurning, ClimberConstants.PID_TURN);
+  }
+
+  public void setClimberPosition(double inches){
+    m_Motor2.set(ControlMode.Position, inchesToTicks(inches), DemandType.AuxPID, 0);
+    m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
   }
   
+  public void stop() {
+    m_Motor1.set(ControlMode.PercentOutput, 0);
+    m_Motor2.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void zeroClimber() {
+    m_Motor1.getSensorCollection().setIntegratedSensorPosition(0, ClimberConstants.kTimeoutMs);
+    m_Motor2.getSensorCollection().setIntegratedSensorPosition(0, ClimberConstants.kTimeoutMs);
+  }
+
+  public void printClimberValues() {
+    SmartDashboard.putNumber("Loop 0 position Ticks motor 2", ticksToInches(m_Motor2.getSelectedSensorPosition(0)));
+    SmartDashboard.putNumber("Loop 1 Position Ticks motor 2", ticksToInches(m_Motor2.getSelectedSensorPosition(1)));
+    SmartDashboard.putNumber("Left Climber Position Inches empty",  ticksToInches(m_Motor1.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("Right Climber Position Inches empty",  ticksToInches(m_Motor2.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("motor 1 integrated", ticksToInches(m_Motor1.getSensorCollection().getIntegratedSensorPosition()));
+    SmartDashboard.putNumber("motor 2 integrated", ticksToInches(m_Motor2.getSensorCollection().getIntegratedSensorPosition()));
+  }
+
   @Override
   public void periodic() {
-
-  }
-
-  public void raise(double inches) {
-    m_Motor2.set(ControlMode.Position, inchesToTicks(inches));
-    m_Motor1.follow(m_Motor2);
-  }
-
-  public void lower(double inches){
-    m_Motor2.set(ControlMode.Position, -inchesToTicks(inches));
-    m_Motor1.follow(m_Motor2);
   }
 
   public double inchesToTicks(double inches) {
-    return 4096.0 * Math.PI * (1.0 / 2.0) * inches * 36.0;
+    return inches * 2048.0 * ClimberConstants.kGearRatio / ClimberConstants.kShaftDiameter / Math.PI;
+  }
+
+  public double ticksToInches(double ticks){
+    return ticks * ClimberConstants.kShaftDiameter * Math.PI / 2048.0 / ClimberConstants.kGearRatio;
   }
 }

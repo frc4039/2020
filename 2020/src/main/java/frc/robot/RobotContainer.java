@@ -10,9 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
@@ -23,11 +23,13 @@ import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
+import frc.robot.commands.Feed;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TurnToLimelight;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.HoodConstants;
@@ -56,7 +58,6 @@ public class RobotContainer {
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new ArcadeDrive(() -> m_driverController.getY(Hand.kLeft),
     () -> m_driverController.getX(Hand.kRight), m_drivetrain));
-    m_climber.setDefaultCommand(new Climb(() -> m_operatorController.getTriggerAxis(Hand.kLeft),() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
     configureButtonBindings();
   }
 
@@ -85,17 +86,42 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
       .whileHeld(new SmartShoot(ShooterConstants.kShooterRPM3, StirrerConstants.kStirrerPercent, m_feeder, m_shooter, m_stirrer));
 
+
+    /*
+    //extend
+    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
+      .toggleWhenPressed(new Climb(m_climber, 2));
+
+    //retract
+    new JoystickButton(m_operatorController, Button.kBumperRight.value)
+      .toggleWhenPressed(new Climb(m_climber, 0));
+    */
+
     // Driver Controls-------------------------------------------------
 
     // Shoots 
+    //new JoystickButton(m_driverController, Button.kA.value)
+      //.whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+
+    //cancel climber
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+      .whenPressed(new InstantCommand(m_climber::stop, m_climber));
+
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whenPressed(new InstantCommand(m_climber::zeroClimber));
+
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new Climb(2, m_climber));
+
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(new Climb(-2, m_climber));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
     //Move Servo
+    /*
     new POVButton(m_operatorController, 0)
       .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
 
@@ -107,5 +133,10 @@ public class RobotContainer {
 
     new POVButton(m_operatorController, 270)
       .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
+      */
+  }
+
+  public void printValues(){
+    m_climber.printClimberValues();
   }
 }
