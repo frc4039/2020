@@ -1,19 +1,19 @@
+package frc.robot;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.regex.Pattern;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
-import java.util.Collections;
+import java.util.regex.Pattern;
 
 public class MakeButtonList {
 
 	static String controllerNames = "m_driverController|m_operatorController";
-	static HashMap buttonNames = new HashMap<String, String>();
+	static HashMap<String, String> buttonNames = new HashMap<String, String>();
 
 	public static void main(String[] args){
 		setUpButtonNames();
@@ -68,11 +68,9 @@ public class MakeButtonList {
 										if(commandsss.size() > 0){
 											String finalArgs = String.join(", ", commandsss);
 											String finalFunction = String.format("%s, %s %s: %s (%s)", getFormattedButtonString(controller), getFormattedButtonString(trigger).replace("***", getFormattedButtonString(button)), getFormattedButtonString(action), command, finalArgs);
-											System.out.println(finalFunction);
 											controlList.add(finalFunction);
 										} else {
 											String finalFunction = String.format("%s, %s %s: %s", getFormattedButtonString(controller), getFormattedButtonString(trigger).replace("***", getFormattedButtonString(button)), getFormattedButtonString(action), command);
-											System.out.println(finalFunction);
 											controlList.add(finalFunction);
 										}
 										
@@ -92,6 +90,7 @@ public class MakeButtonList {
 					output.write("\r\n");
 				}
 				output.close();
+				System.out.println("Button mapping file generated! Saved to ${rootDir}/buttons.txt");
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -100,7 +99,7 @@ public class MakeButtonList {
 
 	static String getFormattedButtonString(String name){
 		if(buttonNames.containsKey(name)){
-			return buttonNames.get(name).toString();
+			return buttonNames.get(name);
 		} else return name;
 	}
 
