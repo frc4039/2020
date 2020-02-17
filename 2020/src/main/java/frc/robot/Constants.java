@@ -30,6 +30,7 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int kShooterMotor1Port = 20;
         public static final int kShooterMotor2Port = 21;
+        public static final int kShooterFeederMotorPort = 25;
 
         // public static final double kShooterRPM5 = 4250;
         // public static final double kShooterRPM4 = 4250;
@@ -40,6 +41,7 @@ public final class Constants {
         public static final double kTrenchShotRPM = 4500;
         public static final double kWallShotRPM = 3475;
         public static final double k10FtShotRPM = 4250;
+        public static final double kShooterFeederSpeed = 0.5;
 
         public static final int kTargetZone = 1;
         public static final int kNearTrench = 2;
@@ -55,6 +57,7 @@ public final class Constants {
 
         public static final boolean kShooterInversion1 = true;
         public static final boolean kShooterInversion2 = false;
+        public static final boolean kShooterFeederInversion = true;
     }
 
     public static final class IntakeConstants {

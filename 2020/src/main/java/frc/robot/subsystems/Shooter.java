@@ -5,6 +5,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +27,7 @@ public class Shooter extends SubsystemBase {
 
   private TalonSRX m_shooterMotor1;
   private TalonSRX m_shooterMotor2;
+  private CANSparkMax m_ShooterFeederMotor;
   private double m_rpmSetPoint;
   private double hoodSetPoint;
   private Servo m_servo1;
@@ -33,11 +36,11 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
     m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
+    m_ShooterFeederMotor = new CANSparkMax(ShooterConstants.kShooterFeederMotorPort, MotorType.kBrushless);
 
     m_shooterMotor1.setInverted(ShooterConstants.kShooterInversion1);
     m_shooterMotor2.setInverted(ShooterConstants.kShooterInversion2);
-    // m_shooterMotor1.setInverted(true);
-    // m_shooterMotor2.setInverted(false);
+    m_ShooterFeederMotor.setInverted(ShooterConstants.kShooterFeederInversion);
     
     m_shooterMotor1.setSensorPhase(false);
         
@@ -61,6 +64,7 @@ public class Shooter extends SubsystemBase {
 
   public void shoot() {
     m_shooterMotor1.set(ControlMode.Velocity, RPMtoTicks(m_rpmSetPoint));
+    m_ShooterFeederMotor.set(ShooterConstants.kShooterFeederSpeed);
   }
 
   public void stop() {
