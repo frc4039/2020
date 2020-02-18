@@ -20,6 +20,10 @@ public class Stirrer extends SubsystemBase {
   public Stirrer() {
     m_stirrerMotor1 = new CANSparkMax(StirrerConstants.kStirrerMotor1Port, MotorType.kBrushless);
     m_stirrerMotor2 = new CANSparkMax(StirrerConstants.kStirrerMotor2Port, MotorType.kBrushless);
+
+    m_stirrerMotor1.restoreFactoryDefaults();
+    m_stirrerMotor2.restoreFactoryDefaults();
+
     m_stirrerMotor1.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
     m_stirrerMotor2.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
 
