@@ -22,8 +22,10 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
     m_feederMotor = new CANSparkMax(FeederConstants.kFeederMotorPort, MotorType.kBrushless);
-    
+
     m_feederMotor.restoreFactoryDefaults();
+    
+    m_feederMotor.setSmartCurrentLimit(FeederConstants.kCurrentLimit);
     
     m_feederMotor.setInverted(FeederConstants.kFeederInversion);
 

@@ -73,9 +73,10 @@ public final class Constants {
     public static final class StirrerConstants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
-		public static final double kStirrerPercent = 1.0;
-        public static final int kStirrerCurrentLimit = 40;
+        public static final double kStirrerPercent = 1.0;
         
+		public static final int kStirrerCurrentLimit = 30;
+       
         public static final boolean kStirrerInversion1 = false;
         public static final boolean kStirrerInversion2 = true;
     }
@@ -88,13 +89,24 @@ public final class Constants {
         public static final double kRateTolerance = 0;
     }
 
+    public static final class TurningConstants {
+        public static final double kP = 0.25;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kTolerance = 1;
+        public static final double kRateTolerance = 10;
+    }
+
     public static final class FeederConstants {
         public static final int kFeederMotorPort = 24;
+
         public static final double kFeederPercent = 0.5;
+
         public static final int kBreakBeamPort1 = 0;
         public static final int kBreakBeamPort2 = 7;
 
         public static final boolean kFeederInversion = true;
+		public static final double kCurrentLimit = 30;
     }
 
     public static final class ClimberConstants {
@@ -150,8 +162,10 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int kServoPort1 = 0;
         public static final int kServoPort2 = 1;
+
         public static double kFullRetract = 0.0;
         public static double kFullExtend = 1.0;
+        
         public static double kPos1 = 0.25;
         public static double kPos2 = 0.50;
         public static double kPos3 = 0.75;
@@ -176,6 +190,10 @@ public final class Constants {
         public static final double kTrackWidthMeters = 0.61; //3.366;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
         public static final double kPDriveVel = 1.93;
+        
+        public static final double kOpenLoopRampRate = 0.3; //1114 had 0.2 in 2019
+        public static final int kCurrentLimitStall = 60; //1114 had 60 in 2019
+        public static final int kCurrentLimitFree = 10; //1114 had 10 in 2019
         
         public static final boolean kLeftInversion = true;
         public static final boolean kRightInversion = false;

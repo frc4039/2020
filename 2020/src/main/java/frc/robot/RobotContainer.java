@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,26 +31,21 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
+import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
-
 import frc.robot.commands.Climb;
 import frc.robot.commands.Feed;
 import frc.robot.commands.Intake;
-
 import frc.robot.commands.ReverseIntake;
-
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
-
 import frc.robot.Constants.ClimberConstants;
-
 import frc.robot.commands.setShootPosition;
-
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -164,24 +161,31 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
+
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whenPressed(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
+
     //Reverse the intake
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .toggleWhenPressed(new ReverseIntake(m_intaker));
 
     //Move Servo
-    /*
-    new POVButton(m_operatorController, 0)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
+    
+    //new POVButton(m_operatorController, 0)
+    //  .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
 
-    new POVButton(m_operatorController, 90)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos2, m_hood));
 
-    new POVButton(m_operatorController, 180)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kPos3, m_hood));
+    new POVButton(m_driverController, 0)
+      .whenPressed(new TurnToAngle(0, m_drivetrain));
 
-    new POVButton(m_operatorController, 270)
-      .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
-      */
+    new POVButton(m_driverController, 90)
+      .whenPressed(new TurnToAngle(90, m_drivetrain));
+
+    new POVButton(m_driverController, 180)
+      .whenPressed(new TurnToAngle(180, m_drivetrain));
+
+    new POVButton(m_driverController, 270)
+      .whenPressed(new TurnToAngle(-90, m_drivetrain));
   }
 
 
@@ -193,4 +197,9 @@ public class RobotContainer {
     m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
     m_drivetrain.zeroHeading();
   }
+
+public void setTeleSettings() {
+  m_drivetrain.setRampRate();
+}
+
 }

@@ -46,10 +46,10 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor1.restoreFactoryDefaults();
     m_rightMotor2.restoreFactoryDefaults();
 
-    m_leftMotor1.setSmartCurrentLimit(60);
-    m_leftMotor2.setSmartCurrentLimit(60);
-    m_rightMotor1.setSmartCurrentLimit(60);
-    m_rightMotor2.setSmartCurrentLimit(60);
+    m_leftMotor1.setSmartCurrentLimit(DriveConstants.kCurrentLimitStall, DriveConstants.kCurrentLimitFree);
+    m_leftMotor2.setSmartCurrentLimit(DriveConstants.kCurrentLimitStall, DriveConstants.kCurrentLimitFree);
+    m_rightMotor1.setSmartCurrentLimit(DriveConstants.kCurrentLimitStall, DriveConstants.kCurrentLimitFree);
+    m_rightMotor2.setSmartCurrentLimit(DriveConstants.kCurrentLimitStall, DriveConstants.kCurrentLimitFree);
 
     m_leftMotor1.setIdleMode(IdleMode.kBrake);
     m_leftMotor2.setIdleMode(IdleMode.kBrake);
@@ -166,7 +166,14 @@ public class DriveTrain extends SubsystemBase {
 			val = Math.signum(val) * ((Math.abs(val) - deadband) / (1.0 - deadband));
 
 		return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
-	}
+  }
+  
+  public void setRampRate() {
+    m_leftMotor1.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_leftMotor2.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_rightMotor1.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_rightMotor2.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+  }
 
   public double getLimelight() {
     return -table.getEntry("tx").getDouble(0.0) / 27;
