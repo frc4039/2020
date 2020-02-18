@@ -38,6 +38,10 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
     m_ShooterFeederMotor = new CANSparkMax(ShooterConstants.kShooterFeederMotorPort, MotorType.kBrushless);
 
+    m_shooterMotor1.configFactoryDefault();
+    m_shooterMotor2.configFactoryDefault();
+    m_ShooterFeederMotor.restoreFactoryDefaults();
+
     m_shooterMotor1.setInverted(ShooterConstants.kShooterInversion1);
     m_shooterMotor2.setInverted(ShooterConstants.kShooterInversion2);
     m_ShooterFeederMotor.setInverted(ShooterConstants.kShooterFeederInversion);
@@ -46,7 +50,6 @@ public class Shooter extends SubsystemBase {
         
     m_shooterMotor2.follow(m_shooterMotor1);
 
-    m_shooterMotor1.configFactoryDefault();
     m_shooterMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, ShooterConstants.kPIDLoopIdx, ShooterConstants.kTimeoutMs);
 
     m_shooterMotor1.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kF, ShooterConstants.kTimeoutMs);
@@ -69,6 +72,7 @@ public class Shooter extends SubsystemBase {
 
   public void stop() {
     m_shooterMotor1.set(ControlMode.PercentOutput, 0);
+    m_ShooterFeederMotor.set(0);
   }
 
   public void setSetPoint(double rpm, double hood) {
