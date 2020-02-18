@@ -38,7 +38,7 @@ public class TrenchAuto extends SequentialCommandGroup {
         // End 3 meters straight ahead of where we started, facing forward
         new Pose2d(-Units.inchesToMeters(35), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
         // Pass config
-        AutoConstants.config
+        AutoConstants.config.setReversed(true)
     );
   /**
    * Creates a new AutoRoutine.
