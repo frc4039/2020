@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
@@ -20,6 +21,7 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
+import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
@@ -58,6 +60,7 @@ public class RobotContainer {
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new ArcadeDrive(() -> m_driverController.getY(Hand.kLeft),
     () -> m_driverController.getX(Hand.kRight), m_drivetrain));
+
     configureButtonBindings();
   }
 
@@ -110,11 +113,15 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kY.value)
       .whenPressed(new InstantCommand(m_climber::zeroClimber));
 
+    // Fully unspooled
     new JoystickButton(m_driverController, Button.kB.value)
-      .whenPressed(new Climb(2, m_climber));
+      .whenPressed(new Climb(ClimberConstants.kSetpointExtended, m_climber));
 
     new JoystickButton(m_driverController, Button.kX.value)
-      .whenPressed(new Climb(-2, m_climber));
+      .whenPressed(new Climb(ClimberConstants.kSetpointClimbed, m_climber));
+
+    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
+      .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)

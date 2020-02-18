@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -28,11 +29,18 @@ public class Climber extends SubsystemBase {
   private TalonFX m_Motor1 = new TalonFX(ClimberConstants.kClimberMotorLeftPort);
   private TalonFX m_Motor2 = new TalonFX(ClimberConstants.kClimberMotorRightPort);
 
+  private double offset = 0;
 
   public Climber() {
     m_Motor1.configFactoryDefault();
     m_Motor2.configFactoryDefault();
-    
+
+    m_Motor1.setNeutralMode(NeutralMode.Brake);
+    m_Motor2.setNeutralMode(NeutralMode.Brake);
+
+    m_Motor1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 1));
+    m_Motor2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 0, 1));
+
     m_Motor1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     m_Motor2.configRemoteFeedbackFilter(m_Motor1.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor, 1);
@@ -66,9 +74,9 @@ public class Climber extends SubsystemBase {
 
     m_Motor1.configNeutralDeadband(ClimberConstants.kNeutralDeadband, ClimberConstants.kTimeoutMs);
 
-    m_Motor1.configPeakOutputForward(1.0, ClimberConstants.kTimeoutMs);
+    m_Motor1.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
     m_Motor1.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
-    m_Motor2.configPeakOutputForward(1.0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
     m_Motor2.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);  
     
     m_Motor2.config_kF(ClimberConstants.kSlotDistance, ClimberConstants.kDistanceF, ClimberConstants.kTimeoutMs);
@@ -97,16 +105,36 @@ public class Climber extends SubsystemBase {
 
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotDistance, ClimberConstants.PID_PRIMARY);
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotTurning, ClimberConstants.PID_TURN);
+
+    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimit));
+    m_Motor1.configForwardSoftLimitThreshold(0);
+    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimit));
+    m_Motor2.configForwardSoftLimitThreshold(0);
+  
+    m_Motor1.configReverseSoftLimitEnable(true);
+    m_Motor1.configForwardSoftLimitEnable(true);
+    m_Motor2.configReverseSoftLimitEnable(true);
+    m_Motor2.configForwardSoftLimitEnable(true);
+    
   }
 
   public void setClimberPosition(double inches){
-    m_Motor2.set(ControlMode.Position, inchesToTicks(inches), DemandType.AuxPID, 0);
+    if(inches > ClimberConstants.kSetpointExtended) {
+      offset = ClimberConstants.kOffset;
+    } else {
+      offset = 0;
+    }
+    m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
     m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
   }
   
   public void stop() {
     m_Motor1.set(ControlMode.PercentOutput, 0);
     m_Motor2.set(ControlMode.PercentOutput, 0);
+  }
+
+  public double getClimberPosition() {
+    return -ticksToInches(m_Motor2.getSelectedSensorPosition(ClimberConstants.kSlotDistance));
   }
 
   public void zeroClimber() {

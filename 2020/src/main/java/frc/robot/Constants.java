@@ -68,6 +68,9 @@ public final class Constants {
     }
 
     public static final class ClimberConstants {
+        public static final double kSetpointExtended = 33.77;
+        public static final double kSetpointClimbed = 60; // 66.89;
+        
         public static final int kClimberMotorLeftPort = 30;
         public static final int kClimberMotorRightPort = 31;
 
@@ -88,7 +91,7 @@ public final class Constants {
         public static final int kLeftLimitSwitchPort = 2;
         public static final int kRightLimitSwitchPort = 3;
 
-        public static final double kNeutralDeadband = 0.001;
+        public static final double kNeutralDeadband = 0.04;
 
         public static final int kSlotDistance = 0;
         public static final int kSlotTurning = 1;
@@ -108,6 +111,10 @@ public final class Constants {
 
         public static final double kDistancePeakOutput = 0.8;
         public static final double kTurnPeakOutput = 1.0;
+        public static final double kOffset = -1.0;
+        
+		public static final int kMotor1SoftLimit = -66;
+		public static final double kMotor2SoftLimit = -68;
     }
 
     public static final class HoodConstants {
