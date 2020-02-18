@@ -14,8 +14,7 @@ public class Feed extends CommandBase {
   public double m_speed;
   public final Feeder m_feeder;
 
-  public Feed(double speed, Feeder feeder) {
-    m_speed = speed;
+  public Feed(Feeder feeder) {
     m_feeder = feeder;
     addRequirements(m_feeder);
   }
@@ -46,6 +45,6 @@ public class Feed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_feeder.finishedArraging();
+    return !m_feeder.getBreakBeam();
   }
 }

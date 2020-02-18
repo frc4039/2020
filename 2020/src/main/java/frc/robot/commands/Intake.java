@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intaker;
 
 /**
@@ -16,17 +17,13 @@ import frc.robot.subsystems.Intaker;
 public class Intake extends CommandBase {
   private final Intaker m_intaker;
   // private final Stirrer m_stirrer;
-  private double m_speed;
-
-
 
   /**
    * Creates a new ArcadeDrive Command.
    *
    * @param subsystem 
    */
-  public Intake(double speed, Intaker intaker) {
-    m_speed = speed;
+  public Intake(Intaker intaker) {
     m_intaker = intaker;
     // m_stirrer = stirrer;
 
@@ -43,7 +40,7 @@ public class Intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intaker.intake(m_speed);
+    m_intaker.intake(IntakeConstants.kIntakePercent);
     // m_stirrer.stir();
   }
 

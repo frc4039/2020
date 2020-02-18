@@ -37,6 +37,20 @@ deploy {
     }
 }
 
+task createButtonFile (type: JavaExec) {
+    group = "Execution"
+    description = "Create button mapping text file"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "frc.robot.MakeButtonList"
+}
+
+tasks.named('build').configure {
+    dependsOn createButtonFile
+}
+tasks.named('deploy').configure {
+    dependsOn createButtonFile
+}
+
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
