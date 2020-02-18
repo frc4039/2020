@@ -167,6 +167,13 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor2.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
   }
 
+  public void setCoastMode() {
+    m_leftMotor1.setIdleMode(IdleMode.kCoast);
+    m_leftMotor2.setIdleMode(IdleMode.kCoast);
+    m_rightMotor1.setIdleMode(IdleMode.kCoast);
+    m_rightMotor2.setIdleMode(IdleMode.kCoast);
+  }
+
   public double getLimelight() {
     return -table.getEntry("tx").getDouble(0.0) / 27;
   }

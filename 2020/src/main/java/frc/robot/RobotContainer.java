@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -166,6 +168,10 @@ public class RobotContainer {
   public void zeroDriveTrain() {
     m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
     m_drivetrain.zeroHeading();
+  }
+
+  public void setCoastMode() {
+    m_drivetrain.setCoastMode();
   }
 
 public void setTeleSettings() {
