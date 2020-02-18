@@ -17,21 +17,28 @@ import frc.robot.Constants.FeederConstants;
 
 public class Feeder extends SubsystemBase {
   private CANSparkMax m_feederMotor;
-  private DigitalInput m_BreakBeam;
+  private static DigitalInput m_BreakBeam1;
+  private static DigitalInput m_BreakBeam2;
 
   public Feeder() {
     m_feederMotor = new CANSparkMax(FeederConstants.kFeederMotorPort, MotorType.kBrushless);
-    m_feederMotor.setInverted(true);
+    m_feederMotor.setInverted(FeederConstants.kFeederInversion);
 
-    m_BreakBeam = new DigitalInput(FeederConstants.kBreakBeamPort);
+    m_BreakBeam1 = new DigitalInput(FeederConstants.kBreakBeamPort1);
+    m_BreakBeam2 = new DigitalInput(FeederConstants.kBreakBeamPort2);
   }
 
   @Override
   public void periodic() {
-    
+    printFeederValues();
   }
 
   public void feed() {
+    m_feederMotor.set(FeederConstants.kFeederPercent);
+  }
+
+  
+  public void constantFeed() {
     m_feederMotor.set(FeederConstants.kFeederPercent);
   }
 
@@ -39,11 +46,16 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(0);
   }
 
-  public boolean getBreakBeam() {
-    return m_BreakBeam.get();
+  public static boolean getBreakBeam() {
+    return m_BreakBeam1.get() || m_BreakBeam2.get();
+  }
+
+  public static boolean getBottomBeamBreak(){
+    return m_BreakBeam2.get();
   }
 
   public void printFeederValues() {
-    SmartDashboard.putBoolean("Break Beam Status", getBreakBeam());
+    SmartDashboard.putBoolean("Top Break Beam Status", m_BreakBeam1.get());
+    SmartDashboard.putBoolean("Bottom Break Beam Status", m_BreakBeam2.get());
   }
 }

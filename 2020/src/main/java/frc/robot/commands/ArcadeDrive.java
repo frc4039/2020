@@ -44,8 +44,13 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     m_drivetrain.printDriveValues();
-    double m_left = left.getAsDouble()*left.getAsDouble()*left.getAsDouble();
-    double m_right = right.getAsDouble()*right.getAsDouble()*right.getAsDouble();
+
+    double m_left = left.getAsDouble();
+    double m_right = right.getAsDouble();
+    m_left = m_drivetrain.normalizeJoystickWithDeadband(m_left, 0.1);
+    m_right = m_drivetrain.normalizeJoystickWithDeadband(m_right, 0.1);
+    m_left = m_left*m_left*m_left;
+    m_right = m_right*m_right*m_right;
 
     double saturatedInput;
     double greaterInput = Math.max(Math.abs(m_left), Math.abs(m_right));
