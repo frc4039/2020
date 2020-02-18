@@ -33,12 +33,18 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int kShooterMotor1Port = 20;
         public static final int kShooterMotor2Port = 21;
+        public static final int kShooterFeederMotorPort = 25;
 
-        public static final double kShooterRPM5 = 4500;
-        public static final double kShooterRPM4 = 4250;
-        public static final double kShooterRPM3 = 3375;
-        public static final double kShooterRPM2 = 2250;
-        public static final double kShooterRPM1 = 1125;
+        // public static final double kShooterRPM5 = 4250;
+        // public static final double kShooterRPM4 = 4250;
+        // public static final double kShooterRPM3 = 3375;
+        // public static final double kShooterRPM2 = 2250;
+        // public static final double kShooterRPM1 = 1125;
+
+        public static final double kTrenchShotRPM = 4500;
+        public static final double kWallShotRPM = 3475;
+        public static final double k10FtShotRPM = 4250;
+        public static final double kShooterFeederSpeed = 0.5;
 
         public static final int kTargetZone = 1;
         public static final int kNearTrench = 2;
@@ -54,6 +60,7 @@ public final class Constants {
 
         public static final boolean kShooterInversion1 = true;
         public static final boolean kShooterInversion2 = false;
+        public static final boolean kShooterFeederInversion = true;
     }
 
     public static final class IntakeConstants {
@@ -67,7 +74,10 @@ public final class Constants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
 		public static final double kStirrerPercent = 1.0;
-		public static final int kStirrerCurrentLimit = 40;
+        public static final int kStirrerCurrentLimit = 40;
+        
+        public static final boolean kStirrerInversion1 = false;
+        public static final boolean kStirrerInversion2 = true;
     }
 
     public static final class VisionConstants {
@@ -82,7 +92,7 @@ public final class Constants {
         public static final int kFeederMotorPort = 24;
         public static final double kFeederPercent = 0.5;
         public static final int kBreakBeamPort1 = 0;
-        public static final int kBreakBeamPort2 = 1;
+        public static final int kBreakBeamPort2 = 7;
 
         public static final boolean kFeederInversion = true;
     }

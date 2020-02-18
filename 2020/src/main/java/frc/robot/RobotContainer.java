@@ -24,6 +24,9 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
+import frc.robot.commands.AdjustHood;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
@@ -83,7 +86,7 @@ public class RobotContainer {
 
     // Smart Intake
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new SmartIntake(IntakeConstants.kIntakePercent, FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent, m_intaker, m_feeder, m_stirrer));
+      .whenHeld(new SmartIntake(FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent, m_intaker, m_feeder, m_stirrer));
 
     // Revv the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
@@ -96,13 +99,13 @@ public class RobotContainer {
 
     // Set Shoot RPM
       new POVButton(m_operatorController, 0)
-      .toggleWhenPressed(new setShootPosition(1, m_shooter));
+        .toggleWhenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter));
 
       new POVButton(m_operatorController, 270)
-      .toggleWhenPressed(new setShootPosition(2, m_shooter));
+        .toggleWhenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter));
 
       new POVButton(m_operatorController, 180)
-      .toggleWhenPressed(new setShootPosition(3, m_shooter));
+        .toggleWhenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter));
 
     // Driver Controls-------------------------------------------------
 
@@ -113,6 +116,10 @@ public class RobotContainer {
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
+
+    //Reverse the intake
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .toggleWhenPressed(new ReverseIntake(m_intaker));
 
     //Move Servo
     /*

@@ -30,12 +30,21 @@ public class setShootPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_shootingPosition == ShooterConstants.kTargetZone) {
-      m_shooter.setSetPoint(ShooterConstants.kShooterRPM2, HoodConstants.kPos3);
-    } else if (m_shootingPosition == ShooterConstants.kNearTrench) {
-      m_shooter.setSetPoint(ShooterConstants.kShooterRPM3, HoodConstants.kPos3);
-    } else if (m_shootingPosition == ShooterConstants.kInitiationLine) {
-      m_shooter.setSetPoint(ShooterConstants.kShooterRPM4, HoodConstants.kPos3);
+    switch (m_shootingPosition) {
+      case ShooterConstants.kTargetZone:
+        m_shooter.setSetPoint(ShooterConstants.kWallShotRPM, HoodConstants.kPos3);
+
+        break;
+
+      case ShooterConstants.kNearTrench:
+        m_shooter.setSetPoint(ShooterConstants.kTrenchShotRPM, HoodConstants.kPos3);
+
+        break;
+
+      case ShooterConstants.kInitiationLine:
+        m_shooter.setSetPoint(ShooterConstants.k10FtShotRPM, HoodConstants.kPos3);
+
+        break;
     }
   }
 
