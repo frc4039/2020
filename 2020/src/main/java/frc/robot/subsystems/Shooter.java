@@ -30,8 +30,6 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax m_ShooterFeederMotor;
   private double m_rpmSetPoint;
   private double hoodSetPoint;
-  private Servo m_servo1;
-  private Servo m_servo2;
 
   public Shooter() {
     m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
@@ -55,12 +53,6 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kF, ShooterConstants.kTimeoutMs);
     m_shooterMotor1.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kP, ShooterConstants.kTimeoutMs);
 
-    m_servo1 = new Servo(HoodConstants.kServoPort1);
-    m_servo1.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-    
-    m_servo2 = new Servo(HoodConstants.kServoPort2);
-    m_servo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-
     m_rpmSetPoint = ShooterConstants.kWallShotRPM;
     hoodSetPoint = HoodConstants.kPos3; // CHECK THESE POSITIONS IF THEY ARE RIGHT
   }
@@ -78,11 +70,6 @@ public class Shooter extends SubsystemBase {
   public void setSetPoint(double rpm, double hood) {
     m_rpmSetPoint = rpm;
     hoodSetPoint = hood;
-  }
-
-  public void setPosition() {
-    m_servo1.setPosition(hoodSetPoint);
-    m_servo2.setPosition(hoodSetPoint);
   }
 
   @Override

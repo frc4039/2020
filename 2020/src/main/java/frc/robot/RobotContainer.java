@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
@@ -56,6 +57,7 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   private final Stirrer m_stirrer = new Stirrer();
   private final Feeder m_feeder = new Feeder();
+  private final Hood m_hood = new Hood();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
   XboxController m_operatorController = new XboxController(GeneralConstants.kOperatorController);
@@ -160,6 +162,9 @@ public class RobotContainer {
       .whenPressed(new TurnToAngle(-90, m_drivetrain));
   }
 
+  public void init(){
+    m_hood.stop();
+  }
 
   public Command getAutonomousCommand() {    
     return (Command) autoSelector.getSelected();
