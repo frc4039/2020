@@ -161,12 +161,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .toggleWhenPressed(new ReverseIntake(m_intaker));
 
-    //Move Servo
-    
-    //new POVButton(m_operatorController, 0)
-    //  .toggleWhenPressed(new AdjustHood(HoodConstants.kPos1, m_hood));
-
-
     new POVButton(m_driverController, 0)
       .whenPressed(new TurnToAngle(0, m_drivetrain));
 
