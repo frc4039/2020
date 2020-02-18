@@ -123,6 +123,14 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.setPosition(0);
   }
 
+  public void setRampRate() {
+    m_leftMotor1.setOpenLoopRampRate(DriveConstants.kVoltageRampRate);
+    m_leftMotor2.setOpenLoopRampRate(DriveConstants.kVoltageRampRate);
+
+    m_rightMotor1.setOpenLoopRampRate(DriveConstants.kVoltageRampRate);
+    m_rightMotor2.setOpenLoopRampRate(DriveConstants.kVoltageRampRate);
+  }
+
   public double getAverageEncoderDistance() {
     return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
   }

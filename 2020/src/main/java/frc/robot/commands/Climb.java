@@ -8,44 +8,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Climber;
 
-public class Feed extends CommandBase {
-  public double m_speed;
-  public final Feeder m_feeder;
+public class Climb extends CommandBase {
+  private final Climber m_climber;
+  private final double m_inches;
 
-  public Feed(double speed, Feeder feeder) {
-    m_speed = speed;
-    m_feeder = feeder;
-    addRequirements(m_feeder);
+  /**
+   * Creates a new Climb.
+   */
+  public Climb(double inches, Climber climber) {
+    m_climber = climber;
+    m_inches = inches;
+    
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    m_climber.setClimberPosition(m_inches);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.printFeederValues();
-
-    // if (m_feeder.getBreakBeam()) {
-      m_feeder.feed();
-
-    // }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.stop();
+    m_climber.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_feeder.getBreakBeam();
+    return false;
   }
 }

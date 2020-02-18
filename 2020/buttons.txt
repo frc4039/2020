@@ -1,0 +1,10 @@
+Operator Controller, A Button (Hold, interruptable): Shoot
+Operator Controller, B Button (Hold, interruptable): SmartIntake (FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent)
+Operator Controller, X Button (Toggle on/off): Shoot
+Operator Controller, Left Bumper Button (Hold): SmartShoot (StirrerConstants.kStirrerPercent)
+Operator Controller, D-Pad Up (Toggle on/off): setShootPosition (ShooterConstants.kTargetZone)
+Operator Controller, D-Pad Right (Toggle on/off): setShootPosition (ShooterConstants.kInitiationLine)
+Operator Controller, D-Pad Down (Toggle on/off): setShootPosition (ShooterConstants.kNearTrench)
+Driver Controller, A Button (Hold): Shoot
+Driver Controller, Left Bumper Button (Hold): TurnToLimelight
+Driver Controller, Right Bumper Button (Toggle on/off): ReverseIntake

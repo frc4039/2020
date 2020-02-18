@@ -20,12 +20,15 @@ public class Stirrer extends SubsystemBase {
   public Stirrer() {
     m_stirrerMotor1 = new CANSparkMax(StirrerConstants.kStirrerMotor1Port, MotorType.kBrushless);
     m_stirrerMotor2 = new CANSparkMax(StirrerConstants.kStirrerMotor2Port, MotorType.kBrushless);
-    
+
+    m_stirrerMotor1.restoreFactoryDefaults();
+    m_stirrerMotor2.restoreFactoryDefaults();
+
     m_stirrerMotor1.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
     m_stirrerMotor2.setSmartCurrentLimit(StirrerConstants.kStirrerCurrentLimit);
 
-    m_stirrerMotor1.setInverted(false);
-    m_stirrerMotor2.setInverted(true);
+    m_stirrerMotor1.setInverted(StirrerConstants.kStirrerInversion1);
+    m_stirrerMotor2.setInverted(StirrerConstants.kStirrerInversion2);
   }
 
   public void stir(double speed) {
