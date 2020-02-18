@@ -106,7 +106,7 @@ public final class Constants {
         public static final int kBreakBeamPort2 = 7;
 
         public static final boolean kFeederInversion = true;
-		public static final double kCurrentLimit = 30;
+		public static final int kCurrentLimit = 30;
     }
 
     public static final class ClimberConstants {
@@ -176,8 +176,6 @@ public final class Constants {
         public static final int kLeftDriveMotor2Port = 11;
         public static final int kRightDriveMotor1Port = 12;
         public static final int kRightDriveMotor2Port = 13;
-
-        public static final double kVoltageRampRate = 0.3; // s / maxVoltage
 
         public static final double kGearRatio = 0.12068966; //(14/58) * (16/32);
         public static final double kWheelDiameter = 0.157; //nominal 0.1587
