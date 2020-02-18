@@ -106,7 +106,7 @@ public final class Constants {
         public static final int kBreakBeamPort1 = 0;
         public static final int kBreakBeamPort2 = 7;
 
-        public static final boolean kFeederInversion = true;
+        public static final boolean kFeederInversion = false;
 		public static final int kCurrentLimit = 30;
     }
 
