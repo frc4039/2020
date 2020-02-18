@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
+
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -19,20 +22,33 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
+import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
+
+import frc.robot.commands.Climb;
+import frc.robot.commands.Feed;
+import frc.robot.commands.Intake;
+
 import frc.robot.commands.ReverseIntake;
+
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
+
+import frc.robot.Constants.ClimberConstants;
+
 import frc.robot.commands.setShootPosition;
+
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -43,6 +59,7 @@ public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Intaker m_intaker = new Intaker();
+  private final Climber m_climber = new Climber();
   private final Stirrer m_stirrer = new Stirrer();
   private final Feeder m_feeder = new Feeder();
   //private final Hood m_hood = new Hood();
@@ -53,7 +70,9 @@ public class RobotContainer {
   SendableChooser<Command> autoSelector = new SendableChooser<Command>();
   
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot.  Contains subsy
+   * 
+   * stems, OI devices, and commands.
    */
   public RobotContainer() {
     //m_drivetrain.setDefaultCommand(new ArcadeDrive(() -> m_driverController.getY(Hand.kLeft),
@@ -107,11 +126,39 @@ public class RobotContainer {
       new POVButton(m_operatorController, 180)
         .toggleWhenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter));
 
+
+    /*
+    //extend
+    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
+      .toggleWhenPressed(new Climb(m_climber, 2));
+
+    //retract
+    new JoystickButton(m_operatorController, Button.kBumperRight.value)
+      .toggleWhenPressed(new Climb(m_climber, 0));
+    */
+
     // Driver Controls-------------------------------------------------
 
     // Shoots 
+    //new JoystickButton(m_driverController, Button.kA.value)
+      //.whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+
+    //cancel climber
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new Shoot(m_shooter));
+      .whenPressed(new InstantCommand(m_climber::stop, m_climber));
+
+    //new JoystickButton(m_driverController, Button.kY.value)
+    //  .whenPressed(new InstantCommand(m_climber::zeroClimber));
+
+    // Fully unspooled
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new Climb(ClimberConstants.kSetpointExtended, m_climber));
+
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(new Climb(ClimberConstants.kSetpointClimbed, m_climber));
+
+    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
+      .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
@@ -136,6 +183,7 @@ public class RobotContainer {
       .toggleWhenPressed(new AdjustHood(HoodConstants.kFullExtend, m_hood));
       */
   }
+
 
   public Command getAutonomousCommand() {    
     return (Command) autoSelector.getSelected();

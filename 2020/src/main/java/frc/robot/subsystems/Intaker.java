@@ -15,7 +15,7 @@ public class Intaker extends SubsystemBase {
   // private final SpeedController m_rightMotor = new SpeedControllerGroup(new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless),
   //     new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless));
 
-  private VictorSPX m_intakeMotor;
+  private final VictorSPX m_intakeMotor;
 
   public Intaker() {
     m_intakeMotor = new VictorSPX(IntakeConstants.kIntakeMotorPort);  
