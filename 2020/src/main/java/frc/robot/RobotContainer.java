@@ -88,10 +88,6 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kA.value)
       .whenHeld(new Shoot(m_shooter));
 
-    // // Intakes
-    // new JoystickButton(m_operatorController, Button.kB.value)
-    //   .whenHeld(new Intake(IntakeConstants.kIntakePercent, m_intaker));
-
     // Smart Intake
     new JoystickButton(m_operatorController, Button.kB.value)
       .whenHeld(new SmartIntake(m_intaker, m_feeder, m_stirrer));
@@ -114,17 +110,6 @@ public class RobotContainer {
 
       new POVButton(m_operatorController, 180)
         .toggleWhenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter));
-
-
-    /*
-    //extend
-    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .toggleWhenPressed(new Climb(m_climber, 2));
-
-    //retract
-    new JoystickButton(m_operatorController, Button.kBumperRight.value)
-      .toggleWhenPressed(new Climb(m_climber, 0));
-    */
 
     // Driver Controls-------------------------------------------------
 
@@ -152,7 +137,6 @@ public class RobotContainer {
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
-
 
     new JoystickButton(m_driverController, Button.kY.value)
       .whenPressed(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));

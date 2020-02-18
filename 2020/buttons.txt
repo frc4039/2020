@@ -1,5 +1,4 @@
 Operator Controller, A Button (Hold, interruptable): Shoot
-Operator Controller, B Button (Hold, interruptable): Intake (IntakeConstants.kIntakePercent)
 Operator Controller, B Button (Hold, interruptable): SmartIntake
 Operator Controller, X Button (Toggle on/off): Shoot
 Operator Controller, Left Bumper Button (Hold): SmartShoot
