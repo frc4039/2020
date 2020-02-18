@@ -13,20 +13,16 @@ public class SmartIntake extends ParallelCommandGroup {
   public final Feeder m_feeder;
   public final Intaker m_intaker;
   public final Stirrer m_stirrer;
-  public final double m_feedSpeed;
-  public final double m_stirSpeed;
   
-  public SmartIntake(double feedSpeed, double stirSpeed, Intaker intaker, Feeder feeder, Stirrer stirrer) {
+  public SmartIntake(Intaker intaker, Feeder feeder, Stirrer stirrer) {
     m_feeder = feeder;
     m_intaker = intaker;
     m_stirrer = stirrer;
-    m_stirSpeed = stirSpeed;
-    m_feedSpeed = feedSpeed;
 
     addCommands(
       new Intake(m_intaker),
-      new ParallelCommandGroup(new Stir(m_stirSpeed, m_stirrer),
-                            new Feed(m_feedSpeed, m_feeder))
+      new ParallelCommandGroup(new Stir(m_stirrer),
+                            new Feed(m_feeder))
     );
   }
 }

@@ -43,10 +43,8 @@ import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.setShootPosition;
-import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.StirrerConstants;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -96,7 +94,7 @@ public class RobotContainer {
 
     // Smart Intake
     new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new SmartIntake(FeederConstants.kFeederPercent, StirrerConstants.kStirrerPercent, m_intaker, m_feeder, m_stirrer));
+      .whenHeld(new SmartIntake(m_intaker, m_feeder, m_stirrer));
 
     // Revv the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
@@ -104,7 +102,7 @@ public class RobotContainer {
 
     // SmartShoot
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .whileHeld(new SmartShoot(StirrerConstants.kStirrerPercent, m_feeder, m_shooter, m_stirrer));
+      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
 
 
     // Set Shoot RPM

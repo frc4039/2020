@@ -13,10 +13,8 @@ import frc.robot.subsystems.Stirrer;
 
 public class Stir extends CommandBase {
   private final Stirrer m_stirrer;
-  private double m_speed;
 
-  public Stir(double speed, Stirrer stirrer) {
-    m_speed = speed;
+  public Stir(Stirrer stirrer) {
     m_stirrer = stirrer;
 
     addRequirements(m_stirrer);
@@ -30,7 +28,7 @@ public class Stir extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_stirrer.stir(m_speed);
+    m_stirrer.stir();
   }
 
   // Called once the command ends or is interrupted.

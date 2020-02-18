@@ -14,8 +14,7 @@ public class Feed extends CommandBase {
   public double m_speed;
   public final Feeder m_feeder;
 
-  public Feed(double speed, Feeder feeder) {
-    m_speed = speed;
+  public Feed(Feeder feeder) {
     m_feeder = feeder;
     addRequirements(m_feeder);
   }

@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.StirrerConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
@@ -47,7 +46,7 @@ public class TrenchAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new SmartShoot(StirrerConstants.kStirrerPercent, feeder, shooter, stirrer).withTimeout(5), 
+          new SmartShoot(feeder, shooter, stirrer).withTimeout(5), 
           new AutoCommand(drivetrain, exampleTrajectory));
   }
 }
