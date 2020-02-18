@@ -31,7 +31,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.AdjustClimb;
-import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
 import frc.robot.commands.Feed;
