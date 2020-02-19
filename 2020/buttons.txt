@@ -1,18 +1,12 @@
 Operator Controller, B Button (Hold, interruptable): SmartIntake
 Operator Controller, X Button (Toggle on/off): Shoot
 Operator Controller, Left Bumper Button (Hold): SmartShoot
-Operator Controller, D-Pad Up (When pressed): setShootPosition (ShooterConstants.kTargetZone)
-Operator Controller, D-Pad Right (When pressed): setShootPosition (ShooterConstants.kInitiationLine)
-Operator Controller, D-Pad Down (When pressed): setShootPosition (ShooterConstants.kNearTrench)
-Driver Controller, A Button (Hold): Shoot (ShooterConstants.kShooterRPM4)
-Driver Controller, A Button (When pressed): InstantCommand
-Driver Controller, Y Button (When pressed): InstantCommand
-Driver Controller, B Button (When pressed): Climb (ClimberConstants.kSetpointExtended)
-Driver Controller, X Button (When pressed): Climb (ClimberConstants.kSetpointClimbed)
+Operator Controller, D-Pad Up (Press): setShootPosition (ShooterConstants.kTargetZone)
+Operator Controller, D-Pad Right (Press): setShootPosition (ShooterConstants.kInitiationLine)
+Operator Controller, D-Pad Down (Press): setShootPosition (ShooterConstants.kNearTrench)
+Driver Controller, A Button (Press): InstantCommand (m_climber::stop)
+Driver Controller, B Button (Press): Climb (ClimberConstants.kSetpointExtended)
+Driver Controller, X Button (Press): Climb (ClimberConstants.kSetpointClimbed)
 Driver Controller, Left Bumper Button (Hold): TurnToLimelight
-Driver Controller, Y Button (When pressed): InstantCommand
+Driver Controller, Y Button (Press): InstantCommand (m_drivetrain::zeroHeading)
 Driver Controller, Right Bumper Button (Toggle on/off): ReverseIntake
-Driver Controller, D-Pad Up (When pressed): TurnToAngle (0)
-Driver Controller, D-Pad Left (When pressed): TurnToAngle (90)
-Driver Controller, D-Pad Down (When pressed): TurnToAngle (180)
-Driver Controller, D-Pad Right (When pressed): TurnToAngle (-90)

@@ -25,9 +25,8 @@ public class MakeButtonList {
 
 			if(classMatcher.find()){
 				String classBody = classMatcher.group(0);
-				classBody = classBody.replaceAll("\\s+//.*\n", "");
-				// classBody = Pattern.compile("\\/\\*(.*?)\\*\\/", Pattern.DOTALL).matcher(classBody).replaceAll("");
 				classBody = classBody.replaceAll("(?s)\\/\\*(.*?)\\*\\/", "");
+				classBody = classBody.replaceAll("(?m)//.*$", "");
 				classBody = classBody.replaceAll("(\\s\\s)+", "");
 				classBody = classBody.replaceAll("\\n", "");
 				classBody = classBody.replaceAll("\\r", "");
@@ -61,7 +60,7 @@ public class MakeButtonList {
 										String[] commandArgs = commandArgsS.replace(" ", "").split(",");
 										ArrayList<String> commandsss = new ArrayList<String>();
 										for(String arg : commandArgs){
-											if(!arg.startsWith("m_")){
+											if(!arg.startsWith("m_") || arg.contains("::")){
 												commandsss.add(arg);
 											}
 										}
@@ -123,7 +122,7 @@ public class MakeButtonList {
 		buttonNames.put("whileActiveOnce", "(Hold, interruptable)");
 		buttonNames.put("whileActiveContinuous", "(Hold)");
 		buttonNames.put("whenReleased", "(When button is released)");
-		buttonNames.put("whenPressed", "(When pressed)");
+		buttonNames.put("whenPressed", "(Press)");
 		buttonNames.put("whenInactive", "(Runs when not held)");
 		buttonNames.put("whenActive", "(When activated)");
 		buttonNames.put("toggleWhenActive", "(Toggles on/off)");

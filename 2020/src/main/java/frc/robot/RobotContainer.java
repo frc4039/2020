@@ -7,38 +7,25 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax.IdleMode;
-
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Intaker;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Stirrer;
-import frc.robot.commands.TurnToAngle;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.GeneralConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AdjustClimb;
-import frc.robot.commands.AdjustHood;
-import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
-import frc.robot.commands.Feed;
-import frc.robot.commands.Intake;
 import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
@@ -46,11 +33,14 @@ import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TestAuto;
 import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.setShootPosition;
-import frc.robot.Constants.GeneralConstants;
-import frc.robot.Constants.HoodConstants;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intaker;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Stirrer;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
