@@ -9,45 +9,36 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants.VisionConstants;
+import frc.robot.Constants.TurningConstants;
 import frc.robot.subsystems.DriveTrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class TurnToLimelight extends PIDCommand {
-  DriveTrain m_drivetrain;
+public class TurnToAngle extends PIDCommand {
   /**
-   * Creates a new Limelight.
+   * Creates a new TurnToAngle.
    */
-  public TurnToLimelight(DriveTrain drivetrain) {
+  public TurnToAngle(double angle, DriveTrain m_drivetrain) {
     super(
         // The controller that the command will use
-        new PIDController(VisionConstants.kP, VisionConstants.kI, VisionConstants.kD),
+        new PIDController(TurningConstants.kP, TurningConstants.kI, TurningConstants.kD),
         // This should return the measurement
-        drivetrain::getLimelight,
+        m_drivetrain::getHeading,
         // This should return the setpoint (can also be a constant)
-         () -> 0,
+        () -> angle,
         // This uses the output
-        output -> drivetrain.arcadeDrive(0, output), drivetrain);
-    getController().setTolerance(VisionConstants.kTolerance, VisionConstants.kRateTolerance);
-
-    m_drivetrain = drivetrain;
+        output -> {
+          m_drivetrain.arcadeDrive(0, output);
+        }, 
+        m_drivetrain
+        );
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+    getController().enableContinuousInput(-180, 180);
+    getController().setTolerance(TurningConstants.kTolerance, TurningConstants.kRateTolerance);
   }
 
-  @Override
-  public void initialize() {
-    super.initialize();
-    m_drivetrain.setPipelineOne();
-  }
-
-  @Override
-  public void end(boolean interrupted) {
-    super.end(interrupted);
-    m_drivetrain.setPipelineZero();
-  }
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

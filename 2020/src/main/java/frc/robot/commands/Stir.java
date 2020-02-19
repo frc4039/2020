@@ -8,15 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Stirrer;
 
 public class Stir extends CommandBase {
   private final Stirrer m_stirrer;
-  private double m_speed;
+  private final Feeder m_feeder;
 
-  public Stir(double speed, Stirrer stirrer) {
-    m_speed = speed;
+  public Stir(Stirrer stirrer, Feeder feeder) {
     m_stirrer = stirrer;
+    m_feeder = feeder;
 
     addRequirements(m_stirrer);
   }
@@ -29,7 +30,7 @@ public class Stir extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_stirrer.stir(m_speed);
+    m_stirrer.stir();
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +42,6 @@ public class Stir extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !m_feeder.getBreakBeam();
   }
 }

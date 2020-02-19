@@ -19,12 +19,10 @@ public class SmartShoot extends CommandBase {
   Shooter m_shooter;
   Stirrer m_stirrer;
 
-  public SmartShoot(double shooterRPM, double stirSpeed, Feeder feeder, Shooter shooter, Stirrer stirrer) {
-    m_rpm = shooterRPM;
+  public SmartShoot(Feeder feeder, Shooter shooter, Stirrer stirrer) {
     m_feeder = feeder;
     m_shooter = shooter;
     m_stirrer = stirrer;
-    m_stirSpeed = stirSpeed;
 
     addRequirements(m_feeder, m_shooter, m_stirrer);
   }
@@ -39,13 +37,13 @@ public class SmartShoot extends CommandBase {
   @Override
   public void execute() {
     // only feeds if shooter RPM is +/- 500 of the current RPM
-    m_shooter.shoot(m_rpm);
+    m_shooter.shoot();
     // m_stirrer.stir(m_stirSpeed);
 
-    if (Math.abs(m_shooter.returnCurrentRPM() - m_rpm) < 500) {
+    if (Math.abs(m_shooter.returnCurrentRPM() - m_shooter.getSetpoint()) < 500) {
       m_feeder.feed();
-      m_stirrer.stir(m_stirSpeed);
-      m_shooter.shoot(m_rpm);
+      m_stirrer.stir();
+      m_shooter.feedShooter();
     }
   }
 

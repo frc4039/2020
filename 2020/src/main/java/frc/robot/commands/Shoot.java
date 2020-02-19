@@ -15,7 +15,6 @@ import frc.robot.subsystems.Shooter;
  */
 public class Shoot extends CommandBase {
   private final Shooter m_shooter;
-  private double m_rpm;
 
 
 
@@ -24,8 +23,7 @@ public class Shoot extends CommandBase {
    *
    * @param subsystem 
    */
-  public Shoot(double rpm, Shooter shooter) {
-    m_rpm = rpm;
+  public Shoot(Shooter shooter) {
     m_shooter = shooter;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -41,7 +39,7 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_shooter.shoot(m_rpm);
+      m_shooter.shoot();
   }
 
   // Called once the command ends or is interrupted.
