@@ -79,8 +79,7 @@ public class DriveTrain extends SubsystemBase {
     m_drive.setRightSideInverted(false);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
-    table.getEntry("pipeline").setNumber(6);
-
+    table.getEntry("pipeline").setNumber(0);
   }
 
   @Override
@@ -133,6 +132,14 @@ public class DriveTrain extends SubsystemBase {
 
   public CANEncoder getRightEncoder() {
     return m_rightEncoder;
+  }
+
+  public void setPipelineZero() {
+    table.getEntry("pipeline").setNumber(0);
+  }
+
+  public void setPipelineOne() {
+    table.getEntry("pipeline").setNumber(1);
   }
 
   public void setMaxOutput(double maxOutput) {

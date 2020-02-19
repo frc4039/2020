@@ -44,7 +44,7 @@ public final class Constants {
         public static final double kTrenchShotRPM = 4500;
         public static final double kWallShotRPM = 3475;
         public static final double k10FtShotRPM = 4250;
-        public static final double kShooterFeederSpeed = 0.5;
+        public static final double kShooterFeederSpeed = 0.8;
 
         public static final int kTargetZone = 1;
         public static final int kNearTrench = 2;
@@ -60,7 +60,7 @@ public final class Constants {
 
         public static final boolean kShooterInversion1 = true;
         public static final boolean kShooterInversion2 = false;
-        public static final boolean kShooterFeederInversion = true;
+        public static final boolean kShooterFeederInversion = false;
     }
 
     public static final class IntakeConstants {
@@ -167,9 +167,9 @@ public final class Constants {
         public static double kFullRetract = 0.0;
         public static double kFullExtend = 1.0;
         
-        public static double kPos1 = 0.25;
-        public static double kPos2 = 0.50;
-        public static double kPos3 = 0.75;
+        public static double k10FtPos = 0.00;
+        public static double kWallPos = 1.00;
+        public static double kTrenchPos = 0.75;
     }
 
     public static final class DriveConstants {

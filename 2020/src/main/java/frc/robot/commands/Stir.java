@@ -13,9 +13,11 @@ import frc.robot.subsystems.Stirrer;
 
 public class Stir extends CommandBase {
   private final Stirrer m_stirrer;
+  private final Feeder m_feeder;
 
-  public Stir(Stirrer stirrer) {
+  public Stir(Stirrer stirrer, Feeder feeder) {
     m_stirrer = stirrer;
+    m_feeder = feeder;
 
     addRequirements(m_stirrer);
   }
@@ -40,6 +42,6 @@ public class Stir extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !Feeder.getBreakBeam();
+    return !m_feeder.getBreakBeam();
   }
 }
