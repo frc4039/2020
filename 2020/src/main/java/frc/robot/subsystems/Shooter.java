@@ -8,11 +8,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GeneralConstants;
-import frc.robot.Constants.HoodConstants;
 // import edu.wpi.first.wpilibj.SpeedController;
 // import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.Constants.ShooterConstants;
@@ -29,7 +27,6 @@ public class Shooter extends SubsystemBase {
   private TalonSRX m_shooterMotor2;
   private CANSparkMax m_ShooterFeederMotor;
   private double m_rpmSetPoint;
-  private double hoodSetPoint;
 
   public Shooter() {
     m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
@@ -54,11 +51,13 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kP, ShooterConstants.kTimeoutMs);
 
     m_rpmSetPoint = ShooterConstants.kWallShotRPM;
-    hoodSetPoint = HoodConstants.kPos3; // CHECK THESE POSITIONS IF THEY ARE RIGHT
   }
 
   public void shoot() {
     m_shooterMotor1.set(ControlMode.Velocity, RPMtoTicks(m_rpmSetPoint));
+  }
+
+  public void feedShooter() {
     m_ShooterFeederMotor.set(ShooterConstants.kShooterFeederSpeed);
   }
 
@@ -67,9 +66,8 @@ public class Shooter extends SubsystemBase {
     m_ShooterFeederMotor.set(0);
   }
 
-  public void setSetPoint(double rpm, double hood) {
+  public void setSetPoint(double rpm) {
     m_rpmSetPoint = rpm;
-    hoodSetPoint = hood;
   }
 
   @Override
@@ -92,21 +90,6 @@ public class Shooter extends SubsystemBase {
 
   public void printShooterValues() {
     SmartDashboard.putNumber("Shooter RPM", returnCurrentRPM());
-    SmartDashboard.putNumber("RPM Set Point", m_rpmSetPoint);
-    SmartDashboard.putNumber("Hood Set Point", hoodSetPoint);
-
-    if (m_rpmSetPoint == ShooterConstants.kWallShotRPM) {
-        SmartDashboard.putString("RPM Setpoint", "Wall shot (3475)");
-    }
-        
-    
-    else if (m_rpmSetPoint == ShooterConstants.k10FtShotRPM) {
-        SmartDashboard.putString("RPM Set Point", "10 ft shot (4250)");
-    }
-
-    else {
-        SmartDashboard.putString("RPM Set Point", "Trench shot (4500)");
-    }
   }
 
   public double returnCurrentRPM() {

@@ -16,6 +16,7 @@ import frc.robot.subsystems.DriveTrain;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class TurnToLimelight extends PIDCommand {
+  DriveTrain m_drivetrain;
   /**
    * Creates a new Limelight.
    */
@@ -30,10 +31,23 @@ public class TurnToLimelight extends PIDCommand {
         // This uses the output
         output -> drivetrain.arcadeDrive(0, output), drivetrain);
     getController().setTolerance(VisionConstants.kTolerance, VisionConstants.kRateTolerance);
+
+    m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
 
+  @Override
+  public void initialize() {
+    super.initialize();
+    m_drivetrain.setPipelineOne();
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    m_drivetrain.setPipelineZero();
+  }
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

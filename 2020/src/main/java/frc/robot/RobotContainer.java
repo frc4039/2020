@@ -34,6 +34,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.AdjustClimb;
+import frc.robot.commands.AdjustHood;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
 import frc.robot.commands.Feed;
@@ -42,11 +43,13 @@ import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.TestAuto;
 import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.setShootPosition;
 import frc.robot.Constants.GeneralConstants;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class RobotContainer {
@@ -71,7 +74,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     autoSelector.addOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain));
-    autoSelector.setDefaultOption("dsd", new PrintCommand("hello"));
+    autoSelector.setDefaultOption("dsd", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
     autoSelector.addOption("trenchshot", new PrintCommand("hola"));
     autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
     SmartDashboard.putData("Auto Selector", autoSelector);
@@ -88,10 +91,6 @@ public class RobotContainer {
 
     // Operator Controls---------------------------------------------
 
-    // Shoots
-    new JoystickButton(m_operatorController, Button.kA.value)
-      .whenHeld(new Shoot(m_shooter));
-
     // Smart Intake
     new JoystickButton(m_operatorController, Button.kB.value)
       .whenHeld(new SmartIntake(m_intaker, m_feeder, m_stirrer));
@@ -104,16 +103,15 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kBumperLeft.value)
       .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
 
-
     // Set Shoot RPM
       new POVButton(m_operatorController, 0)
-        .toggleWhenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter));
+        .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
 
       new POVButton(m_operatorController, 270)
-        .toggleWhenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter));
+        .whenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter, m_hood));
 
       new POVButton(m_operatorController, 180)
-        .toggleWhenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter));
+        .whenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood));
 
     // Driver Controls-------------------------------------------------
 
@@ -149,17 +147,17 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .toggleWhenPressed(new ReverseIntake(m_intaker));
 
-    new POVButton(m_driverController, 0)
-      .whenPressed(new TurnToAngle(0, m_drivetrain));
+    // new POVButton(m_driverController, 0)
+    //   .whenPressed(new TurnToAngle(0, m_drivetrain));
 
-    new POVButton(m_driverController, 90)
-      .whenPressed(new TurnToAngle(90, m_drivetrain));
+    // new POVButton(m_driverController, 90)
+    //   .whenPressed(new TurnToAngle(90, m_drivetrain));
 
-    new POVButton(m_driverController, 180)
-      .whenPressed(new TurnToAngle(180, m_drivetrain));
+    // new POVButton(m_driverController, 180)
+    //   .whenPressed(new TurnToAngle(180, m_drivetrain));
 
-    new POVButton(m_driverController, 270)
-      .whenPressed(new TurnToAngle(-90, m_drivetrain));
+    // new POVButton(m_driverController, 270)
+    //   .whenPressed(new TurnToAngle(-90, m_drivetrain));
   }
 
   public void init(){

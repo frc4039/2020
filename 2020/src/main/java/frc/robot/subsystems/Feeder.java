@@ -46,11 +46,11 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(0);
   }
 
-  public static boolean getBreakBeam() {
+  public boolean getBreakBeam() {
     return m_BreakBeam1.get() || m_BreakBeam2.get();
   }
 
-  public static boolean getBottomBeamBreak(){
+  public boolean getBottomBeamBreak(){
     return m_BreakBeam2.get();
   }
 

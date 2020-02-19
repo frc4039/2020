@@ -43,7 +43,7 @@ public class SmartShoot extends CommandBase {
     if (Math.abs(m_shooter.returnCurrentRPM() - m_shooter.getSetpoint()) < 500) {
       m_feeder.feed();
       m_stirrer.stir();
-      m_shooter.shoot();
+      m_shooter.feedShooter();
     }
   }
 
