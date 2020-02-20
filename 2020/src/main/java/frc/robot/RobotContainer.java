@@ -163,12 +163,13 @@ public class RobotContainer {
     m_drivetrain.zeroHeading();
   }
 
-  public void setCoastMode() {
+  public void setDisabledSettings() {
     m_drivetrain.setCoastMode();
   }
 
 public void setTeleSettings() {
   m_drivetrain.setRampRate();
+  m_drivetrain.setBrakeMode();
 }
 
 }
