@@ -104,10 +104,10 @@ public class Climber extends SubsystemBase {
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotDistance, ClimberConstants.PID_PRIMARY);
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotTurning, ClimberConstants.PID_TURN);
 
-    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimit));
-    m_Motor1.configForwardSoftLimitThreshold(0);
-    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimit));
-    m_Motor2.configForwardSoftLimitThreshold(0);
+    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitReverse));
+    m_Motor1.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitForward));
+    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitReverse));
+    m_Motor2.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitForward));
   
     m_Motor1.configReverseSoftLimitEnable(true);
     m_Motor1.configForwardSoftLimitEnable(true);

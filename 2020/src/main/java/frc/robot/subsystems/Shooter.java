@@ -10,18 +10,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.GeneralConstants;
-// import edu.wpi.first.wpilibj.SpeedController;
-// import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-
-
-  // private final SpeedController m_leftMotor = new SpeedControllerGroup(new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless),
-  //     new CANSparkMax(DriveConstants.kLeftDriveMotor2Port, MotorType.kBrushless));
-  // private final SpeedController m_rightMotor = new SpeedControllerGroup(new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless),
-  //     new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless));
 
   private TalonSRX m_shooterMotor1;
   private TalonSRX m_shooterMotor2;
@@ -81,11 +72,11 @@ public class Shooter extends SubsystemBase {
      * Reference:
      * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/VelocityClosedLoop/src/main/java/frc/robot/Robot.java#L123
      */
-    return rpm * ShooterConstants.kGearRatio * GeneralConstants.TicksPerRev / 600.0;
+    return rpm * ShooterConstants.kGearRatio * 4096 / 600.0;
   }
 
   public double TicksToRPM(double ticks) {
-    return ticks * 600 / GeneralConstants.TicksPerRev / ShooterConstants.kGearRatio;
+    return ticks * 600 / 4096 / ShooterConstants.kGearRatio;
   }
 
   public void printShooterValues() {
