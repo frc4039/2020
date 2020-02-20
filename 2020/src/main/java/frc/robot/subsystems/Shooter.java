@@ -5,11 +5,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
 
@@ -74,15 +76,10 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    printShooterValues();
+
   }
 
   public double RPMtoTicks(double rpm) {
-    /**
-     * Units that ControlMode.velocity expects to be in ticks per 100ms, NOT per minute.
-     * Reference:
-     * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/VelocityClosedLoop/src/main/java/frc/robot/Robot.java#L123
-     */
     return rpm * ShooterConstants.kGearRatio * 4096 / 600.0;
   }
 

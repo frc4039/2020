@@ -9,12 +9,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.HoodConstants;
 
 public class Hood extends SubsystemBase {
-  /**
-   * Creates a new Hood.
-   */
 
   private Servo m_servo1;
   private Servo m_servo2;
@@ -29,7 +27,7 @@ public class Hood extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
   }
 
   public void setPosition(double pos) {

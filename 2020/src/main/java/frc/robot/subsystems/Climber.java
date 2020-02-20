@@ -33,6 +33,19 @@ public class Climber extends SubsystemBase {
     m_Motor1.configFactoryDefault();
     m_Motor2.configFactoryDefault();
 
+    m_Motor1.setInverted(true);
+    m_Motor2.setInverted(false);
+
+    m_Motor1.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
+    m_Motor1.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
+    
+    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitReverse));
+    m_Motor1.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitForward));
+    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitReverse));
+    m_Motor2.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitForward));
+
     m_Motor1.setNeutralMode(NeutralMode.Brake);
     m_Motor2.setNeutralMode(NeutralMode.Brake);
 
@@ -57,9 +70,6 @@ public class Climber extends SubsystemBase {
 
     m_Motor2.configSelectedFeedbackCoefficient(	1, 1,	ClimberConstants.kTimeoutMs);	
 
-    m_Motor1.setInverted(true);
-    m_Motor2.setInverted(false);
-
     m_Motor2.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, ClimberConstants.kTimeoutMs);
 
     m_Motor2.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, ClimberConstants.kTimeoutMs);
@@ -71,11 +81,6 @@ public class Climber extends SubsystemBase {
     m_Motor2.configNeutralDeadband(ClimberConstants.kNeutralDeadband, ClimberConstants.kTimeoutMs);
 
     m_Motor1.configNeutralDeadband(ClimberConstants.kNeutralDeadband, ClimberConstants.kTimeoutMs);
-
-    m_Motor1.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
-    m_Motor1.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
-    m_Motor2.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
-    m_Motor2.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);  
     
     m_Motor2.config_kF(ClimberConstants.kSlotDistance, ClimberConstants.kDistanceF, ClimberConstants.kTimeoutMs);
     m_Motor2.config_kP(ClimberConstants.kSlotDistance, ClimberConstants.kDistanceP, ClimberConstants.kTimeoutMs);
@@ -103,17 +108,11 @@ public class Climber extends SubsystemBase {
 
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotDistance, ClimberConstants.PID_PRIMARY);
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotTurning, ClimberConstants.PID_TURN);
-
-    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitReverse));
-    m_Motor1.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitForward));
-    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitReverse));
-    m_Motor2.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitForward));
   
     m_Motor1.configReverseSoftLimitEnable(true);
     m_Motor1.configForwardSoftLimitEnable(true);
     m_Motor2.configReverseSoftLimitEnable(true);
     m_Motor2.configForwardSoftLimitEnable(true);
-    
   }
 
   public void setClimberPosition(double inches){
@@ -122,7 +121,9 @@ public class Climber extends SubsystemBase {
     } else {
       offset = 0;
     }
+
     m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
+
     m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
   }
   
@@ -159,5 +160,9 @@ public class Climber extends SubsystemBase {
 
   public double ticksToInches(double ticks){
     return ticks * ClimberConstants.kShaftDiameter * Math.PI / 2048.0 / ClimberConstants.kGearRatio;
+  }
+
+  public double inchesToDistanceFromGround(double height) {
+    return height + ClimberConstants.kSetpointExtended;
   }
 }

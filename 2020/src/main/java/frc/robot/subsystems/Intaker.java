@@ -6,26 +6,27 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.IntakeConstants;
+
 public class Intaker extends SubsystemBase {
-
-
-  // private final SpeedController m_leftMotor = new SpeedControllerGroup(new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless),
-  //     new CANSparkMax(DriveConstants.kLeftDriveMotor2Port, MotorType.kBrushless));
-  // private final SpeedController m_rightMotor = new SpeedControllerGroup(new CANSparkMax(DriveConstants.kRightDriveMotor1Port, MotorType.kBrushless),
-  //     new CANSparkMax(DriveConstants.kRightDriveMotor2Port, MotorType.kBrushless));
 
   private final VictorSPX m_intakeMotor;
 
   public Intaker() {
     m_intakeMotor = new VictorSPX(IntakeConstants.kIntakeMotorPort); 
+
     m_intakeMotor.configFactoryDefault(); 
+    
     m_intakeMotor.setInverted(IntakeConstants.kIntakeInversion);
-    //m_intakeMotor.setInverted(false);
   }
 
-  public void intake(double speed) {
-    m_intakeMotor.set(ControlMode.PercentOutput, speed);
+  public void intake() {
+    m_intakeMotor.set(ControlMode.PercentOutput, IntakeConstants.kIntakePercent);
+  }
+
+  public void outtake() {
+    m_intakeMotor.set(ControlMode.PercentOutput, -IntakeConstants.kIntakePercent);
   }
 
   public void stop() {
@@ -34,6 +35,6 @@ public class Intaker extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
   }
 }

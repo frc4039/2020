@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intaker;
 
 /**
@@ -40,7 +39,7 @@ public class Intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intaker.intake(IntakeConstants.kIntakePercent);
+    m_intaker.intake();
     // m_stirrer.stir();
   }
 

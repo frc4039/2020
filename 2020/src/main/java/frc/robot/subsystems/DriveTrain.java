@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.GeneralConstants;
 
 public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless);
@@ -72,6 +73,13 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
     m_rightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
 
+    if(GeneralConstants.realMatch){
+      m_leftMotor1.burnFlash();
+      m_leftMotor2.burnFlash();
+      m_rightMotor1.burnFlash();
+      m_rightMotor2.burnFlash();
+    }
+
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
     m_drive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
@@ -85,7 +93,6 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-    printDriveValues();
   }
 
   public void drive(double left, double right) {

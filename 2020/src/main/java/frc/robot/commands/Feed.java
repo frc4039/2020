@@ -45,6 +45,6 @@ public class Feed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_feeder.getBreakBeam();
+    return !m_feeder.getOrBreakBeams();
   }
 }

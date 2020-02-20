@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.GeneralConstants;
 
@@ -40,7 +41,7 @@ public class Feeder extends SubsystemBase {
 
   @Override
   public void periodic() {
-    printFeederValues();
+
   }
 
   public void feed() {
@@ -51,12 +52,20 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(0);
   }
 
-  public boolean getBreakBeam() {
+  public boolean getBottomBreakBeam(){
+    return m_BreakBeam2.get();
+  }
+
+  public boolean getTopBreakBeam(){
+    return m_BreakBeam1.get();
+  }
+
+  public boolean getOrBreakBeams() {
     return m_BreakBeam1.get() || m_BreakBeam2.get();
   }
 
-  public boolean getBottomBeamBreak(){
-    return m_BreakBeam2.get();
+  public boolean getAndBreakBeams() {
+    return m_BreakBeam1.get() && m_BreakBeam2.get();
   }
 
   public void printFeederValues() {
