@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -22,10 +23,16 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the constants are needed, to reduce verbosity.
  */
+
 public final class Constants {
+
+    private static DriverStation DS;
+
     public static final class GeneralConstants {
         public static final int kDriverController = 0;
         public static final int kOperatorController = 1;
+
+        public static final boolean realMatch = DS.isFMSAttached();
     }
 
     public static final class ShooterConstants {
@@ -50,6 +57,8 @@ public final class Constants {
         public static final int kTimeoutMs = 30;
 
         public static final double kGearRatio = 64 / 20;
+
+        public static final int kShooterFeederMotorCurrentLimit = 30;
 
         public static final boolean kShooterInversion1 = true;
         public static final boolean kShooterInversion2 = false;

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FeederConstants;
+import frc.robot.Constants.GeneralConstants;
 
 public class Feeder extends SubsystemBase {
   private CANSparkMax m_feederMotor;
@@ -28,6 +29,10 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.setSmartCurrentLimit(FeederConstants.kCurrentLimit);
     
     m_feederMotor.setInverted(FeederConstants.kFeederInversion);
+
+    if (GeneralConstants.realMatch) {
+      m_feederMotor.burnFlash();
+    }
 
     m_BreakBeam1 = new DigitalInput(FeederConstants.kBreakBeamPort1);
     m_BreakBeam2 = new DigitalInput(FeederConstants.kBreakBeamPort2);

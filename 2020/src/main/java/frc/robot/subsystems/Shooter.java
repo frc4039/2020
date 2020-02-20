@@ -10,27 +10,25 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
 
   private TalonSRX m_shooterMotor1;
   private TalonSRX m_shooterMotor2;
-  private CANSparkMax m_ShooterFeederMotor;
+  private CANSparkMax m_shooterFeederMotor;
   private double m_rpmSetPoint;
 
   public Shooter() {
     m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
     m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
-    m_ShooterFeederMotor = new CANSparkMax(ShooterConstants.kShooterFeederMotorPort, MotorType.kBrushless);
-
+    
     m_shooterMotor1.configFactoryDefault();
     m_shooterMotor2.configFactoryDefault();
-    m_ShooterFeederMotor.restoreFactoryDefaults();
 
     m_shooterMotor1.setInverted(ShooterConstants.kShooterInversion1);
     m_shooterMotor2.setInverted(ShooterConstants.kShooterInversion2);
-    m_ShooterFeederMotor.setInverted(ShooterConstants.kShooterFeederInversion);
     
     m_shooterMotor1.setSensorPhase(false);
         
@@ -41,7 +39,20 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kF, ShooterConstants.kTimeoutMs);
     m_shooterMotor1.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kP, ShooterConstants.kTimeoutMs);
 
-    m_rpmSetPoint = ShooterConstants.kWallShotRPM;
+
+    m_shooterFeederMotor = new CANSparkMax(ShooterConstants.kShooterFeederMotorPort, MotorType.kBrushless);
+
+    m_shooterFeederMotor.restoreFactoryDefaults();
+
+    m_shooterFeederMotor.setInverted(ShooterConstants.kShooterFeederInversion);
+
+    m_shooterFeederMotor.setSmartCurrentLimit(ShooterConstants.kShooterFeederMotorCurrentLimit);
+
+    if (GeneralConstants.realMatch) {
+      m_shooterFeederMotor.burnFlash();
+    }
+
+    m_rpmSetPoint = ShooterConstants.kInitiationLine;
   }
 
   public void shoot() {
@@ -49,12 +60,12 @@ public class Shooter extends SubsystemBase {
   }
 
   public void feedShooter() {
-    m_ShooterFeederMotor.set(ShooterConstants.kShooterFeederSpeed);
+    m_shooterFeederMotor.set(ShooterConstants.kShooterFeederSpeed);
   }
 
   public void stop() {
     m_shooterMotor1.set(ControlMode.PercentOutput, 0);
-    m_ShooterFeederMotor.set(0);
+    m_shooterFeederMotor.set(0);
   }
 
   public void setSetPoint(double rpm) {

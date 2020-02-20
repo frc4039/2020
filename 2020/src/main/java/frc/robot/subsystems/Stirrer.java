@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.StirrerConstants;
 
 public class Stirrer extends SubsystemBase {
@@ -29,6 +30,11 @@ public class Stirrer extends SubsystemBase {
 
     m_stirrerMotor1.setInverted(StirrerConstants.kStirrerInversion1);
     m_stirrerMotor2.setInverted(StirrerConstants.kStirrerInversion2);
+
+    if (GeneralConstants.realMatch) {
+      m_stirrerMotor1.burnFlash();
+      m_stirrerMotor2.burnFlash();
+    }
   }
 
   public void stir() {
