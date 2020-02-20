@@ -82,16 +82,16 @@ public class RobotContainer {
     // Operator Controls---------------------------------------------
 
     // Smart Intake
-    new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new SmartIntake(m_intaker, m_feeder, m_stirrer));
+    new Trigger(() -> m_operatorController.getY(Hand.kLeft) < -0.25)
+      .whileActiveContinuous(new SmartIntake(m_intaker, m_feeder, m_stirrer));
+
+    //Reverse the intake
+    new Trigger(() -> m_operatorController.getY(Hand.kLeft) > 0.25)
+      .whileActiveContinuous(new ReverseIntake(m_intaker));
 
     // Revv the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
-      .toggleWhenPressed(new Shoot(m_shooter));
-
-    // SmartShoot
-    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
+      .toggleWhenPressed(new Shoot(m_shooter).withTimeout(5));
 
     // Set Shoot RPM
       new POVButton(m_operatorController, 0)
@@ -108,6 +108,10 @@ public class RobotContainer {
     // Shoots 
     //new JoystickButton(m_driverController, Button.kA.value)
       //.whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+
+    // SmartShoot
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
 
     //cancel climber
     new JoystickButton(m_driverController, Button.kA.value)
@@ -127,15 +131,11 @@ public class RobotContainer {
       .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
 
     // Limelight
-    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+    new JoystickButton(m_driverController, Button.kA.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
     new JoystickButton(m_driverController, Button.kY.value)
       .whenPressed(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-
-    //Reverse the intake
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .toggleWhenPressed(new ReverseIntake(m_intaker));
 
     // new POVButton(m_driverController, 0)
     //   .whenPressed(new TurnToAngle(0, m_drivetrain));
