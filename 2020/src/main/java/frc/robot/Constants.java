@@ -32,7 +32,7 @@ public final class Constants {
         public static final int kDriverController = 0;
         public static final int kOperatorController = 1;
 
-        public static final boolean realMatch = DS.isFMSAttached();
+        public static final boolean realMatch = false;
     }
 
     public static final class ShooterConstants {

@@ -117,7 +117,7 @@ public class RobotContainer {
     //  .whenPressed(new InstantCommand(m_climber::zeroClimber));
 
     // Fully unspooled
-    new JoystickButton(m_driverController, Button.kB.value)
+    /*new JoystickButton(m_driverController, Button.kB.value)
       .whenPressed(new Climb(ClimberConstants.kSetpointExtended, m_climber));
 
     new JoystickButton(m_driverController, Button.kX.value)
@@ -125,6 +125,7 @@ public class RobotContainer {
 
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
       .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
+    */
 
     // Limelight
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
@@ -135,7 +136,7 @@ public class RobotContainer {
 
     //Reverse the intake
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .toggleWhenPressed(new ReverseIntake(m_intaker));
+      .whenPressed(new ReverseIntake(m_intaker));
 
     // new POVButton(m_driverController, 0)
     //   .whenPressed(new TurnToAngle(0, m_drivetrain));
