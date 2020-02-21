@@ -164,7 +164,8 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putNumber("Left Climber Position Inches empty",  ticksToInches(m_Motor1.getSelectedSensorPosition()));
     SmartDashboard.putNumber("Right Climber Position Inches empty",  ticksToInches(m_Motor2.getSelectedSensorPosition()));
     SmartDashboard.putNumber("motor 1 integrated", ticksToInches(m_Motor1.getSensorCollection().getIntegratedSensorPosition()));
-    SmartDashboard.putNumber("motor 2 integrated", ticksToInches(m_Motor2.getSensorCollection().getIntegratedSensorPosition()));
+    SmartDashboard.putNumber("motor 2 integrated", ticksToInches(m_Motor2.getSensorCollection().getIntegratedSensorPosition())); 
+    SmartDashboard.putBoolean("Climber Enable", getClimbEnable());
   }
 
   @Override

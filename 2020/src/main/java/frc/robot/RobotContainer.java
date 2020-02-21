@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,6 +33,7 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TestAuto;
+import frc.robot.commands.ThirtyInchReverse;
 import frc.robot.commands.TrenchAuto;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
@@ -111,7 +113,9 @@ public class RobotContainer {
 
     //Buddy climb height
     new POVButton(m_driverController, 90)
-      .whenPressed(new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber));
+      .whenPressed(new ParallelCommandGroup(
+      new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),
+      new InstantCommand(m_climber::dropBuddyClimb)));
 
     //Fully climbed height
     new POVButton(m_driverController, 180)
@@ -121,19 +125,14 @@ public class RobotContainer {
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
       .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
 
-    //new POVButton(m_operatorController, 0).and()
-    //  .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
-    
 
-
+    //Initiate climber-------------------------------------------------
     new JoystickButton(m_operatorController, Button.kStart.value)
       .and(new Trigger(() -> m_driverController.getTriggerAxis(Hand.kRight) >0.25))
       .whenActive(new EnableClimber(m_climber));
-    // Driver Controls-------------------------------------------------
 
-    // Shoots 
-    //new JoystickButton(m_driverController, Button.kA.value)
-      //.whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
+
+    // Driver Controls-------------------------------------------------
 
     // SmartShoot
     new JoystickButton(m_driverController, Button.kY.value)
@@ -143,20 +142,14 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value)
       .whileHeld(new TurnToLimelight(m_drivetrain));
 
-    new JoystickButton(m_driverController, Button.kY.value)
-      .whenPressed(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
 
-    // new POVButton(m_driverController, 0)
-    //   .whenPressed(new TurnToAngle(0, m_drivetrain));
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(new InstantCommand(m_climber::zeroClimber));
 
-    // new POVButton(m_driverController, 90)
-    //   .whenPressed(new TurnToAngle(90, m_drivetrain));
-
-    // new POVButton(m_driverController, 180)
-    //   .whenPressed(new TurnToAngle(180, m_drivetrain));
-
-    // new POVButton(m_driverController, 270)
-    //   .whenPressed(new TurnToAngle(-90, m_drivetrain));
+    new JoystickButton(m_driverController, Button.kStart.value)
+      .whenPressed(new ThirtyInchReverse(m_drivetrain));
   }
 
   public void init(){
