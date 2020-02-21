@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 
 public final class Constants {
 
-    private static DriverStation DS;
+    private static DriverStation DS = DriverStation.getInstance();
 
     public static final class GeneralConstants {
         public static final int kDriverController = 0;
@@ -127,6 +127,9 @@ public final class Constants {
         public static final double kSetFullyExtended = 33.77;
         public static final double kSetFullyClimbed = 60; // 66.89;
         public static final double kSetBuddyClimb = 20; //Must be less than 26 (60-33.77)
+
+        public static final int kServoPort1 = 2;
+        public static final int kServoPort2 = 3;
 
 		public static final int kTimeoutMs = 0;
         public static final int kPIDLoopIdx = 0;
