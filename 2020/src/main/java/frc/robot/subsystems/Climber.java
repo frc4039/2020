@@ -29,6 +29,8 @@ public class Climber extends SubsystemBase {
 
   private double offset = 0;
 
+  private boolean enableClimb = false;
+
   public Climber() {
     m_Motor1.configFactoryDefault();
     m_Motor2.configFactoryDefault();
@@ -116,15 +118,19 @@ public class Climber extends SubsystemBase {
   }
 
   public void setClimberPosition(double inches){
-    if(inches > ClimberConstants.kSetpointExtended) {
-      offset = ClimberConstants.kOffset;
-    } else {
-      offset = 0;
+
+    if (enableClimb){
+      if(inches > ClimberConstants.kSetFullyExtended) {
+        offset = ClimberConstants.kOffset;
+      } else {
+        offset = 0;
+      }
+  
+      m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
+  
+      m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
     }
-
-    m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
-
-    m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
+   
   }
   
   public void stop() {
@@ -162,7 +168,15 @@ public class Climber extends SubsystemBase {
     return ticks * ClimberConstants.kShaftDiameter * Math.PI / 2048.0 / ClimberConstants.kGearRatio;
   }
 
-  public double inchesToDistanceFromGround(double height) {
-    return height + ClimberConstants.kSetpointExtended;
+  public double distanceFromGroundToInches(double height) {
+    return height + ClimberConstants.kSetFullyExtended;
+  }
+
+  public void initiateClimb() {
+    enableClimb = true;
+  }
+
+  public boolean getClimbEnable() {
+    return enableClimb;
   }
 }

@@ -26,6 +26,7 @@ import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.Climb;
+import frc.robot.commands.EnableClimber;
 import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
@@ -89,20 +90,45 @@ public class RobotContainer {
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) > 0.25)
       .whileActiveContinuous(new ReverseIntake(m_intaker));
 
-    // Revv the shooter for SmartShoot
+    // Rev the shooter for SmartShoot
     new JoystickButton(m_operatorController, Button.kX.value)
       .toggleWhenPressed(new Shoot(m_shooter).withTimeout(5));
 
     // Set Shoot RPM
-      new POVButton(m_operatorController, 0)
-        .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
+    new POVButton(m_operatorController, 0)
+      .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
 
-      new POVButton(m_operatorController, 270)
-        .whenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter, m_hood));
+    new POVButton(m_operatorController, 270)
+      .whenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter, m_hood));
 
-      new POVButton(m_operatorController, 180)
-        .whenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood));
+    new POVButton(m_operatorController, 180)
+      .whenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood));
 
+    
+    //Fully extend climber
+    new POVButton(m_operatorController, 0)
+      .whenPressed(new Climb(ClimberConstants.kSetFullyExtended, m_climber));
+
+    //Buddy climb height
+    new POVButton(m_driverController, 90)
+      .whenPressed(new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber));
+
+    //Fully climbed height
+    new POVButton(m_driverController, 180)
+      .whenPressed(new Climb(ClimberConstants.kSetFullyClimbed, m_climber));
+
+    //Manual climb
+    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
+      .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
+
+    //new POVButton(m_operatorController, 0).and()
+    //  .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
+    
+
+
+    new JoystickButton(m_operatorController, Button.kStart.value)
+      .and(new Trigger(() -> m_driverController.getTriggerAxis(Hand.kRight) >0.25))
+      .whenActive(new EnableClimber(m_climber));
     // Driver Controls-------------------------------------------------
 
     // Shoots 
@@ -112,23 +138,6 @@ public class RobotContainer {
     // SmartShoot
     new JoystickButton(m_driverController, Button.kY.value)
       .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
-
-    //cancel climber
-    new JoystickButton(m_driverController, Button.kA.value)
-      .whenPressed(new InstantCommand(m_climber::stop, m_climber));
-
-    //new JoystickButton(m_driverController, Button.kY.value)
-    //  .whenPressed(new InstantCommand(m_climber::zeroClimber));
-
-    // Fully unspooled
-    new JoystickButton(m_driverController, Button.kB.value)
-      .whenPressed(new Climb(ClimberConstants.kSetpointExtended, m_climber));
-
-    new JoystickButton(m_driverController, Button.kX.value)
-      .whenPressed(new Climb(ClimberConstants.kSetpointClimbed, m_climber));
-
-    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
-      .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)

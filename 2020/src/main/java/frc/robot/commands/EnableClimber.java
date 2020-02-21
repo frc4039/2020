@@ -8,43 +8,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Climber;
 
-public class AdjustHood extends CommandBase {
+public class EnableClimber extends CommandBase {
   /**
-   * Creates a new AdjustHood.
+   * Creates a new EnableClimber.
    */
-  public final Hood m_hood;
-  public double m_pos;
   
-  public AdjustHood(double pos, Hood hood) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_pos = pos;
-    m_hood = hood;
+  private final Climber m_climber;
 
-    addRequirements(m_hood);
+  public EnableClimber(Climber climber) {
+    m_climber = climber;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_climber.initiateClimb();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_hood.setPosition(m_pos);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_hood.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
