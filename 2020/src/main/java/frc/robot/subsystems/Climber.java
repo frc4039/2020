@@ -170,6 +170,7 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
+    printClimberValues();
   }
 
   public double inchesToTicks(double inches) {
