@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -27,9 +28,19 @@ public class Climber extends SubsystemBase {
   private TalonFX m_Motor1 = new TalonFX(ClimberConstants.kClimberMotorLeftPort);
   private TalonFX m_Motor2 = new TalonFX(ClimberConstants.kClimberMotorRightPort);
 
+  private Servo m_servo1;
+  private Servo m_servo2;
+
   private double offset = 0;
 
   public Climber() {
+
+    m_servo1 = new Servo(ClimberConstants.kServoPort1);
+    m_servo1.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    
+    m_servo2 = new Servo(ClimberConstants.kServoPort2);
+    m_servo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+
     m_Motor1.configFactoryDefault();
     m_Motor2.configFactoryDefault();
 
@@ -164,5 +175,15 @@ public class Climber extends SubsystemBase {
 
   public double inchesToDistanceFromGround(double height) {
     return height + ClimberConstants.kSetpointExtended;
+  }
+
+  public void dropBuddyClimb(){
+    m_servo1.set(0);
+    m_servo2.set(0);
+  }
+
+  public void resetBuddyClimb(){
+    m_servo1.set(1);
+    m_servo2.set(1);
   }
 }

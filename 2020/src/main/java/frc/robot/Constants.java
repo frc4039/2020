@@ -26,13 +26,13 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 
 public final class Constants {
 
-    private static DriverStation DS;
+    private static DriverStation DS = DriverStation.getInstance();
 
     public static final class GeneralConstants {
         public static final int kDriverController = 0;
         public static final int kOperatorController = 1;
 
-        public static final boolean realMatch = false;
+        public static final boolean realMatch = DS.isFMSAttached();
     }
 
     public static final class ShooterConstants {
@@ -123,6 +123,9 @@ public final class Constants {
 
         public static final int kLeftLimitSwitchPort = 2;
         public static final int kRightLimitSwitchPort = 3;
+
+        public static final int kServoPort1 = 2;
+        public static final int kServoPort2 = 3;
 
         public static final double kSetpointExtended = 33.77;
         public static final double kSetpointClimbed = 60; // 66.89;

@@ -5,6 +5,8 @@ Operator Controller, D-Pad Up (Press): setShootPosition (ShooterConstants.kTarge
 Operator Controller, D-Pad Right (Press): setShootPosition (ShooterConstants.kInitiationLine)
 Operator Controller, D-Pad Down (Press): setShootPosition (ShooterConstants.kNearTrench)
 Driver Controller, A Button (Press): InstantCommand (m_climber::stop)
+Driver Controller, B Button (Press): InstantCommand (m_climber::dropBuddyClimb)
+Driver Controller, X Button (Press): InstantCommand (m_climber::resetBuddyClimb)
 Driver Controller, Left Bumper Button (Hold): TurnToLimelight
 Driver Controller, Y Button (Press): InstantCommand (m_drivetrain::zeroHeading)
-Driver Controller, Right Bumper Button (Toggle on/off): ReverseIntake
+Driver Controller, Right Bumper Button (Press): ReverseIntake

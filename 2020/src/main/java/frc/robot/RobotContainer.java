@@ -117,14 +117,25 @@ public class RobotContainer {
     //  .whenPressed(new InstantCommand(m_climber::zeroClimber));
 
     // Fully unspooled
-    /*new JoystickButton(m_driverController, Button.kB.value)
+    /*
+    new JoystickButton(m_driverController, Button.kB.value)
       .whenPressed(new Climb(ClimberConstants.kSetpointExtended, m_climber));
 
+    //fully climbed
     new JoystickButton(m_driverController, Button.kX.value)
       .whenPressed(new Climb(ClimberConstants.kSetpointClimbed, m_climber));
 
+    //manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
       .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
+    */
+
+    /* Buddy Climb
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_climber::dropBuddyClimb));
+
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
     */
 
     // Limelight
