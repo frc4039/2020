@@ -153,8 +153,9 @@ public class RobotContainer {
         new TurnToLimelight(m_drivetrain), 
         new ParallelCommandGroup(
           new TurnToLimelight(m_drivetrain).perpetually(), 
-          new SmartShoot(m_feeder, m_shooter, m_stirrer)),
-        new InstantCommand(m_drivetrain::setPipelineZero)));
+          new SmartShoot(m_feeder, m_shooter, m_stirrer))));
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
