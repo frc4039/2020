@@ -88,11 +88,11 @@ public final class Constants {
     }
 
     public static final class VisionConstants {
-        public static final double kP = 1.0;
+        public static final double kP = 0.6;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kFF = 0.15;
-        public static final double kTolerance = 0.1;
+        public static final double kFF = 0.2;
+        public static final double kTolerance = 0.08;
         public static final double kRateTolerance = 0.0;
     }
 

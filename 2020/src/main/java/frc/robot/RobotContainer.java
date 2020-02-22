@@ -149,7 +149,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value)
       .whileHeld(new SequentialCommandGroup(
         new InstantCommand(m_drivetrain::setPipelineOne),
-        new WaitCommand(0.02),
+        new WaitCommand(0.2),
         new TurnToLimelight(m_drivetrain), 
         new ParallelCommandGroup(
           new TurnToLimelight(m_drivetrain).perpetually(), 
