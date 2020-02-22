@@ -70,7 +70,7 @@ public class RobotContainer {
    * stems, OI devices, and commands.
    */
   public RobotContainer() {
-    autoSelector.setDefaultOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain));
+    autoSelector.setDefaultOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("dsd", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
     autoSelector.addOption("trenchshot", new PrintCommand("hola"));
     autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
