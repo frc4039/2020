@@ -31,6 +31,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.Climb;
 import frc.robot.commands.EnableClimber;
+import frc.robot.commands.RendezvousAuto;
 import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
@@ -38,6 +39,7 @@ import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TestAuto;
 import frc.robot.commands.ThirtyInchReverse;
 import frc.robot.commands.TrenchAuto;
+import frc.robot.commands.TrenchAutoV2;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
@@ -70,9 +72,9 @@ public class RobotContainer {
    * stems, OI devices, and commands.
    */
   public RobotContainer() {
-    autoSelector.setDefaultOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("dsd", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
-    autoSelector.addOption("trenchshot", new PrintCommand("hola"));
+    autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Middle Front Bumpers", new TrenchAutoV2(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    // autoSelector.addOption("RendezvousAuto", new RendezvousAuto());
     autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
