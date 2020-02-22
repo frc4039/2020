@@ -40,9 +40,9 @@ public final class Constants {
         public static final int kShooterMotor2Port = 21;
         public static final int kShooterFeederMotorPort = 25;
 
-        public static final double kTrenchShotRPM = 4500;
+        public static final double kTrenchShotRPM = 5250;
         public static final double kWallShotRPM = 3475;
-        public static final double k10FtShotRPM = 4250;
+        public static final double k10FtShotRPM = 4350;
 
         public static final double kShooterFeederSpeed = 0.8;
 

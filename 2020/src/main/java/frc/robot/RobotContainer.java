@@ -75,7 +75,6 @@ public class RobotContainer {
     autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
-
     m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.arcadeDrive(m_driverController.getY(Hand.kLeft),
     m_driverController.getX(Hand.kRight)), m_drivetrain));
 
