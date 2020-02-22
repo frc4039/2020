@@ -29,7 +29,7 @@ public class TurnToAngle extends PIDCommand {
         () -> angle,
         // This uses the output
         output -> {
-          m_drivetrain.arcadeDrive(0, output);
+          m_drivetrain.arcadeDrive(0, output + Math.signum(output)*TurningConstants.kFF);
         }, 
         m_drivetrain
         );

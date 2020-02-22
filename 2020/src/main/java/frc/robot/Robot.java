@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
+    m_robotContainer.printAllValues();
   }
 
   /**
@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_robotContainer.setDisabledSettings();
+    //m_robotContainer.setDisabledSettings();
   }
 
   @Override

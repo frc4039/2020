@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,6 +38,7 @@ import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TestAuto;
 import frc.robot.commands.ThirtyInchReverse;
 import frc.robot.commands.TrenchAuto;
+import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
 import frc.robot.subsystems.Climber;
@@ -142,10 +145,14 @@ public class RobotContainer {
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new TurnToLimelight(m_drivetrain));
+      .whileHeld(new SequentialCommandGroup(new TurnToLimelight(m_drivetrain), 
+                                            new ParallelCommandGroup(
+                                              new TurnToLimelight(m_drivetrain).perpetually(), 
+                                              new SmartShoot(m_feeder, m_shooter, m_stirrer))));
 
 
-    //temporary commands
+    //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
+    /*
     new JoystickButton(m_driverController, Button.kB.value)
       .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
 
@@ -154,6 +161,28 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Button.kStart.value)
       .whenPressed(new ThirtyInchReverse(m_drivetrain));
+
+    new JoystickButton(m_driverController, Button.kBack.value)
+      .whenPressed(m_drivetrain::zeroHeading);
+
+    new POVButton(m_driverController, 0)
+      .whileHeld(new TurnToAngle(0.0, m_drivetrain));
+
+    new POVButton(m_driverController, 90)
+      .whileHeld(new TurnToAngle(-90.0, m_drivetrain));
+
+    new POVButton(m_driverController, 180)
+      .whileHeld(new TurnToAngle(180.0, m_drivetrain));
+
+    new POVButton(m_driverController, 270)
+      .whileHeld(new TurnToAngle(90.0, m_drivetrain));
+      */
+
+    new POVButton(m_driverController, 0)
+      .whenPressed(new InstantCommand(m_drivetrain::setPipelineZero));
+
+    new POVButton(m_driverController, 180)
+      .whenPressed(new InstantCommand(m_drivetrain::setPipelineOne));
   }
 
   public void init(){
@@ -176,6 +205,13 @@ public class RobotContainer {
 public void setTeleSettings() {
   m_drivetrain.setRampRate();
   m_drivetrain.setBrakeMode();
+}
+
+public void printAllValues(){
+  m_climber.printClimberValues();
+  m_drivetrain.printDriveValues();
+  m_feeder.printFeederValues();
+  m_shooter.printShooterValues();
 }
 
 }

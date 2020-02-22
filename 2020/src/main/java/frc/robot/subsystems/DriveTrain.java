@@ -92,6 +92,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+    printDriveValues();
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
   }
 
@@ -201,7 +202,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void printDriveValues() {
     SmartDashboard.putNumber("limelightx", getLimelight());
-    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+    SmartDashboard.putNumber("Gyro", getHeading());
     SmartDashboard.putNumber("Left Encoder", m_leftEncoder.getPosition());
     SmartDashboard.putNumber("Right Encoder", m_rightEncoder.getPosition());
   }

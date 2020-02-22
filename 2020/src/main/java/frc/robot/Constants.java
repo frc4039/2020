@@ -91,14 +91,16 @@ public final class Constants {
         public static final double kP = 1.0;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kTolerance = 0;
-        public static final double kRateTolerance = 0;
+        public static final double kFF = 0.15;
+        public static final double kTolerance = 0.1;
+        public static final double kRateTolerance = 0.0;
     }
 
     public static final class TurningConstants {
-        public static final double kP = 0.25;
+        public static final double kP = 0.0015;
         public static final double kI = 0;
         public static final double kD = 0;
+        public static final double kFF = 0.35;
         public static final double kTolerance = 1;
         public static final double kRateTolerance = 10;
     }
@@ -176,7 +178,7 @@ public final class Constants {
         
         public static double k10FtPos = 0.00;
         public static double kWallPos = 1.00;
-        public static double kTrenchPos = 0.75;
+        public static double kTrenchPos = 0.0;
     }
 
     public static final class DriveConstants {
