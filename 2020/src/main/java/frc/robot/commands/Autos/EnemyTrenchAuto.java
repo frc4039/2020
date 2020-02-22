@@ -36,22 +36,22 @@ public class EnemyTrenchAuto extends SequentialCommandGroup {
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
-      List.of(new Translation2d(Units.inchesToMeters(60), 0)),
+      List.of(new Translation2d(Units.inchesToMeters(42), 0)),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(120), 0, new Rotation2d(Units.degreesToRadians(0))),
+      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
       // Pass config
       AutoConstants.config.setReversed(false));
 
   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
-      new Pose2d(120, 0, new Rotation2d(Units.degreesToRadians(0))),
+      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
       // Pass through these two interior waypoints, making an 's' curve path
       List.of(
-
+        new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(48))
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(120), Units.inchesToMeters(16 * 12),
-          new Rotation2d(Units.degreesToRadians(180))),
+      new Pose2d(-Units.inchesToMeters(0), Units.inchesToMeters(17.5 * 12),
+          new Rotation2d(Units.degreesToRadians(185))),
       // Pass config
       AutoConstants.config.setReversed(true));
 
@@ -63,8 +63,8 @@ public class EnemyTrenchAuto extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
         new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood).withTimeout(2),
-        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)));
-        // new AutoCommand(drivetrain, farTrajectory2),
-        // new SmartShoot(feeder, shooter, stirrer));
+        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
+        new AutoCommand(drivetrain, farTrajectory2),
+        new SmartShoot(feeder, shooter, stirrer));
     }
 }
