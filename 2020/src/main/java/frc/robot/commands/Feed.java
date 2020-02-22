@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
@@ -31,9 +32,9 @@ public class Feed extends CommandBase {
     m_feeder.printFeederValues();
 
     // if (m_feeder.getBreakBeam()) {
-      m_feeder.feed();
-
+    m_feeder.feed();
     // }
+    SmartDashboard.putBoolean("Feeder Stalled", m_feeder.isStalled());
   }
 
   // Called once the command ends or is interrupted.
