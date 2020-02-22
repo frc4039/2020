@@ -33,6 +33,7 @@ import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
 import frc.robot.commands.EnableClimber;
+import frc.robot.commands.LimelightShoot;
 import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
@@ -147,13 +148,7 @@ public class RobotContainer {
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new SequentialCommandGroup(
-        new InstantCommand(m_drivetrain::setPipelineOne),
-        new WaitCommand(0.2),
-        new TurnToLimelight(m_drivetrain), 
-        new ParallelCommandGroup(
-          new TurnToLimelight(m_drivetrain).perpetually(), 
-          new SmartShoot(m_feeder, m_shooter, m_stirrer))));
+      .whenPressed(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer));
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 

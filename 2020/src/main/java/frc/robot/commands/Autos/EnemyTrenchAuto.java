@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
@@ -65,6 +67,7 @@ public class EnemyTrenchAuto extends SequentialCommandGroup {
         new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood).withTimeout(2),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
         new AutoCommand(drivetrain, farTrajectory2),
-        new SmartShoot(feeder, shooter, stirrer));
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer).withTimeout(5),
+        new InstantCommand(drivetrain::setPipelineZero));
     }
 }

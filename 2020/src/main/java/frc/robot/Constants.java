@@ -89,7 +89,7 @@ public final class Constants {
 
     public static final class VisionConstants {
         public static final double kP = 0.6;
-        public static final double kI = 0;
+        public static final double kI = 0.1;
         public static final double kD = 0;
         public static final double kFF = 0.2;
         public static final double kTolerance = 0.08;
@@ -209,8 +209,8 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 0.5;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
+        public static final double kMaxSpeedMetersPerSecond = 1;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
 		public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
