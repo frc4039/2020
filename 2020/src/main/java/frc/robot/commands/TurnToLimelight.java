@@ -42,13 +42,12 @@ public class TurnToLimelight extends PIDCommand {
   @Override
   public void initialize() {
     super.initialize();
-    //m_drivetrain.setPipelineOne();
   }
 
   @Override
   public void end(boolean interrupted) {
     super.end(interrupted);
-    //m_drivetrain.setPipelineZero();
+    SmartDashboard.putBoolean("Targeted", false);
   }
   // Returns true when the command should end.
   @Override

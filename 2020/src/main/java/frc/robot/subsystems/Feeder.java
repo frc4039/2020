@@ -68,6 +68,14 @@ public class Feeder extends SubsystemBase {
     return m_BreakBeam1.get() && m_BreakBeam2.get();
   }
 
+  public boolean isStalled(){
+    if(m_feederMotor.getAppliedOutput() != 0 && m_feederMotor.getEncoder().getVelocity() == 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public void printFeederValues() {
     SmartDashboard.putBoolean("Top Break Beam Status", m_BreakBeam1.get());
     SmartDashboard.putBoolean("Bottom Break Beam Status", m_BreakBeam2.get());
