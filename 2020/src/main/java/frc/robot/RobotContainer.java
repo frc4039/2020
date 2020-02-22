@@ -29,6 +29,7 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AdjustClimb;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
 import frc.robot.commands.EnableClimber;
 import frc.robot.commands.ReverseIntake;
@@ -77,8 +78,10 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Selector", autoSelector);
 
 
-    m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.arcadeDrive(m_driverController.getY(Hand.kLeft),
-    m_driverController.getX(Hand.kRight)), m_drivetrain));
+    m_drivetrain.setDefaultCommand(new ArcadeDrive(
+      () -> m_driverController.getY(Hand.kLeft), 
+      () -> m_driverController.getX(Hand.kRight), 
+      m_drivetrain));
 
     configureButtonBindings();
   }
