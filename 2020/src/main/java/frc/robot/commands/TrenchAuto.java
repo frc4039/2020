@@ -26,7 +26,7 @@ import frc.robot.subsystems.Stirrer;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class TrenchAuto extends SequentialCommandGroup {
-  static final Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+  static final Trajectory trenchTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
@@ -35,9 +35,9 @@ public class TrenchAuto extends SequentialCommandGroup {
             new Translation2d(0, -Units.inchesToMeters(65))
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-Units.inchesToMeters(35), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
+        new Pose2d(-Units.inchesToMeters(35 + 14 * 12), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
         // Pass config
-        AutoConstants.config.setReversed(true)
+        AutoConstants.config.setReversed(false)
     );
   /**
    * Creates a new AutoRoutine.
@@ -47,6 +47,6 @@ public class TrenchAuto extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
           new SmartShoot(feeder, shooter, stirrer).withTimeout(5), 
-          new AutoCommand(drivetrain, exampleTrajectory));
+          new AutoCommand(drivetrain, trenchTrajectory));
   }
 }

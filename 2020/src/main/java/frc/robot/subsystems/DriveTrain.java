@@ -158,6 +158,12 @@ public class DriveTrain extends SubsystemBase {
     m_gyro.reset();
   }
 
+  public void resetEverything() {
+    resetEncoders();
+    zeroHeading();
+    resetOdometry(new Pose2d());
+  }
+
   public double getHeading() {
     return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }

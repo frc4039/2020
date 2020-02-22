@@ -70,8 +70,8 @@ public class RobotContainer {
    * stems, OI devices, and commands.
    */
   public RobotContainer() {
-    autoSelector.addOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain));
-    autoSelector.setDefaultOption("dsd", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
+    autoSelector.setDefaultOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain));
+    autoSelector.addOption("dsd", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
     autoSelector.addOption("trenchshot", new PrintCommand("hola"));
     autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
     SmartDashboard.putData("Auto Selector", autoSelector);
@@ -150,6 +150,14 @@ public class RobotContainer {
                                               new TurnToLimelight(m_drivetrain).perpetually(), 
                                               new SmartShoot(m_feeder, m_shooter, m_stirrer))));
 
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+      .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
+
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whileHeld(new InstantCommand(m_drivetrain::setCoastMode))
+      .whenReleased(new InstantCommand(m_drivetrain::setBrakeMode));
+
+    // new JoystickButton
 
     //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
     /*
