@@ -72,7 +72,7 @@ public class RobotContainer {
     autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Middle Front Bumpers", new TrenchAutoV2(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     // autoSelector.addOption("RendezvousAuto", new RendezvousAuto());
-    autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
+    autoSelector.addOption("wallshot", new EnemyTrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
     m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.arcadeDrive(m_driverController.getY(Hand.kLeft),

@@ -22,7 +22,7 @@ public class setShootPosition extends CommandBase {
   private int m_shootingPosition;
   private Shooter m_shooter;
   private Hood m_hood;
-  
+
   
   public setShootPosition(int shootingPosition, Shooter shooter, Hood hood) {
     m_shootingPosition = shootingPosition;
@@ -79,3 +79,4 @@ public class setShootPosition extends CommandBase {
     return true;
   }
 }
+        
