@@ -197,7 +197,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLimelight() {
-    return -table.getEntry("tx").getDouble(0.0) / 27;
+    return -table.getEntry("tx").getDouble(100.0) / 27;
   }
 
   public void printDriveValues() {

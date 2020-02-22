@@ -145,10 +145,14 @@ public class RobotContainer {
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)
-      .whileHeld(new SequentialCommandGroup(new TurnToLimelight(m_drivetrain), 
-                                            new ParallelCommandGroup(
-                                              new TurnToLimelight(m_drivetrain).perpetually(), 
-                                              new SmartShoot(m_feeder, m_shooter, m_stirrer))));
+      .whileHeld(new SequentialCommandGroup(
+        new InstantCommand(m_drivetrain::setPipelineOne),
+        new WaitCommand(0.02),
+        new TurnToLimelight(m_drivetrain), 
+        new ParallelCommandGroup(
+          new TurnToLimelight(m_drivetrain).perpetually(), 
+          new SmartShoot(m_feeder, m_shooter, m_stirrer)),
+        new InstantCommand(m_drivetrain::setPipelineZero)));
 
 
     //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
