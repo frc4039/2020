@@ -152,20 +152,25 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
-    new JoystickButton(m_driverController, Button.kBumperLeft.value)
-      .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
 
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whileHeld(new InstantCommand(m_drivetrain::setCoastMode))
-      .whenReleased(new InstantCommand(m_drivetrain::setBrakeMode));
 
     // new JoystickButton
 
     //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
-    /*
+  
     new JoystickButton(m_driverController, Button.kB.value)
       .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
 
+    
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+      .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
+
+  /*
+
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whileHeld(new InstantCommand(m_drivetrain::setCoastMode))
+      .whenReleased(new InstantCommand(m_drivetrain::setBrakeMode));
+  
     new JoystickButton(m_driverController, Button.kX.value)
       .whenPressed(new InstantCommand(m_climber::zeroClimber));
 
@@ -186,13 +191,13 @@ public class RobotContainer {
 
     new POVButton(m_driverController, 270)
       .whileHeld(new TurnToAngle(90.0, m_drivetrain));
-      */
-
+    
     new POVButton(m_driverController, 0)
       .whenPressed(new InstantCommand(m_drivetrain::setPipelineZero));
 
     new POVButton(m_driverController, 180)
       .whenPressed(new InstantCommand(m_drivetrain::setPipelineOne));
+    */
   }
 
   public void init(){
