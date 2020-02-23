@@ -77,7 +77,6 @@ public class RobotContainer {
     autoSelector.addOption("wallshot", new EnemyTrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
-
     m_drivetrain.setDefaultCommand(new ArcadeDrive(
       () -> m_driverController.getY(Hand.kLeft), 
       () -> m_driverController.getX(Hand.kRight), 
@@ -219,6 +218,10 @@ public class RobotContainer {
 
   public void setDisabledSettings() {
     m_drivetrain.setCoastMode();
+  }
+
+  public void setAutoSettings() {
+    m_drivetrain.setBrakeMode();
   }
 
 public void setTeleSettings() {
