@@ -220,6 +220,7 @@ public class RobotContainer {
 public void setTeleSettings() {
   m_drivetrain.setRampRate();
   m_drivetrain.setBrakeMode();
+  m_climber.zeroClimber();
 }
 
 public void printAllValues(){
