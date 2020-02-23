@@ -31,9 +31,10 @@ public class Feed extends CommandBase {
   public void execute() {
     m_feeder.printFeederValues();
 
-    // if (m_feeder.getBreakBeam()) {
-    m_feeder.feed();
-    // }
+    if (!m_feeder.isStalled()) {
+      m_feeder.feed();
+    }
+
     SmartDashboard.putBoolean("Feeder Stalled", m_feeder.isStalled());
   }
 

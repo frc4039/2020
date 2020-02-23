@@ -48,6 +48,10 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(FeederConstants.kFeederPercent);
   }
 
+  public void unjam() {
+    m_feederMotor.set(-FeederConstants.kFeederPercent);
+  }
+
   public void stop() {
     m_feederMotor.set(0);
   }

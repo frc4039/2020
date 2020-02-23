@@ -95,13 +95,16 @@ public class RobotContainer {
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) > 0.25)
       .whileActiveContinuous(new SmartIntake(m_intaker, m_feeder, m_stirrer));
 
+    new JoystickButton(m_operatorController, Button.kX.value)
+      .whenPressed(new InstantCommand(m_feeder::unjam));
+
     //Reverse the intake
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) < -0.25)
       .whileActiveContinuous(new ReverseIntake(m_intaker));
 
     // Rev the shooter for SmartShoot
-    new JoystickButton(m_operatorController, Button.kX.value)
-      .toggleWhenPressed(new Shoot(m_shooter).withTimeout(5));
+    // new JoystickButton(m_operatorController, Button.kX.value)
+    //   .toggleWhenPressed(new Shoot(m_shooter).withTimeout(5));
     
     //Fully extend climber OR set shot position to Target Zone
     new POVButton(m_operatorController, 0)
@@ -209,8 +212,9 @@ public class RobotContainer {
   }
 
   public void zeroDriveTrain() {
-    m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
     m_drivetrain.zeroHeading();
+    m_drivetrain.resetEncoders();
+    m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
   }
 
   public void setDisabledSettings() {
