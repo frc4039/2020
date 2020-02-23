@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Timer m_timer = new Timer();
 
   private RobotContainer m_robotContainer;
 
@@ -55,11 +57,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    //m_robotContainer.setDisabledSettings();
+    m_timer.reset();
+    m_timer.start();
   }
 
   @Override
   public void disabledPeriodic() {
+    if (m_timer.get() > 3.00) {
+      m_robotContainer.setDisabledSettings();
+      m_timer.stop();
+    }
   }
 
   /**

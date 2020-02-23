@@ -1,11 +1,12 @@
 Operator Controller, X Button (Toggle on/off): Shoot(m_shooter).withTimeout (5)
-Operator Controller, D-Pad Up whenPressed(new ConditionalCommand: Climb(ClimberConstants.kSetFullyExtended, m_climber), new setShootPosition (ShooterConstants.kTargetZone, m_climber::getClimbEnable)
-Operator Controller, D-Pad Left whenPressed(new ConditionalCommand(new ParallelCommandGroup: Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),new InstantCommand(m_climber::dropBuddyClimb)),new setShootPosition (ShooterConstants.kInitiationLine, m_climber::getClimbEnable)
-Operator Controller, D-Pad Down whenPressed(new ConditionalCommand: Climb(ClimberConstants.kSetFullyClimbed, m_climber),new setShootPosition (ShooterConstants.kNearTrench, m_climber::getClimbEnable)
+Operator Controller, D-Pad Up (Press): ConditionalCommand( new Climb(ClimberConstants.kSetFullyExtended, m_climber),new setShootPosition (ShooterConstants.kTargetZone, m_climber::getClimbEnable)
+Operator Controller, D-Pad Left (Press): ConditionalCommand( new ParallelCommandGroup( new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber), new InstantCommand(m_climber::dropBuddyClimb)), new setShootPosition (ShooterConstants.kInitiationLine, m_climber::getClimbEnable)
+Operator Controller, D-Pad Down (Press): ConditionalCommand( new Climb(ClimberConstants.kSetFullyClimbed, m_climber), new setShootPosition (ShooterConstants.kNearTrench, m_climber::getClimbEnable)
 Operator Controller, Start Button (When activated): EnableClimber
 Driver Controller, Y Button (Hold): SmartShoot
-Driver Controller, A Button whileHeld(new SequentialCommandGroup(new TurnToLimelight(m_drivetrain), new ParallelCommandGroup: TurnToLimelight(m_drivetrain).perpetually(), new SmartShoot
-Driver Controller, B Button (Press): InstantCommand (m_climber::resetBuddyClimb)
-Driver Controller, X Button (Press): InstantCommand (m_climber::zeroClimber)
+Driver Controller, A Button (Press): LimelightShoot
+Driver Controller, A Button (When button is released): InstantCommand (m_drivetrain::setPipelineZero)
+Driver Controller, Left Bumper Button (Press): InstantCommand (m_drivetrain::resetEverything)
+Driver Controller, Right Bumper Button (When button is released): InstantCommand (m_drivetrain::setBrakeMode)
 Driver Controller, D-Pad Up (Press): InstantCommand (m_drivetrain::setPipelineZero)
 Driver Controller, D-Pad Down (Press): InstantCommand (m_drivetrain::setPipelineOne)

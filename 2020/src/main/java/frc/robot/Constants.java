@@ -40,9 +40,9 @@ public final class Constants {
         public static final int kShooterMotor2Port = 21;
         public static final int kShooterFeederMotorPort = 25;
 
-        public static final double kTrenchShotRPM = 4500;
+        public static final double kTrenchShotRPM = 5250;
         public static final double kWallShotRPM = 3475;
-        public static final double k10FtShotRPM = 4250;
+        public static final double k10FtShotRPM = 4350;
 
         public static final double kShooterFeederSpeed = 0.8;
 
@@ -88,11 +88,11 @@ public final class Constants {
     }
 
     public static final class VisionConstants {
-        public static final double kP = 1.0;
-        public static final double kI = 0;
+        public static final double kP = 0.6;
+        public static final double kI = 0.1;
         public static final double kD = 0;
-        public static final double kFF = 0.15;
-        public static final double kTolerance = 0.1;
+        public static final double kFF = 0.2;
+        public static final double kTolerance = 0.08;
         public static final double kRateTolerance = 0.0;
     }
 
@@ -196,7 +196,7 @@ public final class Constants {
 		public static final double ksVolts = 0.172;
 		public static final double kvVoltSecondsPerMeter = 2.05;
         public static final double kaVoltSecondsSquaredPerMeter = 0.493;
-        public static final double kTrackWidthMeters = 0.61; //3.366;
+        public static final double kTrackWidthMeters = 1.1; //3.366;
 		public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
         public static final double kPDriveVel = 1.93;
         
@@ -209,8 +209,8 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 0.5;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
+        public static final double kMaxSpeedMetersPerSecond = 1;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
 		public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =

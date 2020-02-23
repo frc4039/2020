@@ -158,6 +158,12 @@ public class DriveTrain extends SubsystemBase {
     m_gyro.reset();
   }
 
+  public void resetEverything() {
+    resetEncoders();
+    zeroHeading();
+    resetOdometry(new Pose2d());
+  }
+
   public double getHeading() {
     return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
@@ -197,7 +203,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLimelight() {
-    return -table.getEntry("tx").getDouble(0.0) / 27;
+    return -table.getEntry("tx").getDouble(100.0) / 27;
   }
 
   public void printDriveValues() {
