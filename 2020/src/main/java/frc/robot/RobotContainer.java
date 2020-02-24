@@ -128,16 +128,12 @@ public class RobotContainer {
         new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
         m_climber::getClimbEnable));
 
-    new POVButton(m_operatorController, 180)
-      .whenPressed(new setShootPosition(ShooterConstants.kFrontBumpers, m_shooter, m_hood));
-
     //Manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
       .whileActiveContinuous(new ConditionalCommand(
         new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber), 
         new InstantCommand(), 
         m_climber::getClimbEnable));
-
 
     //Initiate climber-------------------------------------------------
     new JoystickButton(m_operatorController, Button.kStart.value)
