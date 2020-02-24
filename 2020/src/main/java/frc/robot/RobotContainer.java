@@ -72,9 +72,9 @@ public class RobotContainer {
    */
   public RobotContainer() {
     autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Middle Front Bumpers", new TrenchAutoV2(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    // autoSelector.addOption("RendezvousAuto", new RendezvousAuto());
-    autoSelector.addOption("wallshot", new EnemyTrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("RendezvousAuto", new RendezvousAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("wallshot", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
     m_drivetrain.setDefaultCommand(new ArcadeDrive(
@@ -118,7 +118,7 @@ public class RobotContainer {
         new ParallelCommandGroup(
           new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),
           new InstantCommand(m_climber::dropBuddyClimb)),
-        new setShootPosition(ShooterConstants.kInitiationLine, m_shooter, m_hood),
+        new setShootPosition(ShooterConstants.kBackBumpers, m_shooter, m_hood),
         m_climber::getClimbEnable));
 
     //Fully climbed height OR set shot position to Near Trench
@@ -127,6 +127,9 @@ public class RobotContainer {
         new Climb(ClimberConstants.kSetFullyClimbed, m_climber),
         new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
         m_climber::getClimbEnable));
+
+    new POVButton(m_operatorController, 180)
+      .whenPressed(new setShootPosition(ShooterConstants.kFrontBumpers, m_shooter, m_hood));
 
     //Manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
@@ -150,11 +153,9 @@ public class RobotContainer {
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)
-      .whenPressed(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer));
+      .whenHeld(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer));
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
-
-
 
     // new JoystickButton
 

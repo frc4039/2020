@@ -46,7 +46,7 @@ public class TestAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood),
+          new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood),
           new SmartShoot(feeder, shooter, stirrer).withTimeout(5), 
           new AutoCommand(drivetrain, exampleTrajectory));
   }

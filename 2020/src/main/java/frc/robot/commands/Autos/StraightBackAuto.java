@@ -33,41 +33,27 @@ import frc.robot.subsystems.Stirrer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class EnemyTrenchAuto extends SequentialCommandGroup {
+public class StraightBackAuto extends SequentialCommandGroup {
   static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
-      List.of(new Translation2d(Units.inchesToMeters(42), 0)),
+      List.of(new Translation2d(-Units.inchesToMeters(15), 0)),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
-      // Pass config
-      AutoConstants.config.setReversed(false));
-
-  static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
-      // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
-      // Pass through these two interior waypoints, making an 's' curve path
-      List.of(
-        new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(48))
-      ),
-      // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(0), Units.inchesToMeters(17.5 * 12),
-          new Rotation2d(Units.degreesToRadians(185))),
+      new Pose2d(-Units.inchesToMeters(30), 0, new Rotation2d(Units.degreesToRadians(0))),
       // Pass config
       AutoConstants.config.setReversed(true));
 
   /**
    * Creates a new AutoRoutine.
    */
-  public EnemyTrenchAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Intaker intaker, Hood hood) {
+  public StraightBackAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Intaker intaker, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-        new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood).withTimeout(2),
+        new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood).withTimeout(2),
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
-        new AutoCommand(drivetrain, farTrajectory2),
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer).withTimeout(5),
         new InstantCommand(drivetrain::setPipelineZero));
     }
 }

@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase {
       m_shooterFeederMotor.burnFlash();
     }
 
-    m_rpmSetPoint = ShooterConstants.k10FtShotRPM;
+    m_rpmSetPoint = ShooterConstants.k10FtBackShotRPM;
   }
 
   public void shoot() {
