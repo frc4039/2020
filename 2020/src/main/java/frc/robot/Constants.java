@@ -179,9 +179,9 @@ public final class Constants {
         public static final int kServoPort2 = 1;
         
         public static double kWallPos = 1.00;
-        public static double k10ftBackPos = 0.25;
+        public static double k10ftBackPos = 0.00;
         public static double k10ftFrontPos = 0.0;
-        public static double kTrenchPos = 0.0;
+        public static double kTrenchPos = 0.00;
     }
 
     public static final class DriveConstants {
