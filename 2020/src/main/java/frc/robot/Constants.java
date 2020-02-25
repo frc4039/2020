@@ -213,8 +213,10 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 2;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
+        public static final double kMaxSpeedMetersPerSecondSlow = 2;
+        public static final double kMaxAccelerationMetersPerSecondSquaredSlow = 0.5;
+        public static final double kMaxSpeedMetersPerSecondFast = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquaredFast = 0.8;
 		public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
@@ -226,9 +228,17 @@ public final class Constants {
                 10
             );
 
-        public static final TrajectoryConfig config =
-                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        public static final TrajectoryConfig slowConfig =
+                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecondSlow,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquaredSlow)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(DriveConstants.kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint);
+
+        public static final TrajectoryConfig fastConfig =
+                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecondFast,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquaredFast)
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(DriveConstants.kDriveKinematics)
                     // Apply the voltage constraint

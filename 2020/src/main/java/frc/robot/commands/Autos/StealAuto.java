@@ -42,7 +42,7 @@ public class StealAuto extends SequentialCommandGroup {
       // End 3 meters straight ahead of where we started, facing forward
       new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
       // Pass config
-      AutoConstants.config.setReversed(false));
+      AutoConstants.fastConfig.setReversed(false));
 
   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
@@ -55,7 +55,7 @@ public class StealAuto extends SequentialCommandGroup {
       new Pose2d(-Units.inchesToMeters(0), Units.inchesToMeters(17.5*12),
           new Rotation2d(Units.degreesToRadians(185))),
       // Pass config
-      AutoConstants.config.setReversed(true));
+      AutoConstants.fastConfig.setReversed(true));
 
   /**
    * Creates a new AutoRoutine.

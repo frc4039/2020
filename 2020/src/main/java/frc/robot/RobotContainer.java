@@ -38,7 +38,7 @@ import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
-import frc.robot.commands.ThirtyInchReverse;
+// import frc.robot.commands.ThirtyInchReverse;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;

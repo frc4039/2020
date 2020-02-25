@@ -40,7 +40,7 @@ public class RendezvousAuto extends SequentialCommandGroup {
             // End 3 meters straight ahead of where we started, facing forward
         new Pose2d(Units.inchesToMeters(20), Units.inchesToMeters(6), new Rotation2d(Units.degreesToRadians(16.69))),
       // Pass config
-      AutoConstants.config.setReversed(false));
+      AutoConstants.slowConfig.setReversed(false));
 
   /**
    * Creates a new AutoRoutine.

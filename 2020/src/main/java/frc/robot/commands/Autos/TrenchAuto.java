@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -31,19 +30,30 @@ import frc.robot.subsystems.Stirrer;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class TrenchAuto extends SequentialCommandGroup {
-  static final Trajectory trenchTrajectory = TrajectoryGenerator.generateTrajectory(
+  static final Trajectory trenchTrajectory1 = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(Units.inchesToMeters(65) / 2, -Units.inchesToMeters(65) / 2),
-            new Translation2d(0, -Units.inchesToMeters(65))
+            new Translation2d(Units.inchesToMeters(65) / 2, -Units.inchesToMeters(65) / 2)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-Units.inchesToMeters(35 + 14 * 12), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
-        // Pass config
-        AutoConstants.config.setReversed(false)
+        new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
+        AutoConstants.slowConfig.setReversed(false)
     );
+
+    static final Trajectory trenchTrajectory2 = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(
+            new Translation2d(-Units.inchesToMeters(17 + 7 * 6), -Units.inchesToMeters(65))
+        ),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(-Units.inchesToMeters(35 + 14 * 12), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(0))),
+        AutoConstants.fastConfig.setReversed(false)
+    );
+
   /**
    * Creates a new AutoRoutine.
    */
@@ -52,7 +62,8 @@ public class TrenchAuto extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
           new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
-          new ParallelCommandGroup(new AutoCommand(drivetrain, trenchTrajectory), 
-                                   new SmartIntake(intaker, feeder, stirrer)));
+          new AutoCommand(drivetrain, trenchTrajectory1),
+          new ParallelCommandGroup(new SmartIntake(intaker, feeder, stirrer),
+                                   new AutoCommand(drivetrain, trenchTrajectory2)));
   }
 }
