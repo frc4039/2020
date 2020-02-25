@@ -51,7 +51,7 @@ public class StraightBackAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer),
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
         new InstantCommand(drivetrain::setPipelineZero));
     }

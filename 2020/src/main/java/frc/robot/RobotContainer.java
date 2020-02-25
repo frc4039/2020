@@ -145,11 +145,11 @@ public class RobotContainer {
 
     // SmartShoot
     new JoystickButton(m_driverController, Button.kY.value)
-      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
+      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer, m_intaker));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)
-      .whenHeld(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer));
+      .whenHeld(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer, m_intaker));
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 

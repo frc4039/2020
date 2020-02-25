@@ -66,6 +66,7 @@ public final class Constants {
         public static final boolean kShooterInversion2 = false;
 
         public static final boolean kShooterFeederInversion = false;
+		public static double kShooterThreshold = 500;
     }
 
     public static final class IntakeConstants {

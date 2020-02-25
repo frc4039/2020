@@ -66,7 +66,7 @@ public class StealAuto extends SequentialCommandGroup {
     super(
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
         new AutoCommand(drivetrain, farTrajectory2),
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer).withTimeout(3),
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(3),
         new InstantCommand(drivetrain::setPipelineZero));
     }
 }
