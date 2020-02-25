@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DriveTrain;
@@ -29,7 +30,7 @@ public class LimelightShoot extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
       new SequentialCommandGroup(
-        new ParallelCommandGroup(
+        new ParallelRaceGroup(
           new Shoot(shooter),
           new SequentialCommandGroup(
             new InstantCommand(drivetrain::setPipelineOne),

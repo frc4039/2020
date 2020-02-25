@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
@@ -42,7 +43,7 @@ public class SmartShoot extends CommandBase {
     m_shooter.shoot();
     // m_stirrer.stir(m_stirSpeed);
 
-    if (Math.abs(m_shooter.returnCurrentRPM() - m_shooter.getSetpoint()) < 50) {
+    if (Math.abs(m_shooter.returnCurrentRPM() - m_shooter.getSetpoint()) < ShooterConstants.kShooterThreshold) {
       m_intaker.intake();
       m_feeder.feed();
       m_stirrer.stir();
@@ -56,6 +57,7 @@ public class SmartShoot extends CommandBase {
     m_feeder.stop();
     m_stirrer.stop();
     m_shooter.stop();
+    m_intaker.stop();
   }
 
   // Returns true when the command should end.
