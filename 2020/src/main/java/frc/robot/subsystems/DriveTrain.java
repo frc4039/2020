@@ -158,7 +158,12 @@ public class DriveTrain extends SubsystemBase {
     m_gyro.calibrate();
   }
 
+  public void zeroGyro() {
+    m_gyro.zeroYaw();
+  }
+
   public void resetEverything() {
+    zeroGyro();
     calibrateGyro();
     resetOdometry(new Pose2d());
   }
