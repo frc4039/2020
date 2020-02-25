@@ -159,7 +159,6 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void resetEverything() {
-    resetEncoders();
     zeroHeading();
     resetOdometry(new Pose2d());
   }

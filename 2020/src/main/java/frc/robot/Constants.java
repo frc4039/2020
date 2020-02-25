@@ -42,13 +42,15 @@ public final class Constants {
 
         public static final double kTrenchShotRPM = 5250;
         public static final double kWallShotRPM = 3475;
-        public static final double k10FtShotRPM = 4350;
+        public static final double k10ftBackBumperShotRPM = 4350;
+        public static final double k10ftFrontBumperShotRPM = 4600;
 
         public static final double kShooterFeederSpeed = 0.8;
 
         public static final int kTargetZone = 1;
         public static final int kNearTrench = 2;
-        public static final int kInitiationLine = 3;
+        public static final int kBackBumpers = 3;
+        public static final int kFrontBumpers = 4;
 
         public static final double kF = 0.008;
         public static final double kP = 0.02;
@@ -78,7 +80,7 @@ public final class Constants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
 
-        public static final double kStirrerPercent1 = 0.5;
+        public static final double kStirrerPercent1 = 0.50;
         public static final double kStirrerPercent2 = 0.25;
         
 		public static final int kStirrerCurrentLimit = 30;
@@ -176,9 +178,10 @@ public final class Constants {
         public static final int kServoPort1 = 0;
         public static final int kServoPort2 = 1;
         
-        public static double k10FtPos = 0.00;
         public static double kWallPos = 1.00;
-        public static double kTrenchPos = 0.0;
+        public static double k10ftBackPos = 0.00;
+        public static double k10ftFrontPos = 0.0;
+        public static double kTrenchPos = 0.00;
     }
 
     public static final class DriveConstants {
@@ -209,8 +212,8 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 1;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
+        public static final double kMaxSpeedMetersPerSecond = 2;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
 		public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =

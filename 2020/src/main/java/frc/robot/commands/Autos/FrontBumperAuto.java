@@ -16,11 +16,8 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
@@ -33,41 +30,39 @@ import frc.robot.subsystems.Stirrer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class EnemyTrenchAuto extends SequentialCommandGroup {
-  static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
+public class FrontBumperAuto extends SequentialCommandGroup {
+  static final Trajectory trenchTrajectory1 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
-      List.of(new Translation2d(Units.inchesToMeters(42), 0)),
+      List.of(new Translation2d(-Units.inchesToMeters(65) / 2, -Units.inchesToMeters(65) / 2)),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
-      // Pass config
-      AutoConstants.config.setReversed(false));
-
-  static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
-      // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
-      // Pass through these two interior waypoints, making an 's' curve path
-      List.of(
-        new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(48))
-      ),
-      // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(0), Units.inchesToMeters(17.5 * 12),
-          new Rotation2d(Units.degreesToRadians(185))),
+      new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
       AutoConstants.config.setReversed(true));
+
+  static final Trajectory trenchTrajectory2 = TrajectoryGenerator.generateTrajectory(
+      // Start at the origin facing the +X direction
+      new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
+      // Pass through these two interior waypoints, making an 's' curve path
+      List.of(
+
+      ),
+      // End 3 meters straight ahead of where we started, facing forward
+      new Pose2d(-Units.inchesToMeters(35 + 12 * 12), -Units.inchesToMeters(65),
+          new Rotation2d(Units.degreesToRadians(180))),
+      // Pass config
+      AutoConstants.config.setReversed(false));
 
   /**
    * Creates a new AutoRoutine.
    */
-  public EnemyTrenchAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Intaker intaker, Hood hood) {
+  public FrontBumperAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Intaker intaker,
+      Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(
-        new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood).withTimeout(2),
-        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
-        new AutoCommand(drivetrain, farTrajectory2),
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer).withTimeout(5),
-        new InstantCommand(drivetrain::setPipelineZero));
-    }
+    super(new SmartShoot(feeder, shooter, stirrer).withTimeout(3),
+            new SequentialCommandGroup(new AutoCommand(drivetrain, trenchTrajectory1), new ParallelCommandGroup(
+            new AutoCommand(drivetrain, trenchTrajectory2), new SmartIntake(intaker, feeder, stirrer))));
+  }
 }
