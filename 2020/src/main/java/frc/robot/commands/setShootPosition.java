@@ -59,7 +59,7 @@ public class setShootPosition extends CommandBase {
         break;
 
       case ShooterConstants.kBackBumpers:
-        m_shooter.setSetPoint(ShooterConstants.k10FtBackShotRPM);
+        m_shooter.setSetPoint(ShooterConstants.k10ftBackBumperShotRPM);
         m_hood.setPosition(HoodConstants.k10ftBackPos);
 
         SmartDashboard.putString("Shoot setpoint", "10FtBackShot (4250)");
@@ -67,7 +67,7 @@ public class setShootPosition extends CommandBase {
         break;
 
       case ShooterConstants.kFrontBumpers:
-        m_shooter.setSetPoint(ShooterConstants.k10FtBackShotRPM);
+        m_shooter.setSetPoint(ShooterConstants.k10ftFrontBumperShotRPM);
         m_hood.setPosition(HoodConstants.k10ftFrontPos);
 
         SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (4600)");

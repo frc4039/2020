@@ -42,8 +42,8 @@ public final class Constants {
 
         public static final double kTrenchShotRPM = 5250;
         public static final double kWallShotRPM = 3475;
-        public static final double k10FtBackShotRPM = 4350;
-        public static final double k10ftFrontShotRPM = 4600;
+        public static final double k10ftBackBumperShotRPM = 4350;
+        public static final double k10ftFrontBumperShotRPM = 4600;
 
         public static final double kShooterFeederSpeed = 0.8;
 
@@ -80,8 +80,8 @@ public final class Constants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
 
-        public static final double kStirrerPercent1 = 0.85;
-        public static final double kStirrerPercent2 = 0.60;
+        public static final double kStirrerPercent1 = 0.50;
+        public static final double kStirrerPercent2 = 0.25;
         
 		public static final int kStirrerCurrentLimit = 30;
        

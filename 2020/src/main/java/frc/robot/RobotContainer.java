@@ -74,7 +74,7 @@ public class RobotContainer {
     autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("RendezvousAuto", new RendezvousAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("wallshot", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Steal Auto", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
     m_drivetrain.setDefaultCommand(new ArcadeDrive(
@@ -209,7 +209,6 @@ public class RobotContainer {
 
   public void zeroDriveTrain() {
     m_drivetrain.zeroHeading();
-    m_drivetrain.resetEncoders();
     m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
   }
 
