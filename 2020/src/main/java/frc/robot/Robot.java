@@ -67,6 +67,8 @@ public class Robot extends TimedRobot {
       m_robotContainer.setDisabledSettings();
       m_timer.stop();
     }
+
+    
   }
 
   /**
@@ -75,7 +77,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_robotContainer.init();
-    m_robotContainer.zeroDriveTrain();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -111,6 +112,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
   }
 
   @Override

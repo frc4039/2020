@@ -10,18 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -38,9 +32,6 @@ import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
-import frc.robot.commands.ThirtyInchReverse;
-import frc.robot.commands.TurnToAngle;
-import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -76,7 +67,6 @@ public class RobotContainer {
     // autoSelector.addOption("RendezvousAuto", new RendezvousAuto());
     autoSelector.addOption("wallshot", new EnemyTrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
-
 
     m_drivetrain.setDefaultCommand(new ArcadeDrive(
       () -> m_driverController.getY(Hand.kLeft), 
@@ -152,7 +142,8 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
-
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
 
     // new JoystickButton
 
@@ -164,6 +155,7 @@ public class RobotContainer {
     
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
+
 
   /*
 
@@ -206,11 +198,6 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {    
     return (Command) autoSelector.getSelected();
-  }
-
-  public void zeroDriveTrain() {
-    m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-    m_drivetrain.zeroHeading();
   }
 
   public void setDisabledSettings() {
