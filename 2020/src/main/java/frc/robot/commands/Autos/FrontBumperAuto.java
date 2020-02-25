@@ -61,7 +61,7 @@ public class FrontBumperAuto extends SequentialCommandGroup {
       Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new SmartShoot(feeder, shooter, stirrer).withTimeout(3),
+    super(new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3),
             new SequentialCommandGroup(new AutoCommand(drivetrain, trenchTrajectory1), new ParallelCommandGroup(
             new AutoCommand(drivetrain, trenchTrajectory2), new SmartIntake(intaker, feeder, stirrer))));
   }

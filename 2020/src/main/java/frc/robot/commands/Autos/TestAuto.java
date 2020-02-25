@@ -20,6 +20,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 
@@ -42,11 +43,11 @@ public class TestAuto extends SequentialCommandGroup {
   /**
    * Creates a new AutoRoutine.
    */
-  public TestAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Hood hood) {
+  public TestAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, Intaker intaker, DriveTrain drivetrain, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new SmartShoot(feeder, shooter, stirrer).withTimeout(5), 
+          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(5), 
           new AutoCommand(drivetrain, exampleTrajectory));
   }
 }

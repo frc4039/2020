@@ -9,22 +9,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 
 public class SmartShoot extends CommandBase {
   Feeder m_feeder;
   double m_rpm;
-  double m_stirSpeed;
   Shooter m_shooter;
   Stirrer m_stirrer;
+  Intaker m_intaker;
 
-  public SmartShoot(Feeder feeder, Shooter shooter, Stirrer stirrer) {
+  public SmartShoot(Feeder feeder, Shooter shooter, Stirrer stirrer, Intaker intaker) {
     m_feeder = feeder;
     m_shooter = shooter;
     m_stirrer = stirrer;
+    m_intaker = intaker;
 
-    addRequirements(m_feeder, m_shooter, m_stirrer);
+    addRequirements(m_feeder, m_shooter, m_stirrer, m_intaker);
   }
 
   // Called when the command is initially scheduled.
@@ -41,6 +43,7 @@ public class SmartShoot extends CommandBase {
     // m_stirrer.stir(m_stirSpeed);
 
     if (Math.abs(m_shooter.returnCurrentRPM() - m_shooter.getSetpoint()) < 50) {
+      m_intaker.intake();
       m_feeder.feed();
       m_stirrer.stir();
       m_shooter.feedShooter();
