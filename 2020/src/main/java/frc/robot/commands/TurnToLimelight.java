@@ -31,8 +31,9 @@ public class TurnToLimelight extends PIDCommand {
         // This should return the setpoint (can also be a constant)
          () -> 0,
         // This uses the output
-        output -> drivetrain.arcadeDrive(0, output + Math.signum(output)*VisionConstants.kFF), drivetrain);
+        output -> drivetrain.arcadeDrive(0, (output + Math.signum(output)*VisionConstants.kFF)), drivetrain);
     getController().setTolerance(VisionConstants.kTolerance, VisionConstants.kRateTolerance);
+    getController().setIntegratorRange(-VisionConstants.kMaxI, VisionConstants.kMaxI);
 
     m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
