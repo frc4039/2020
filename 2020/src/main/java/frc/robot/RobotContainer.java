@@ -10,18 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -38,9 +32,6 @@ import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
-import frc.robot.commands.ThirtyInchReverse;
-import frc.robot.commands.TurnToAngle;
-import frc.robot.commands.TurnToLimelight;
 import frc.robot.commands.setShootPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -153,6 +144,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
+
     // new JoystickButton
 
     //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
@@ -163,6 +157,7 @@ public class RobotContainer {
     
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
+
 
   /*
 

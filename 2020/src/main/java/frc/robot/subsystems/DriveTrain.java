@@ -154,12 +154,12 @@ public class DriveTrain extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  public void zeroHeading() {
-    m_gyro.reset();
+  public void calibrateGyro() {
+    m_gyro.calibrate();
   }
 
   public void resetEverything() {
-    zeroHeading();
+    calibrateGyro();
     resetOdometry(new Pose2d());
   }
 
