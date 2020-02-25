@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -32,10 +33,10 @@ public class TestAuto extends SequentialCommandGroup {
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(-1, 0)
+            new Translation2d(-Units.inchesToMeters(18), 0)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-2, 0, new Rotation2d(0)),
+        new Pose2d(-Units.inchesToMeters(36), 0, new Rotation2d(0)),
         // Pass config
         AutoConstants.config.setReversed(true)
     );
@@ -46,8 +47,7 @@ public class TestAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood),
-          new SmartShoot(feeder, shooter, stirrer).withTimeout(5), 
+          new SmartShoot(feeder, shooter, stirrer).withTimeout(2), 
           new AutoCommand(drivetrain, exampleTrajectory));
   }
 }

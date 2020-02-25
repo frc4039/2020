@@ -32,6 +32,7 @@ import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.resetDisabledRobot;
 import frc.robot.commands.setShootPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -65,7 +66,8 @@ public class RobotContainer {
     autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Middle Front Bumpers", new TrenchAutoV2(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     // autoSelector.addOption("RendezvousAuto", new RendezvousAuto());
-    autoSelector.addOption("wallshot", new EnemyTrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Steal Auto", new EnemyTrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Backwards Auto", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
     m_drivetrain.setDefaultCommand(new ArcadeDrive(
@@ -143,7 +145,7 @@ public class RobotContainer {
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whenPressed(new InstantCommand(m_drivetrain::resetEverything));
+      .whenPressed(new resetDisabledRobot(m_drivetrain));
 
     // new JoystickButton
 

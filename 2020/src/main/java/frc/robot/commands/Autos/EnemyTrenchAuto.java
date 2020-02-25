@@ -62,7 +62,6 @@ public class EnemyTrenchAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-        new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood).withTimeout(2),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
         new AutoCommand(drivetrain, farTrajectory2),
         new LimelightShoot(drivetrain, feeder, shooter, stirrer).withTimeout(5),
