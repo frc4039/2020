@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -47,7 +48,8 @@ public class TestAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(2), 
+          new setShootPosition(ShooterConstants.kMidBumpers, shooter, hood),
+          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
           new AutoCommand(drivetrain, exampleTrajectory));
   }
 }

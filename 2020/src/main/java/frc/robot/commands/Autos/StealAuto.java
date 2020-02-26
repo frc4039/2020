@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -61,9 +62,10 @@ public class StealAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
+        new setShootPosition(ShooterConstants.kFrontBumpers, shooter, hood),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
         new AutoCommand(drivetrain, farTrajectory2),
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(3),
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(10),
         new InstantCommand(drivetrain::setPipelineZero));
     }
 }

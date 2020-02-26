@@ -75,13 +75,14 @@ public class TrenchAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
+          new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood),
           new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
           new AutoCommand(drivetrain, trenchTrajectory1),
           new ParallelRaceGroup(
                                    new AutoCommand(drivetrain, trenchTrajectory2),
                                    new SmartIntake(intaker, feeder, stirrer)
                                    ),
-          new setShootPosition(ShooterConstants.kNearTrench, shooter, hood)
+          new setShootPosition(ShooterConstants.kFarTrench, shooter, hood)
           // new AutoCommand(drivetrain, trenchTrajectory3),
           // new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker)
           );
