@@ -29,7 +29,7 @@ public class TurnToLimelight extends PIDCommand {
         // This should return the measurement
         drivetrain::getLimelight,
         // This should return the setpoint (can also be a constant)
-         () -> 0,
+         () -> VisionConstants.kLimelightOffset,
         // This uses the output
         output -> drivetrain.arcadeDrive(0, (output + Math.signum(output)*VisionConstants.kFF)), drivetrain);
     getController().setTolerance(VisionConstants.kTolerance, VisionConstants.kRateTolerance);

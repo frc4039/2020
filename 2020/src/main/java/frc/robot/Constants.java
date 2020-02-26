@@ -99,6 +99,7 @@ public final class Constants {
         public static final double kTolerance = 0.03;
         public static final double kRateTolerance = 0.0;
         public static final double kMaxI = 0.10;
+        public static final double kLimelightOffset = 0;
     }
 
     public static final class TurningConstants {
