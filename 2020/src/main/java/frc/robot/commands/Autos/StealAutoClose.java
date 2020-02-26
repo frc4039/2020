@@ -50,7 +50,7 @@ public class StealAutoClose extends SequentialCommandGroup {
         new Translation2d(-Units.inchesToMeters(5 * 12), Units.inchesToMeters(4 * 12))
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(2 * 12), Units.inchesToMeters(17.5*12),
+      new Pose2d(-Units.inchesToMeters(3 * 12), Units.inchesToMeters(17.5*12),
           new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
       AutoConstants.fastConfig.setReversed(true));
@@ -63,9 +63,9 @@ public class StealAutoClose extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
         new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood),
-        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)));
-        // new AutoCommand(drivetrain, farTrajectory2),
-        // new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(3),
-        // new InstantCommand(drivetrain::setPipelineZero));
+        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
+        new AutoCommand(drivetrain, farTrajectory2),
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(10)
+        );
     }
 }
