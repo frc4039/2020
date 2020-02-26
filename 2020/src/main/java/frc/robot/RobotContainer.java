@@ -64,7 +64,6 @@ public class RobotContainer {
   public RobotContainer() {
     autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    // autoSelector.addOption("RendezvousAuto", new RendezvousAuto());
     autoSelector.addOption("Steal Auto", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Steal Auto Close", new StealAutoClose(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Backwards Auto", new TestAuto(m_shooter, m_feeder, m_stirrer, m_intaker, m_drivetrain, m_hood));
@@ -88,12 +87,12 @@ public class RobotContainer {
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) > 0.25)
       .whileActiveContinuous(new SmartIntake(m_intaker, m_feeder, m_stirrer));
 
-    new JoystickButton(m_operatorController, Button.kX.value)
-      .whenPressed(new InstantCommand(m_feeder::unjam));
-
     //Reverse the intake
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) < -0.25)
       .whileActiveContinuous(new ReverseIntake(m_intaker));
+
+    new JoystickButton(m_operatorController, Button.kX.value)
+      .whenPressed(new InstantCommand(m_feeder::unjam));
 
     // Rev the shooter for SmartShoot
     // new JoystickButton(m_operatorController, Button.kX.value)
@@ -112,7 +111,7 @@ public class RobotContainer {
         new ParallelCommandGroup(
           new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),
           new InstantCommand(m_climber::dropBuddyClimb)),
-        new setShootPosition(ShooterConstants.kBackBumpers, m_shooter, m_hood),
+        new setShootPosition(ShooterConstants.kMidBumpers, m_shooter, m_hood),
         m_climber::getClimbEnable));
 
     //Fully climbed height OR set shot position to Near Trench
@@ -128,6 +127,15 @@ public class RobotContainer {
         new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber), 
         new InstantCommand(), 
         m_climber::getClimbEnable));
+
+    /*
+    //Manual Climb Reverse
+    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kLeft) > 0.05)
+      .whileActiveContinuous(new ConditionalCommand(
+        new AdjustClimb(() -> -m_operatorController.getTriggerAxis(Hand.kLeft), m_climber), 
+        new InstantCommand(), 
+        m_climber::getClimbEnable));
+    */
 
     //Initiate climber-------------------------------------------------
     new JoystickButton(m_operatorController, Button.kStart.value)
@@ -150,19 +158,15 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(new resetDisabledRobot(m_drivetrain));
 
-    // new JoystickButton
-
-    //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
-  
-    new JoystickButton(m_driverController, Button.kB.value)
-      .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
-
-    
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whenPressed(new resetDisabledRobot(m_drivetrain));
 
+    // new JoystickButton
 
+    //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
   /*
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
 
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whileHeld(new InstantCommand(m_drivetrain::setCoastMode))
