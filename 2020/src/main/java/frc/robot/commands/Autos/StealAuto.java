@@ -32,7 +32,8 @@ import frc.robot.subsystems.Stirrer;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class StealAuto extends SequentialCommandGroup {
-  static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
+  
+  /*  static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
@@ -41,10 +42,20 @@ public class StealAuto extends SequentialCommandGroup {
       new Pose2d(Units.inchesToMeters(90), 0, new Rotation2d(Units.degreesToRadians(0))),
       // Pass config
       AutoConstants.fastConfig.setReversed(false));
+  */
+  static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
+      // Start at the origin facing the +X direction
+      new Pose2d(0, 0, new Rotation2d(0)),
+      // Pass through these two interior waypoints, making an 's' curve path
+      List.of(new Translation2d(Units.inchesToMeters(42), Units.inchesToMeters(12))),
+      // End 3 meters straight ahead of where we started, facing forward
+      new Pose2d(Units.inchesToMeters(95), Units.inchesToMeters(12), new Rotation2d(-Units.degreesToRadians(20))),
+      // Pass config
+      AutoConstants.fastConfig.setReversed(false));
 
   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(84), 0, new Rotation2d(Units.degreesToRadians(0))),
+      new Pose2d(Units.inchesToMeters(95), 12, new Rotation2d(-Units.degreesToRadians(20))),
       // Pass through these two interior waypoints, making an 's' curve path
       List.of(
         new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(4 * 12))
