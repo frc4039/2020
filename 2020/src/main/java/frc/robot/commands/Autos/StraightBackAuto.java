@@ -42,7 +42,7 @@ public class StraightBackAuto extends SequentialCommandGroup {
       // End 3 meters straight ahead of where we started, facing forward
       new Pose2d(-Units.inchesToMeters(30), 0, new Rotation2d(Units.degreesToRadians(0))),
       // Pass config
-      AutoConstants.config.setReversed(true));
+      AutoConstants.slowConfig.setReversed(true));
 
   /**
    * Creates a new AutoRoutine.

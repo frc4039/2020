@@ -39,7 +39,7 @@ public class FrontBumperAuto extends SequentialCommandGroup {
       // End 3 meters straight ahead of where we started, facing forward
       new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
-      AutoConstants.config.setReversed(true));
+      AutoConstants.slowConfig.setReversed(true));
 
   static final Trajectory trenchTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
@@ -52,7 +52,7 @@ public class FrontBumperAuto extends SequentialCommandGroup {
       new Pose2d(-Units.inchesToMeters(35 + 12 * 12), -Units.inchesToMeters(65),
           new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
-      AutoConstants.config.setReversed(false));
+      AutoConstants.fastConfig.setReversed(false));
 
   /**
    * Creates a new AutoRoutine.

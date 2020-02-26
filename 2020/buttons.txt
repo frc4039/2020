@@ -8,4 +8,4 @@ Driver Controller, A Button (Hold, interruptable): LimelightShoot
 Driver Controller, A Button (When button is released): InstantCommand (m_drivetrain::setPipelineZero)
 Driver Controller, Right Bumper Button (Press): resetDisabledRobot
 Driver Controller, B Button (Press): InstantCommand (m_climber::resetBuddyClimb)
-Driver Controller, Left Bumper Button (Press): InstantCommand (m_drivetrain::resetEverything)
+Driver Controller, Left Bumper Button (Press): resetDisabledRobot

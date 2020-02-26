@@ -39,7 +39,7 @@ public class TestAuto extends SequentialCommandGroup {
         // End 3 meters straight ahead of where we started, facing forward
         new Pose2d(-Units.inchesToMeters(36), 0, new Rotation2d(0)),
         // Pass config
-        AutoConstants.config.setReversed(true)
+        AutoConstants.slowConfig.setReversed(true)
     );
   /**
    * Creates a new AutoRoutine.

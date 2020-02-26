@@ -41,6 +41,7 @@ public final class Constants {
         public static final int kShooterFeederMotorPort = 25;
 
         public static final double kTrenchShotRPM = 5250;
+        public static final double kTrenchAutoRPM = 5500;
         public static final double kWallShotRPM = 3475;
         public static final double k10ftBackBumperShotRPM = 4350;
         public static final double k10ftFrontBumperShotRPM = 4600;
@@ -98,7 +99,7 @@ public final class Constants {
         public static final double kTolerance = 0.03;
         public static final double kRateTolerance = 0.0;
         public static final double kMaxI = 0.10;
-        public static final double kLimelightOffset = 0;
+        public static final double kLimelightOffset = 0.1;
     }
 
     public static final class TurningConstants {
@@ -215,8 +216,10 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 2;
-		public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
+        public static final double kMaxSpeedMetersPerSecondSlow = 2;
+        public static final double kMaxAccelerationMetersPerSecondSquaredSlow = 0.5;
+        public static final double kMaxSpeedMetersPerSecondFast = 4.0;
+        public static final double kMaxAccelerationMetersPerSecondSquaredFast = 1.8;
 		public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
@@ -228,9 +231,17 @@ public final class Constants {
                 10
             );
 
-        public static final TrajectoryConfig config =
-                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-                                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        public static final TrajectoryConfig slowConfig =
+                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecondSlow,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquaredSlow)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(DriveConstants.kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint);
+
+        public static final TrajectoryConfig fastConfig =
+                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecondFast,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquaredFast)
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(DriveConstants.kDriveKinematics)
                     // Apply the voltage constraint
