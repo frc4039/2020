@@ -40,10 +40,11 @@ public final class Constants {
         public static final int kShooterMotor2Port = 21;
         public static final int kShooterFeederMotorPort = 25;
 
-        public static final double kTrenchShotRPM = 5250;
-        public static final double kTrenchAutoRPM = 5500;
+        public static final double kNearTrenchShotRPM = 5250;
+        public static final double kFarTrenchShotRPM = 5500;
         public static final double kWallShotRPM = 3475;
         public static final double k10ftBackBumperShotRPM = 4350;
+        public static final double k10ftMidBumperShotRPM = 4425;
         public static final double k10ftFrontBumperShotRPM = 4600;
 
         public static final double kShooterFeederSpeed = 0.8;
@@ -52,6 +53,8 @@ public final class Constants {
         public static final int kNearTrench = 2;
         public static final int kBackBumpers = 3;
         public static final int kFrontBumpers = 4;
+        public static final int kMidBumpers = 5;
+        public static final int kFarTrench = 6;
 
         public static final double kF = 0.008;
         public static final double kP = 0.02;
@@ -181,11 +184,13 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int kServoPort1 = 0;
         public static final int kServoPort2 = 1;
-        
-        public static double kWallPos = 1.00;
-        public static double k10ftBackPos = 0.00;
-        public static double k10ftFrontPos = 0.0;
-        public static double kTrenchPos = 0.00;
+
+        public static final double kWallPos = 1.00;
+        public static final double k10ftBackPos = 0.00;
+        public static final double k10ftMidPos = 0.00;
+        public static final double k10ftFrontPos = 0.00;
+		public static final double kFarTrenchPos = 0.00;
+		public static final double kNearTrenchPos = 0.00;
     }
 
     public static final class DriveConstants {
