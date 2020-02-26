@@ -17,8 +17,10 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
@@ -47,11 +49,24 @@ public class TrenchAuto extends SequentialCommandGroup {
         new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(-Units.inchesToMeters(17 + 7 * 6), -Units.inchesToMeters(65))
+            new Translation2d(-Units.inchesToMeters(8 * 12), -Units.inchesToMeters(65))
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-Units.inchesToMeters(35 + 14 * 12), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(0))),
+        new Pose2d(-Units.inchesToMeters(16 * 12 + 6), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
         AutoConstants.fastConfig.setReversed(false)
+    );
+
+    static final Trajectory trenchTrajectory3 = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(-Units.inchesToMeters(16 * 12 + 6), -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(
+            new Translation2d(-Units.inchesToMeters((6 * 12 + 6)-40), -Units.inchesToMeters(65)),
+            new Translation2d(-Units.inchesToMeters((6 * 12 + 6)-40), -Units.inchesToMeters(65)-40)
+        ),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(-Units.inchesToMeters((16 * 12 + 6) - 40) , -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(0))),
+        AutoConstants.slowConfig.setReversed(true)
     );
 
   /**
@@ -63,7 +78,13 @@ public class TrenchAuto extends SequentialCommandGroup {
     super(
           new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
           new AutoCommand(drivetrain, trenchTrajectory1),
-          new ParallelCommandGroup(new SmartIntake(intaker, feeder, stirrer),
-                                   new AutoCommand(drivetrain, trenchTrajectory2)));
+          new ParallelRaceGroup(
+                                   new AutoCommand(drivetrain, trenchTrajectory2),
+                                   new SmartIntake(intaker, feeder, stirrer)
+                                   ),
+          new setShootPosition(ShooterConstants.kNearTrench, shooter, hood)
+          // new AutoCommand(drivetrain, trenchTrajectory3),
+          // new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker)
+          );
   }
 }

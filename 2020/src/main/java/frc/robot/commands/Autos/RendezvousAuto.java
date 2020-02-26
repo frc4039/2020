@@ -38,7 +38,7 @@ public class RendezvousAuto extends SequentialCommandGroup {
             new Translation2d(Units.inchesToMeters(40), 0)
         ),
             // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(Units.inchesToMeters(20), Units.inchesToMeters(6), new Rotation2d(Units.degreesToRadians(16.69))),
+        new Pose2d(Units.inchesToMeters(60 + 20), Units.inchesToMeters(6 + 6), new Rotation2d(Units.degreesToRadians(17.69))),
       // Pass config
       AutoConstants.slowConfig.setReversed(false));
 
@@ -53,6 +53,10 @@ public class RendezvousAuto extends SequentialCommandGroup {
         // new SmartShoot(feeder, shooter, stirrer).withTimeout(3),
         // new SequentialCommandGroup(new AutoCommand(drivetrain, trenchTrajectory1), new ParallelCommandGroup(
         //     new AutoCommand(drivetrain, trenchTrajectory2), new SmartIntake(intaker, feeder, stirrer))));
-        new AutoCommand(drivetrain, rendezvousTrajectory));
+        new ParallelCommandGroup(
+          new AutoCommand(drivetrain, rendezvousTrajectory),
+          new SmartIntake(intaker, feeder, stirrer)
+        )
+    );
   }
 }

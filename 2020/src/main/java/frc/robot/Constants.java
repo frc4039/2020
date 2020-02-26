@@ -41,6 +41,7 @@ public final class Constants {
         public static final int kShooterFeederMotorPort = 25;
 
         public static final double kTrenchShotRPM = 5250;
+        public static final double kTrenchAutoRPM = 5500;
         public static final double kWallShotRPM = 3475;
         public static final double k10ftBackBumperShotRPM = 4350;
         public static final double k10ftFrontBumperShotRPM = 4600;
@@ -92,11 +93,12 @@ public final class Constants {
 
     public static final class VisionConstants {
         public static final double kP = 0.6;
-        public static final double kI = 0;
-        public static final double kD = 0;
+        public static final double kI = 1.0;
+        public static final double kD = 0.01;
         public static final double kFF = 0.2;
-        public static final double kTolerance = 0.08;
+        public static final double kTolerance = 0.03;
         public static final double kRateTolerance = 0.0;
+        public static final double kMaxI = 0.10;
     }
 
     public static final class TurningConstants {
@@ -215,8 +217,8 @@ public final class Constants {
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecondSlow = 2;
         public static final double kMaxAccelerationMetersPerSecondSquaredSlow = 0.5;
-        public static final double kMaxSpeedMetersPerSecondFast = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquaredFast = 0.8;
+        public static final double kMaxSpeedMetersPerSecondFast = 4.0;
+        public static final double kMaxAccelerationMetersPerSecondSquaredFast = 1.8;
 		public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
