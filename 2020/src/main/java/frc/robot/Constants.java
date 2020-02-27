@@ -125,6 +125,12 @@ public final class Constants {
         public static final int kCurrentLimit = 30;
         
         public static final boolean kFeederInversion = true;
+
+        public static final double kFeederTicksPerRev = 42;
+        public static final double kFeederGearRatio = 20;
+        public static final double kFeederRotation = 0.375;
+
+		public static final double kFeederIncrement = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
     public static final class ClimberConstants {
