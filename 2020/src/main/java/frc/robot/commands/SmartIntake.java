@@ -21,11 +21,8 @@ public class SmartIntake extends ParallelCommandGroup {
 
     addCommands(
       new Intake(m_intaker),
-      new ParallelCommandGroup(
-        new Stir(m_stirrer, m_feeder),
-        new Feed(m_feeder)
-      ),
-      new FeedOnce(m_feeder)
+      new ParallelCommandGroup(new Stir(m_stirrer, m_feeder),
+                               new Feed(m_feeder))
     );
   }
 }
