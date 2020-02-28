@@ -7,24 +7,32 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax.IdleMode;
-
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.GeneralConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.Autos.*;
+import frc.robot.commands.AdjustClimb;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Climb;
+import frc.robot.commands.EnableClimber;
+import frc.robot.commands.LimelightShoot;
+import frc.robot.commands.ReverseIntake;
+import frc.robot.commands.SmartIntake;
+import frc.robot.commands.SmartShoot;
+import frc.robot.commands.resetDisabledRobot;
+import frc.robot.commands.setShootPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
@@ -32,25 +40,6 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
-import frc.robot.commands.TurnToAngle;
-import frc.robot.commands.AdjustClimb;
-import frc.robot.commands.AdjustHood;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.Climb;
-import frc.robot.commands.Feed;
-import frc.robot.commands.Intake;
-import frc.robot.commands.ReverseIntake;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.SmartIntake;
-import frc.robot.commands.SmartShoot;
-import frc.robot.commands.TestAuto;
-import frc.robot.commands.TrenchAuto;
-import frc.robot.commands.TurnToLimelight;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.commands.setShootPosition;
-import frc.robot.Constants.GeneralConstants;
-import frc.robot.Constants.HoodConstants;
-import frc.robot.Constants.ShooterConstants;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -73,15 +62,18 @@ public class RobotContainer {
    * stems, OI devices, and commands.
    */
   public RobotContainer() {
-    autoSelector.addOption("10ftshot", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain));
-    autoSelector.setDefaultOption("dsd", new TestAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_hood));
-    autoSelector.addOption("trenchshot", new PrintCommand("hola"));
-    autoSelector.addOption("wallshot", new PrintCommand("bonjour"));
+    autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Steal Auto", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Steal Auto Close", new StealAutoClose(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.addOption("Backwards Auto", new TestAuto(m_shooter, m_feeder, m_stirrer, m_intaker, m_drivetrain, m_hood));
+    autoSelector.addOption("Rendezvous Auto", new RendezvousAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
-
-    m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.arcadeDrive(m_driverController.getY(Hand.kLeft),
-    m_driverController.getX(Hand.kRight)), m_drivetrain));
+    m_drivetrain.setDefaultCommand(new ArcadeDrive(
+      () -> m_driverController.getY(Hand.kLeft), 
+      () -> m_driverController.getX(Hand.kRight), 
+      m_drivetrain));
 
     configureButtonBindings();
   }
@@ -92,72 +84,121 @@ public class RobotContainer {
     // Operator Controls---------------------------------------------
 
     // Smart Intake
-    new JoystickButton(m_operatorController, Button.kB.value)
-      .whenHeld(new SmartIntake(m_intaker, m_feeder, m_stirrer));
+    new Trigger(() -> m_operatorController.getY(Hand.kLeft) > 0.25)
+      .whileActiveContinuous(new SmartIntake(m_intaker, m_feeder, m_stirrer));
 
-    // Revv the shooter for SmartShoot
+    //Reverse the intake
+    new Trigger(() -> m_operatorController.getY(Hand.kLeft) < -0.25)
+      .whileActiveContinuous(new ReverseIntake(m_intaker));
+
     new JoystickButton(m_operatorController, Button.kX.value)
-      .toggleWhenPressed(new Shoot(m_shooter));
+      .whenPressed(new InstantCommand(m_feeder::unjam));
 
-    // SmartShoot
-    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer));
+    // Rev the shooter for SmartShoot
+    // new JoystickButton(m_operatorController, Button.kX.value)
+    //   .toggleWhenPressed(new Shoot(m_shooter).withTimeout(5));
+    
+    //Fully extend climber OR set shot position to Target Zone
+    new POVButton(m_operatorController, 0)
+      .whenPressed(new ConditionalCommand(
+        new Climb(ClimberConstants.kSetFullyExtended, m_climber), 
+        new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood), 
+        m_climber::getClimbEnable));
 
-    // Set Shoot RPM
-      new POVButton(m_operatorController, 0)
-        .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
+    //Buddy climb height OR set shot position to Initiation Line
+    new POVButton(m_operatorController, 90)
+      .whenPressed(new ConditionalCommand(
+        new ParallelCommandGroup(
+          new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),
+          new InstantCommand(m_climber::dropBuddyClimb)),
+        new setShootPosition(ShooterConstants.kMidBumpers, m_shooter, m_hood),
+        m_climber::getClimbEnable));
 
-      new POVButton(m_operatorController, 270)
-        .whenPressed(new setShootPosition(ShooterConstants.kInitiationLine, m_shooter, m_hood));
+    //Fully climbed height OR set shot position to Near Trench
+    new POVButton(m_operatorController, 180)
+      .whenPressed(new ConditionalCommand(
+        new Climb(ClimberConstants.kSetFullyClimbed, m_climber),
+        new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
+        m_climber::getClimbEnable));
 
-      new POVButton(m_operatorController, 180)
-        .whenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood));
+    //Manual climb
+    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
+      .whileActiveContinuous(new ConditionalCommand(
+        new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber), 
+        new InstantCommand(), 
+        m_climber::getClimbEnable));
+
+    /*
+    //Manual Climb Reverse
+    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kLeft) > 0.05)
+      .whileActiveContinuous(new ConditionalCommand(
+        new AdjustClimb(() -> -m_operatorController.getTriggerAxis(Hand.kLeft), m_climber), 
+        new InstantCommand(), 
+        m_climber::getClimbEnable));
+    */
+
+    //Initiate climber-------------------------------------------------
+    new JoystickButton(m_operatorController, Button.kStart.value)
+      .and(new Trigger(() -> m_driverController.getTriggerAxis(Hand.kRight) >0.25))
+      .whenActive(new EnableClimber(m_climber));
+
 
     // Driver Controls-------------------------------------------------
 
-    // Shoots 
-    //new JoystickButton(m_driverController, Button.kA.value)
-      //.whileHeld(new Shoot(ShooterConstants.kShooterRPM4, m_shooter));
-
-    //cancel climber
-    new JoystickButton(m_driverController, Button.kA.value)
-      .whenPressed(new InstantCommand(m_climber::stop, m_climber));
-
-    //new JoystickButton(m_driverController, Button.kY.value)
-    //  .whenPressed(new InstantCommand(m_climber::zeroClimber));
-
-    // Fully unspooled
-    new JoystickButton(m_driverController, Button.kB.value)
-      .whenPressed(new Climb(ClimberConstants.kSetpointExtended, m_climber));
-
-    new JoystickButton(m_driverController, Button.kX.value)
-      .whenPressed(new Climb(ClimberConstants.kSetpointClimbed, m_climber));
-
-    new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
-      .whileActiveContinuous(new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber));
+    // SmartShoot
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer, m_intaker));
 
     // Limelight
-    new JoystickButton(m_driverController, Button.kBumperLeft.value)
-      .whileHeld(new TurnToLimelight(m_drivetrain));
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whenHeld(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer, m_intaker));
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
-    new JoystickButton(m_driverController, Button.kY.value)
-      .whenPressed(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-
-    //Reverse the intake
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .toggleWhenPressed(new ReverseIntake(m_intaker));
+      .whenPressed(new resetDisabledRobot(m_drivetrain));
 
-    // new POVButton(m_driverController, 0)
-    //   .whenPressed(new TurnToAngle(0, m_drivetrain));
+    new JoystickButton(m_driverController, Button.kBumperLeft.value)
+      .whenPressed(new resetDisabledRobot(m_drivetrain));
 
-    // new POVButton(m_driverController, 90)
-    //   .whenPressed(new TurnToAngle(90, m_drivetrain));
+    // new JoystickButton
 
-    // new POVButton(m_driverController, 180)
-    //   .whenPressed(new TurnToAngle(180, m_drivetrain));
+    //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
+  /*
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_climber::resetBuddyClimb));
 
-    // new POVButton(m_driverController, 270)
-    //   .whenPressed(new TurnToAngle(-90, m_drivetrain));
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whileHeld(new InstantCommand(m_drivetrain::setCoastMode))
+      .whenReleased(new InstantCommand(m_drivetrain::setBrakeMode));
+  
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(new InstantCommand(m_climber::zeroClimber));
+
+    new JoystickButton(m_driverController, Button.kStart.value)
+      .whenPressed(new ThirtyInchReverse(m_drivetrain));
+
+    new JoystickButton(m_driverController, Button.kBack.value)
+      .whenPressed(m_drivetrain::zeroHeading);
+
+    new POVButton(m_driverController, 0)
+      .whileHeld(new TurnToAngle(0.0, m_drivetrain));
+
+    new POVButton(m_driverController, 90)
+      .whileHeld(new TurnToAngle(-90.0, m_drivetrain));
+
+    new POVButton(m_driverController, 180)
+      .whileHeld(new TurnToAngle(180.0, m_drivetrain));
+
+    new POVButton(m_driverController, 270)
+      .whileHeld(new TurnToAngle(90.0, m_drivetrain));
+    
+    new POVButton(m_driverController, 0)
+      .whenPressed(new InstantCommand(m_drivetrain::setPipelineZero));
+
+    new POVButton(m_driverController, 180)
+      .whenPressed(new InstantCommand(m_drivetrain::setPipelineOne));
+    */
   }
 
   public void init(){
@@ -168,17 +209,25 @@ public class RobotContainer {
     return (Command) autoSelector.getSelected();
   }
 
-  public void zeroDriveTrain() {
-    m_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-    m_drivetrain.zeroHeading();
+  public void setDisabledSettings() {
+    m_drivetrain.setCoastMode();
   }
 
-  public void setCoastMode() {
-    m_drivetrain.setCoastMode();
+  public void setAutoSettings() {
+    m_drivetrain.setBrakeMode();
   }
 
 public void setTeleSettings() {
   m_drivetrain.setRampRate();
+  m_drivetrain.setBrakeMode();
+  m_climber.zeroClimber();
+}
+
+public void printAllValues(){
+  m_climber.printClimberValues();
+  m_drivetrain.printDriveValues();
+  m_feeder.printFeederValues();
+  m_shooter.printShooterValues();
 }
 
 }

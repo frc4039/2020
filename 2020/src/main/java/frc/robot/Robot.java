@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Timer m_timer = new Timer();
 
   private RobotContainer m_robotContainer;
 
@@ -47,7 +49,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
+    m_robotContainer.printAllValues();
   }
 
   /**
@@ -55,11 +57,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_robotContainer.setCoastMode();
+    m_timer.reset();
+    m_timer.start();
   }
 
   @Override
   public void disabledPeriodic() {
+    if (m_timer.get() > 3.00) {
+      m_robotContainer.setDisabledSettings();
+      m_timer.stop();
+    }
+
+    
   }
 
   /**
@@ -67,8 +76,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_robotContainer.init();
-    m_robotContainer.zeroDriveTrain();
+    m_robotContainer.setAutoSettings();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -94,6 +103,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
     m_robotContainer.setTeleSettings();
   }
 
@@ -102,6 +112,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
   }
 
   @Override

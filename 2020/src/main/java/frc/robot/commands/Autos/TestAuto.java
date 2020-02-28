@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Autos;
 
 import java.util.List;
-
+import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -21,6 +21,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Stirrer;
 
@@ -33,22 +34,22 @@ public class TestAuto extends SequentialCommandGroup {
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(-1, 0)
+            new Translation2d(-Units.inchesToMeters(18), 0)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-2, 0, new Rotation2d(0)),
+        new Pose2d(-Units.inchesToMeters(36), 0, new Rotation2d(0)),
         // Pass config
-        AutoConstants.config.setReversed(true)
+        AutoConstants.slowConfig.setReversed(true)
     );
   /**
    * Creates a new AutoRoutine.
    */
-  public TestAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Hood hood) {
+  public TestAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, Intaker intaker, DriveTrain drivetrain, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new setShootPosition(ShooterConstants.kInitiationLine, shooter, hood),
-          new SmartShoot(feeder, shooter, stirrer).withTimeout(5), 
+          new setShootPosition(ShooterConstants.kMidBumpers, shooter, hood),
+          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
           new AutoCommand(drivetrain, exampleTrajectory));
   }
 }

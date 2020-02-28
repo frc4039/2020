@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.GeneralConstants;
 
 public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.kLeftDriveMotor1Port, MotorType.kBrushless);
@@ -72,6 +73,13 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
     m_rightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderConstant/60);
 
+    if(GeneralConstants.realMatch){
+      m_leftMotor1.burnFlash();
+      m_leftMotor2.burnFlash();
+      m_rightMotor1.burnFlash();
+      m_rightMotor2.burnFlash();
+    }
+
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
     m_drive = new DifferentialDrive(m_leftMotor1, m_rightMotor1);
@@ -84,8 +92,8 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
     printDriveValues();
+    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
   }
 
   public void drive(double left, double right) {
@@ -146,8 +154,18 @@ public class DriveTrain extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  public void zeroHeading() {
-    m_gyro.reset();
+  public void calibrateGyro() {
+    m_gyro.calibrate();
+  }
+
+  public void zeroGyro() {
+    m_gyro.zeroYaw();
+  }
+
+  public void resetEverything() {
+    zeroGyro();
+    calibrateGyro();
+    resetOdometry(new Pose2d());
   }
 
   public double getHeading() {
@@ -181,13 +199,20 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor2.setIdleMode(IdleMode.kCoast);
   }
 
+  public void setBrakeMode() {
+    m_leftMotor1.setIdleMode(IdleMode.kBrake);
+    m_leftMotor2.setIdleMode(IdleMode.kBrake);
+    m_rightMotor1.setIdleMode(IdleMode.kBrake);
+    m_rightMotor2.setIdleMode(IdleMode.kBrake);
+  }
+
   public double getLimelight() {
-    return -table.getEntry("tx").getDouble(0.0) / 27;
+    return -table.getEntry("tx").getDouble(100.0) / 27;
   }
 
   public void printDriveValues() {
     SmartDashboard.putNumber("limelightx", getLimelight());
-    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+    SmartDashboard.putNumber("Gyro", getHeading());
     SmartDashboard.putNumber("Left Encoder", m_leftEncoder.getPosition());
     SmartDashboard.putNumber("Right Encoder", m_rightEncoder.getPosition());
   }

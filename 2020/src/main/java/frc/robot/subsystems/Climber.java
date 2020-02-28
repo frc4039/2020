@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -27,11 +28,36 @@ public class Climber extends SubsystemBase {
   private TalonFX m_Motor1 = new TalonFX(ClimberConstants.kClimberMotorLeftPort);
   private TalonFX m_Motor2 = new TalonFX(ClimberConstants.kClimberMotorRightPort);
 
+  private Servo m_servo1;
+  private Servo m_servo2;
+
   private double offset = 0;
 
+  private boolean enableClimb = false;
+
   public Climber() {
+
+    m_servo1 = new Servo(ClimberConstants.kServoPort1);
+    m_servo1.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    
+    m_servo2 = new Servo(ClimberConstants.kServoPort2);
+    m_servo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+
     m_Motor1.configFactoryDefault();
     m_Motor2.configFactoryDefault();
+
+    m_Motor1.setInverted(true);
+    m_Motor2.setInverted(false);
+
+    m_Motor1.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
+    m_Motor1.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
+    
+    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitReverse));
+    m_Motor1.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitForward));
+    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitReverse));
+    m_Motor2.configForwardSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimitForward));
 
     m_Motor1.setNeutralMode(NeutralMode.Brake);
     m_Motor2.setNeutralMode(NeutralMode.Brake);
@@ -57,9 +83,6 @@ public class Climber extends SubsystemBase {
 
     m_Motor2.configSelectedFeedbackCoefficient(	1, 1,	ClimberConstants.kTimeoutMs);	
 
-    m_Motor1.setInverted(true);
-    m_Motor2.setInverted(false);
-
     m_Motor2.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, ClimberConstants.kTimeoutMs);
 
     m_Motor2.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, ClimberConstants.kTimeoutMs);
@@ -71,11 +94,6 @@ public class Climber extends SubsystemBase {
     m_Motor2.configNeutralDeadband(ClimberConstants.kNeutralDeadband, ClimberConstants.kTimeoutMs);
 
     m_Motor1.configNeutralDeadband(ClimberConstants.kNeutralDeadband, ClimberConstants.kTimeoutMs);
-
-    m_Motor1.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
-    m_Motor1.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
-    m_Motor2.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
-    m_Motor2.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);  
     
     m_Motor2.config_kF(ClimberConstants.kSlotDistance, ClimberConstants.kDistanceF, ClimberConstants.kTimeoutMs);
     m_Motor2.config_kP(ClimberConstants.kSlotDistance, ClimberConstants.kDistanceP, ClimberConstants.kTimeoutMs);
@@ -103,27 +121,27 @@ public class Climber extends SubsystemBase {
 
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotDistance, ClimberConstants.PID_PRIMARY);
     m_Motor2.selectProfileSlot(ClimberConstants.kSlotTurning, ClimberConstants.PID_TURN);
-
-    m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimit));
-    m_Motor1.configForwardSoftLimitThreshold(0);
-    m_Motor2.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor2SoftLimit));
-    m_Motor2.configForwardSoftLimitThreshold(0);
   
     m_Motor1.configReverseSoftLimitEnable(true);
     m_Motor1.configForwardSoftLimitEnable(true);
     m_Motor2.configReverseSoftLimitEnable(true);
     m_Motor2.configForwardSoftLimitEnable(true);
-    
   }
 
   public void setClimberPosition(double inches){
-    if(inches > ClimberConstants.kSetpointExtended) {
-      offset = ClimberConstants.kOffset;
-    } else {
-      offset = 0;
+
+    if (enableClimb){
+      if(inches > ClimberConstants.kSetFullyExtended) {
+        offset = ClimberConstants.kOffset;
+      } else {
+        offset = 0;
+      }
+  
+      m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
+  
+      m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
     }
-    m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
-    m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
+   
   }
   
   public void stop() {
@@ -146,11 +164,13 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putNumber("Left Climber Position Inches empty",  ticksToInches(m_Motor1.getSelectedSensorPosition()));
     SmartDashboard.putNumber("Right Climber Position Inches empty",  ticksToInches(m_Motor2.getSelectedSensorPosition()));
     SmartDashboard.putNumber("motor 1 integrated", ticksToInches(m_Motor1.getSensorCollection().getIntegratedSensorPosition()));
-    SmartDashboard.putNumber("motor 2 integrated", ticksToInches(m_Motor2.getSensorCollection().getIntegratedSensorPosition()));
+    SmartDashboard.putNumber("motor 2 integrated", ticksToInches(m_Motor2.getSensorCollection().getIntegratedSensorPosition())); 
+    SmartDashboard.putBoolean("Climber Enable", getClimbEnable());
   }
 
   @Override
   public void periodic() {
+    printClimberValues();
   }
 
   public double inchesToTicks(double inches) {
@@ -159,5 +179,27 @@ public class Climber extends SubsystemBase {
 
   public double ticksToInches(double ticks){
     return ticks * ClimberConstants.kShaftDiameter * Math.PI / 2048.0 / ClimberConstants.kGearRatio;
+  }
+
+  public double distanceFromGroundToInches(double height) {
+    return height + ClimberConstants.kSetFullyExtended;
+  }
+
+  public void initiateClimb() {
+    enableClimb = true;
+  }
+
+  public boolean getClimbEnable() {
+    return enableClimb;
+  }
+
+  public void dropBuddyClimb(){
+    m_servo1.set(0);
+    m_servo2.set(0);
+  }
+
+  public void resetBuddyClimb(){
+    m_servo1.set(1);
+    m_servo2.set(1);
   }
 }

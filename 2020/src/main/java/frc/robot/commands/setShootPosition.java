@@ -22,6 +22,7 @@ public class setShootPosition extends CommandBase {
   private int m_shootingPosition;
   private Shooter m_shooter;
   private Hood m_hood;
+
   
   public setShootPosition(int shootingPosition, Shooter shooter, Hood hood) {
     m_shootingPosition = shootingPosition;
@@ -50,18 +51,42 @@ public class setShootPosition extends CommandBase {
         break;
 
       case ShooterConstants.kNearTrench:
-        m_shooter.setSetPoint(ShooterConstants.kTrenchShotRPM);
-        m_hood.setPosition(HoodConstants.kTrenchPos);
+        m_shooter.setSetPoint(ShooterConstants.kNearTrenchShotRPM);
+        m_hood.setPosition(HoodConstants.kNearTrenchPos);
 
         SmartDashboard.putString("Shoot setpoint", "TrenchShot (4500)");
 
         break;
 
-      case ShooterConstants.kInitiationLine:
-        m_shooter.setSetPoint(ShooterConstants.k10FtShotRPM);
-        m_hood.setPosition(HoodConstants.k10FtPos);
+      case ShooterConstants.kBackBumpers:
+        m_shooter.setSetPoint(ShooterConstants.k10ftBackBumperShotRPM);
+        m_hood.setPosition(HoodConstants.k10ftBackPos);
 
-        SmartDashboard.putString("Shoot setpoint", "10FtShot (4250)");
+        SmartDashboard.putString("Shoot setpoint", "10FtBackShot (4250)");
+
+        break;
+
+      case ShooterConstants.kFrontBumpers:
+        m_shooter.setSetPoint(ShooterConstants.k10ftFrontBumperShotRPM);
+        m_hood.setPosition(HoodConstants.k10ftFrontPos);
+
+        SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (4600)");
+
+        break;
+
+        case ShooterConstants.kMidBumpers:
+        m_shooter.setSetPoint(ShooterConstants.k10ftMidBumperShotRPM);
+        m_hood.setPosition(HoodConstants.k10ftMidPos);
+
+        SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (4425)");
+
+        break;
+
+        case ShooterConstants.kFarTrench:
+        m_shooter.setSetPoint(ShooterConstants.kFarTrenchShotRPM);
+        m_hood.setPosition(HoodConstants.kFarTrenchPos);
+
+        SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (5500)");
 
         break;
     }
@@ -78,3 +103,4 @@ public class setShootPosition extends CommandBase {
     return true;
   }
 }
+        

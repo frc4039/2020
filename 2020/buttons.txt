@@ -1,18 +1,10 @@
-Operator Controller, B Button (Hold, interruptable): SmartIntake
-Operator Controller, X Button (Toggle on/off): Shoot
-Operator Controller, Left Bumper Button (Hold): SmartShoot
-Operator Controller, D-Pad Up (When pressed): setShootPosition (ShooterConstants.kTargetZone)
-Operator Controller, D-Pad Right (When pressed): setShootPosition (ShooterConstants.kInitiationLine)
-Operator Controller, D-Pad Down (When pressed): setShootPosition (ShooterConstants.kNearTrench)
-Driver Controller, A Button (Hold): Shoot (ShooterConstants.kShooterRPM4)
-Driver Controller, A Button (When pressed): InstantCommand
-Driver Controller, Y Button (When pressed): InstantCommand
-Driver Controller, B Button (When pressed): Climb (ClimberConstants.kSetpointExtended)
-Driver Controller, X Button (When pressed): Climb (ClimberConstants.kSetpointClimbed)
-Driver Controller, Left Bumper Button (Hold): TurnToLimelight
-Driver Controller, Y Button (When pressed): InstantCommand
-Driver Controller, Right Bumper Button (Toggle on/off): ReverseIntake
-Driver Controller, D-Pad Up (When pressed): TurnToAngle (0)
-Driver Controller, D-Pad Left (When pressed): TurnToAngle (90)
-Driver Controller, D-Pad Down (When pressed): TurnToAngle (180)
-Driver Controller, D-Pad Right (When pressed): TurnToAngle (-90)
+Operator Controller, X Button (Press): InstantCommand (m_feeder::unjam)
+Operator Controller, D-Pad Up whenPressed(new ConditionalCommand: Climb(ClimberConstants.kSetFullyExtended, m_climber), new setShootPosition (ShooterConstants.kTargetZone, m_climber::getClimbEnable)
+Operator Controller, D-Pad Left whenPressed(new ConditionalCommand(new ParallelCommandGroup: Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),new InstantCommand(m_climber::dropBuddyClimb)),new setShootPosition (ShooterConstants.kMidBumpers, m_climber::getClimbEnable)
+Operator Controller, D-Pad Down whenPressed(new ConditionalCommand: Climb(ClimberConstants.kSetFullyClimbed, m_climber),new setShootPosition (ShooterConstants.kNearTrench, m_climber::getClimbEnable)
+Operator Controller, Start Button (When activated): EnableClimber
+Driver Controller, Y Button (Hold): SmartShoot
+Driver Controller, A Button (Hold, interruptable): LimelightShoot
+Driver Controller, A Button (When button is released): InstantCommand (m_drivetrain::setPipelineZero)
+Driver Controller, Right Bumper Button (Press): resetDisabledRobot
+Driver Controller, Left Bumper Button (Press): resetDisabledRobot

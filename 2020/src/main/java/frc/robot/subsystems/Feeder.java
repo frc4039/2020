@@ -13,7 +13,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.FeederConstants;
+import frc.robot.Constants.GeneralConstants;
 
 public class Feeder extends SubsystemBase {
   private CANSparkMax m_feederMotor;
@@ -29,29 +31,53 @@ public class Feeder extends SubsystemBase {
     
     m_feederMotor.setInverted(FeederConstants.kFeederInversion);
 
+    if (GeneralConstants.realMatch) {
+      m_feederMotor.burnFlash();
+    }
+
     m_BreakBeam1 = new DigitalInput(FeederConstants.kBreakBeamPort1);
     m_BreakBeam2 = new DigitalInput(FeederConstants.kBreakBeamPort2);
   }
 
   @Override
   public void periodic() {
-    printFeederValues();
+
   }
 
   public void feed() {
     m_feederMotor.set(FeederConstants.kFeederPercent);
   }
 
+  public void unjam() {
+    m_feederMotor.set(-FeederConstants.kFeederPercent);
+  }
+
   public void stop() {
     m_feederMotor.set(0);
   }
 
-  public boolean getBreakBeam() {
+  public boolean getBottomBreakBeam(){
+    return m_BreakBeam2.get();
+  }
+
+  public boolean getTopBreakBeam(){
+    return m_BreakBeam1.get();
+  }
+
+  public boolean getOrBreakBeams() {
     return m_BreakBeam1.get() || m_BreakBeam2.get();
   }
 
-  public boolean getBottomBeamBreak(){
-    return m_BreakBeam2.get();
+  public boolean getAndBreakBeams() {
+    return m_BreakBeam1.get() && m_BreakBeam2.get();
+  }
+
+  public boolean isStalled(){
+    if(m_feederMotor.getAppliedOutput() != 0 && m_feederMotor.getEncoder().getVelocity() == 0){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public void printFeederValues() {
