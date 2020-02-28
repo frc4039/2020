@@ -173,7 +173,7 @@ public final class Constants {
 
         public static final double kDistancePeakOutput = 0.8;
         public static final double kTurnPeakOutput = 1.0;
-        public static final double kOffset = -1.0;
+        public static final double kOffset = 2.0; //positive brings left down
         
 		public static final int kMotor1SoftLimitReverse = -66;
 		public static final int kMotor2SoftLimitReverse = -68;
