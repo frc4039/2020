@@ -23,6 +23,7 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autos.*;
+import frc.robot.commands.AdjustBallTwo;
 import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
@@ -160,8 +161,6 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whenPressed(new resetDisabledRobot(m_drivetrain));
-
-    // new JoystickButton
 
     //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
   /*
