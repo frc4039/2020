@@ -132,9 +132,9 @@ public class Climber extends SubsystemBase {
 
     if (enableClimb){
       if(inches > ClimberConstants.kSetFullyExtended) {
-        offset = ClimberConstants.kOffset;
+        offset = ClimberConstants.kOffsetDown;
       } else {
-        offset = 0;
+        offset = ClimberConstants.kOffsetUp;
       }
   
       m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
