@@ -130,7 +130,7 @@ public final class Constants {
         public static final double kFeederGearRatio = 20;
         public static final double kFeederRotation = 0.375;
 
-		public static final double kAdjustBallTwoPos = -kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
+		public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
     public static final class ClimberConstants {

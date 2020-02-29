@@ -43,6 +43,6 @@ public class AdjustBallTwo extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_feeder.getPosition() < FeederConstants.kAdjustBallTwoPos;
+    return m_feeder.getPosition() > FeederConstants.kAdjustBallTwoPos;
   }
 }
