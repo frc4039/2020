@@ -85,8 +85,8 @@ public final class Constants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
 
-        public static final double kStirrerPercent1 = 0.50;
-        public static final double kStirrerPercent2 = 0.25;
+        public static final double kStirrerPercent1 = 0.35;
+        public static final double kStirrerPercent2 = 0.175; //half the other
         
 		public static final int kStirrerCurrentLimit = 30;
        
