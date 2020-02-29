@@ -29,19 +29,20 @@ public class LimelightShoot extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new SequentialCommandGroup(
+      new ParallelCommandGroup(
         new ParallelRaceGroup(
           new Shoot(shooter),
           new SequentialCommandGroup(
             new InstantCommand(drivetrain::setPipelineOne),
             new WaitCommand(0.2),
             new TurnToLimelight(drivetrain)
-          )
-        ),
-        new ParallelCommandGroup(
-          new TurnToLimelight(drivetrain).perpetually(),
-          new SmartShoot(feeder, shooter, stirrer, intaker)
+          ),
+        new AdjustBallTwo(feeder)
         )
+      ),
+      new ParallelCommandGroup(
+        new TurnToLimelight(drivetrain).perpetually(),
+        new SmartShoot(feeder, shooter, stirrer, intaker)
       )
     );
   }
