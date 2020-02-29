@@ -162,10 +162,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBumperLeft.value)
       .whenPressed(new resetDisabledRobot(m_drivetrain));
 
-    
-      new JoystickButton(m_driverController, Button.kB.value)
-      .whenPressed(new AdjustBallTwo(m_feeder));
-
     //temporary commands -- COMMENT OUT THEN DEPLOY BEFORE LEAVING MEETING
   /*
     new JoystickButton(m_driverController, Button.kB.value)

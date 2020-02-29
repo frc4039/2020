@@ -102,7 +102,7 @@ public final class Constants {
         public static final double kTolerance = 0.03;
         public static final double kRateTolerance = 0.0;
         public static final double kMaxI = 0.10;
-        public static final double kLimelightOffset = -0.1;
+        public static final double kLimelightOffset = 0.1;
     }
 
     public static final class TurningConstants {
@@ -121,6 +121,7 @@ public final class Constants {
         public static final int kBreakBeamPort2 = 7;
 
         public static final double kFeederPercent = 0.5;
+        public static final double kFeederSlow = 0.15;
 
         public static final int kCurrentLimit = 30;
         
@@ -130,7 +131,8 @@ public final class Constants {
         public static final double kFeederGearRatio = 20;
         public static final double kFeederRotation = 0.375;
 
-		public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
+        public static final double kAdjustBallTwoPos = 12;
+		//public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
     public static final class ClimberConstants {

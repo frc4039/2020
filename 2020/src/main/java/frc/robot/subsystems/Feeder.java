@@ -52,6 +52,10 @@ public class Feeder extends SubsystemBase {
     m_feederMotor.set(-FeederConstants.kFeederPercent);
   }
 
+  public void slow() {
+    m_feederMotor.set(FeederConstants.kFeederSlow);
+  }
+
   public void stop() {
     m_feederMotor.set(0);
   }

@@ -13,6 +13,7 @@ import frc.robot.subsystems.Feeder;
 
 public class AdjustBallTwo extends CommandBase {
   public final Feeder m_feeder;
+  public double m_initialPos = 0;
   /**
    * Creates a new AdjustBallTwo.
    */
@@ -25,13 +26,13 @@ public class AdjustBallTwo extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_feeder.zeroEncoder();
+    m_initialPos = m_feeder.getPosition();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.unjam();
+    m_feeder.slow();
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +44,6 @@ public class AdjustBallTwo extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_feeder.getPosition() > FeederConstants.kAdjustBallTwoPos;
+    return m_feeder.getPosition() > m_initialPos + FeederConstants.kAdjustBallTwoPos;
   }
 }
