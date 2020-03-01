@@ -49,7 +49,7 @@ public class StealAutoClose extends SequentialCommandGroup {
         new Translation2d(-Units.inchesToMeters(5 * 12), Units.inchesToMeters(4 * 12))
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(3 * 12), Units.inchesToMeters(17.5*12),
+      new Pose2d(-Units.inchesToMeters(2 * 12), Units.inchesToMeters(17.5*12),
           new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
       AutoConstants.fastConfig.setReversed(true));
