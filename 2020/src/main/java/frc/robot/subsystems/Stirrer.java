@@ -59,7 +59,9 @@ public class Stirrer extends SubsystemBase {
   public void altStir() {
     if (m_isAlternating) {
       m_stirrerMotor1.set(StirrerConstants.kStirrerPercent1);
+      m_stirrerMotor2.set(0);
     } else {
+      m_stirrerMotor1.set(0);
       m_stirrerMotor2.set(StirrerConstants.kStirrerPercent2);
     }
   }
