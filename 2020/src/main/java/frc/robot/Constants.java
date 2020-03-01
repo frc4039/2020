@@ -184,7 +184,7 @@ public final class Constants {
         public static final double kDistancePeakOutput = 0.8;
         public static final double kTurnPeakOutput = 1.0;
 
-        public static final double kOffsetDown = 1.25; //positive brings left down
+        public static final double kOffsetDown = 3.25; //positive brings left down
         public static final double kOffsetUp = 0;
         
 		public static final int kMotor1SoftLimitReverse = -66;
