@@ -33,7 +33,7 @@ public class SmartShoot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    m_stirrer.setShootState();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,7 +46,7 @@ public class SmartShoot extends CommandBase {
     if (Math.abs(m_shooter.returnCurrentRPM() - m_shooter.getSetpoint()) < ShooterConstants.kShooterThreshold) {
       m_intaker.intake();
       m_feeder.feed();
-      m_stirrer.stir();
+      m_stirrer.altStir();
       m_shooter.feedShooter();
     }
   }
@@ -54,6 +54,7 @@ public class SmartShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_stirrer.setIntakeState();
     m_feeder.stop();
     m_stirrer.stop();
     m_shooter.stop();

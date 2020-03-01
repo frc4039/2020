@@ -86,12 +86,14 @@ public final class Constants {
         public static final int kStirrerMotor2Port = 28;
 
         public static final double kStirrerPercent1 = 0.35;
-        public static final double kStirrerPercent2 = 0.175; //half the other
+        public static final double kStirrerPercent2 = 0.35; //half the other
         
 		public static final int kStirrerCurrentLimit = 30;
        
         public static final boolean kStirrerInversion1 = false;
         public static final boolean kStirrerInversion2 = true;
+
+        public static final double kAlternatingTime = 4.00;
     }
 
     public static final class VisionConstants {
@@ -131,7 +133,7 @@ public final class Constants {
         public static final double kFeederGearRatio = 20;
         public static final double kFeederRotation = 0.375;
 
-        public static final double kAdjustBallTwoPos = 12;
+        public static final double kAdjustBallTwoPos = 8;
 		//public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
@@ -182,7 +184,7 @@ public final class Constants {
         public static final double kDistancePeakOutput = 0.8;
         public static final double kTurnPeakOutput = 1.0;
 
-        public static final double kOffsetDown = 1.25; //positive brings left down
+        public static final double kOffsetDown = 3.25; //positive brings left down
         public static final double kOffsetUp = 0;
         
 		public static final int kMotor1SoftLimitReverse = -66;
@@ -233,8 +235,8 @@ public final class Constants {
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecondSlow = 2;
         public static final double kMaxAccelerationMetersPerSecondSquaredSlow = 0.5;
-        public static final double kMaxSpeedMetersPerSecondMedium = 3.5;
-        public static final double kMaxAccelerationMetersPerSecondSquaredMedium = 1.5;
+        public static final double kMaxSpeedMetersPerSecondMedium = 3.0;
+        public static final double kMaxAccelerationMetersPerSecondSquaredMedium = 1.25;
         public static final double kMaxSpeedMetersPerSecondFast = 4.0;
         public static final double kMaxAccelerationMetersPerSecondSquaredFast = 1.8;
 		public static final double kRamseteB = 2;
