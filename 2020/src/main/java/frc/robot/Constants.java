@@ -92,6 +92,8 @@ public final class Constants {
        
         public static final boolean kStirrerInversion1 = false;
         public static final boolean kStirrerInversion2 = true;
+
+        public static final double kAlternatingTime = 4.00;
     }
 
     public static final class VisionConstants {
