@@ -35,7 +35,7 @@ public class StealAutoClose extends SequentialCommandGroup {
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
-      List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(12))),
+      List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(20))),
       // End 3 meters straight ahead of where we started, facing forward
       new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
       // Pass config
