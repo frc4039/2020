@@ -133,7 +133,7 @@ public final class Constants {
         public static final double kFeederGearRatio = 20;
         public static final double kFeederRotation = 0.375;
 
-        public static final double kAdjustBallTwoPos = 12;
+        public static final double kAdjustBallTwoPos = 8;
 		//public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
