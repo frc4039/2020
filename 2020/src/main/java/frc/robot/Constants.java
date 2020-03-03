@@ -145,7 +145,7 @@ public final class Constants {
         public static final int kLeftLimitSwitchPort = 2;
         public static final int kRightLimitSwitchPort = 3;
 
-        public static final double kSetFullyExtended = 33.77 + 1.675 - 1.0;
+        public static final double kSetFullyExtended = 33.77 + 1.675 - 1.0 -.5;
         public static final double kSetFullyClimbed = 66; // 66.89;
         public static final double kSetBuddyClimb = 20; //Must be less than 26 (60-33.77)
 
@@ -184,7 +184,7 @@ public final class Constants {
         public static final double kDistancePeakOutput = 0.8;
         public static final double kTurnPeakOutput = 1.0;
 
-        public static final double kOffsetDown = 2.75; //positive brings left down
+        public static final double kOffsetDown = 2.75-4; //positive brings left down
         public static final double kOffsetUp = 0;
 
         // motor 1: left
