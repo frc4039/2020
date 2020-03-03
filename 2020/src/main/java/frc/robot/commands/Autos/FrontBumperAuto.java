@@ -52,7 +52,7 @@ public class FrontBumperAuto extends SequentialCommandGroup {
       new Pose2d(-Units.inchesToMeters(35 + 12 * 12), -Units.inchesToMeters(65),
           new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
-      AutoConstants.fastConfig.setReversed(false));
+      AutoConstants.MediumConfig.setReversed(false));
 
   /**
    * Creates a new AutoRoutine.

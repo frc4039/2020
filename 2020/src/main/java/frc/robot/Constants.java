@@ -85,13 +85,15 @@ public final class Constants {
         public static final int kStirrerMotor1Port = 23;
         public static final int kStirrerMotor2Port = 28;
 
-        public static final double kStirrerPercent1 = 0.50;
-        public static final double kStirrerPercent2 = 0.25;
+        public static final double kStirrerPercent1 = 0.35;
+        public static final double kStirrerPercent2 = 0.35; //half the other
         
 		public static final int kStirrerCurrentLimit = 30;
        
         public static final boolean kStirrerInversion1 = false;
         public static final boolean kStirrerInversion2 = true;
+
+        public static final double kAlternatingTime = 4.00;
     }
 
     public static final class VisionConstants {
@@ -102,7 +104,7 @@ public final class Constants {
         public static final double kTolerance = 0.03;
         public static final double kRateTolerance = 0.0;
         public static final double kMaxI = 0.10;
-        public static final double kLimelightOffset = -0.1;
+        public static final double kLimelightOffset = 0.1;
     }
 
     public static final class TurningConstants {
@@ -121,10 +123,18 @@ public final class Constants {
         public static final int kBreakBeamPort2 = 7;
 
         public static final double kFeederPercent = 0.5;
+        public static final double kFeederSlow = 0.15;
 
         public static final int kCurrentLimit = 30;
         
         public static final boolean kFeederInversion = true;
+
+        public static final double kFeederTicksPerRev = 42;
+        public static final double kFeederGearRatio = 20;
+        public static final double kFeederRotation = 0.375;
+
+        public static final double kAdjustBallTwoPos = 8;
+		//public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
     public static final class ClimberConstants {
@@ -135,8 +145,8 @@ public final class Constants {
         public static final int kLeftLimitSwitchPort = 2;
         public static final int kRightLimitSwitchPort = 3;
 
-        public static final double kSetFullyExtended = 33.77;
-        public static final double kSetFullyClimbed = 60; // 66.89;
+        public static final double kSetFullyExtended = 33.77 + 1.675 - 1.0 -.5;
+        public static final double kSetFullyClimbed = 66; // 66.89;
         public static final double kSetBuddyClimb = 20; //Must be less than 26 (60-33.77)
 
         public static final int kServoPort1 = 2;
@@ -152,7 +162,7 @@ public final class Constants {
         public static final boolean kRetracted = false;
 
         public static final double kGearRatio = 36.0;
-        public static final double kShaftDiameter = 0.744;
+        public static final double kShaftDiameter = 0.885;
 
         public static final double kNeutralDeadband = 0.0;
 
@@ -173,9 +183,13 @@ public final class Constants {
 
         public static final double kDistancePeakOutput = 0.8;
         public static final double kTurnPeakOutput = 1.0;
-        public static final double kOffset = -1.0;
+
+        public static final double kOffsetDown = 2.75-4; //positive brings left down
+        public static final double kOffsetUp = 0;
+
+        // motor 1: left
         
-		public static final int kMotor1SoftLimitReverse = -66;
+		public static final int kMotor1SoftLimitReverse = -68;
 		public static final int kMotor2SoftLimitReverse = -68;
 		public static final int kMotor1SoftLimitForward = 0;
 		public static final int kMotor2SoftLimitForward = 0;
@@ -223,6 +237,8 @@ public final class Constants {
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecondSlow = 2;
         public static final double kMaxAccelerationMetersPerSecondSquaredSlow = 0.5;
+        public static final double kMaxSpeedMetersPerSecondMedium = 3.0;
+        public static final double kMaxAccelerationMetersPerSecondSquaredMedium = 1.25;
         public static final double kMaxSpeedMetersPerSecondFast = 4.0;
         public static final double kMaxAccelerationMetersPerSecondSquaredFast = 1.8;
 		public static final double kRamseteB = 2;
@@ -247,6 +263,14 @@ public final class Constants {
         public static final TrajectoryConfig fastConfig =
                 new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecondFast,
                                     AutoConstants.kMaxAccelerationMetersPerSecondSquaredFast)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(DriveConstants.kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint);
+    
+        public static final TrajectoryConfig MediumConfig =
+                new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecondMedium,
+                                    AutoConstants.kMaxAccelerationMetersPerSecondSquaredMedium)
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(DriveConstants.kDriveKinematics)
                     // Apply the voltage constraint
