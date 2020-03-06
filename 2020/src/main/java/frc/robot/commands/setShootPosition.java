@@ -13,7 +13,6 @@ import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Shooter;
 
 public class setShootPosition extends CommandBase {
   /**

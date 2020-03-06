@@ -24,13 +24,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Intaker;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Stirrer;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class StraightBackAuto extends SequentialCommandGroup {
   static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction

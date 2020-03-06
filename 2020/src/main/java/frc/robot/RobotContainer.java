@@ -23,7 +23,6 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.GeneralConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autos.*;
-import frc.robot.commands.AdjustBallTwo;
 import frc.robot.commands.AdjustClimb;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
@@ -37,9 +36,6 @@ import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Intaker;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Stirrer;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
