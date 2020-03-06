@@ -140,9 +140,8 @@ public class RobotContainer {
 
     //Initiate climber-------------------------------------------------
     new JoystickButton(m_operatorController, Button.kStart.value)
-      .and(new Trigger(() -> m_driverController.getTriggerAxis(Hand.kRight) >0.25))
+      .and(new JoystickButton(m_operatorController, Button.kBack.value))
       .whenActive(new EnableClimber(m_climber));
-
 
     // Driver Controls-------------------------------------------------
 
