@@ -9,41 +9,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.FeederConstants;
-import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.BallManager;
 
 public class AdjustBallTwo extends CommandBase {
-  public final Feeder m_feeder;
+  public final BallManager m_ballManager;
   public double m_initialPos = 0;
   /**
    * Creates a new AdjustBallTwo.
    */
-  public AdjustBallTwo(Feeder feeder) {
-    m_feeder = feeder;
+  public AdjustBallTwo(BallManager ballManager) {
+    m_ballManager = ballManager;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_feeder);
+    addRequirements(m_ballManager);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_initialPos = m_feeder.getPosition();
+    m_initialPos = m_ballManager.getFeederPosition();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.slow();
+    m_ballManager.slowFeed();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.stop();
+    m_ballManager.stopFeeder();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_feeder.getPosition() > m_initialPos + FeederConstants.kAdjustBallTwoPos;
+    return m_ballManager.getFeederPosition() > m_initialPos + FeederConstants.kAdjustBallTwoPos;
   }
 }

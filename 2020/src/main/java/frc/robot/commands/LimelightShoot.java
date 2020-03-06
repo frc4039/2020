@@ -16,27 +16,23 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.DriveTrain;
 
-public class LimelightShoot extends SequentialCommandGroup {
-  public final BallManager m_ballManager;
-  
+public class LimelightShoot extends SequentialCommandGroup {  
   public LimelightShoot(DriveTrain drivetrain, BallManager ballManager) {
-    m_ballManager = ballManager;
-
     super(
       new ParallelCommandGroup(
         new ParallelRaceGroup(
-          new SmartShoot(m_ballManager),
+          new SmartShoot(ballManager),
           new SequentialCommandGroup(
             new InstantCommand(drivetrain::setPipelineOne),
             new WaitCommand(0.2),
             new TurnToLimelight(drivetrain)
           ),
-        new AdjustBallTwo(feeder)
+        new AdjustBallTwo(ballManager)
         )
       ),
       new ParallelCommandGroup(
         new TurnToLimelight(drivetrain).perpetually(),
-        new SmartShoot(feeder, shooter, stirrer, intaker)
+        new SmartShoot(ballManager)
       )
     );
   }

@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
@@ -57,14 +57,13 @@ public class FrontBumperAuto extends SequentialCommandGroup {
   /**
    * Creates a new AutoRoutine.
    */
-  public FrontBumperAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Intaker intaker,
-      Hood hood) {
+  public FrontBumperAuto(BallManager ballManager, DriveTrain drivetrain, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new setShootPosition(ShooterConstants.kFrontBumpers, shooter, hood),
-          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3),
+          new setShootPosition(ShooterConstants.kFrontBumpers, ballManager, hood),
+          new SmartShoot(ballManager).withTimeout(3),
           new SequentialCommandGroup(new AutoCommand(drivetrain, trenchTrajectory1), new ParallelCommandGroup(
-          new AutoCommand(drivetrain, trenchTrajectory2), new SmartIntake(intaker, feeder, stirrer))));
+          new AutoCommand(drivetrain, trenchTrajectory2), new SmartIntake(ballManager))));
   }
 }

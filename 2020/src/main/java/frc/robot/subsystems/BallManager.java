@@ -58,8 +58,6 @@ public class BallManager extends SubsystemBase {
       m_timer.reset();
       m_isAlternating = !m_isAlternating;
     }
-
-    printFeederValues();
   }
 
   // Intaker subsystem
@@ -164,7 +162,7 @@ public class BallManager extends SubsystemBase {
     m_feederMotor.set(-FeederConstants.kFeederPercent);
   }
 
-  public void slow() {
+  public void slowFeed() {
     m_feederMotor.set(FeederConstants.kFeederSlow);
   }
 
@@ -172,7 +170,7 @@ public class BallManager extends SubsystemBase {
     m_feederMotor.set(0);
   }
 
-  public double getPosition() {
+  public double getFeederPosition() {
     return m_feederMotor.getEncoder().getPosition();
   }
 
@@ -207,7 +205,7 @@ public class BallManager extends SubsystemBase {
   public void printFeederValues() {
     SmartDashboard.putBoolean("Top Break Beam Status", m_BreakBeam1.get());
     SmartDashboard.putBoolean("Bottom Break Beam Status", m_BreakBeam2.get());
-    SmartDashboard.putNumber("Feeder Encoder Value", getPosition());
+    SmartDashboard.putNumber("Feeder Encoder Value", getFeederPosition());
   }
 
   // Shooter subsystem

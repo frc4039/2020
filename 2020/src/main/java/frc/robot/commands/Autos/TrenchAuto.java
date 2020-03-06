@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
@@ -71,16 +71,16 @@ public class TrenchAuto extends SequentialCommandGroup {
   /**
    * Creates a new AutoRoutine.
    */
-  public TrenchAuto(Shooter shooter, Feeder feeder, Stirrer stirrer, DriveTrain drivetrain, Intaker intaker, Hood hood) {
+  public TrenchAuto(BallManager ballManager, DriveTrain drivetrain, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood),
-          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
+          new setShootPosition(ShooterConstants.kBackBumpers, ballManager, hood),
+          new SmartShoot(ballManager).withTimeout(3), 
         //   new AutoCommand(drivetrain, trenchTrajectory1),
           new ParallelRaceGroup(
                                    new AutoCommand(drivetrain, trenchTrajectory1),
-                                   new SmartIntake(intaker, feeder, stirrer)
+                                   new SmartIntake(ballManager)
                                    )
         //   new setShootPosition(ShooterConstants.kFarTrench, shooter, hood)
           // new AutoCommand(drivetrain, trenchTrajectory3),

@@ -29,7 +29,6 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
 import frc.robot.commands.EnableClimber;
 import frc.robot.commands.LimelightShoot;
-import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.resetDisabledRobot;
@@ -45,7 +44,7 @@ import frc.robot.subsystems.Stirrer;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
-  private final BallManager m_ballManager = new BallManager()
+  private final BallManager m_ballManager = new BallManager();
   private final Climber m_climber = new Climber();
   private final Hood m_hood = new Hood();
   
@@ -60,12 +59,12 @@ public class RobotContainer {
    * stems, OI devices, and commands.
    */
   public RobotContainer() {
-    autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Steal Auto", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Steal Auto Close", new StealAutoClose(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Backwards Auto", new TestAuto(m_shooter, m_feeder, m_stirrer, m_intaker, m_drivetrain, m_hood));
-    autoSelector.addOption("Rendezvous Auto", new RendezvousAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
+    autoSelector.setDefaultOption("Middle Back Bumpers", new TrenchAuto(m_ballManager, m_drivetrain, m_hood));
+    autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_ballManager, m_drivetrain, m_hood));
+    autoSelector.addOption("Steal Auto", new StealAuto(m_ballManager, m_drivetrain, m_hood));
+    autoSelector.addOption("Steal Auto Close", new StealAutoClose(m_ballManager, m_drivetrain, m_hood));
+    autoSelector.addOption("Backwards Auto", new TestAuto(m_ballManager, m_drivetrain, m_hood));
+    autoSelector.addOption("Rendezvous Auto", new RendezvousAuto(m_ballManager, m_drivetrain, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
     m_drivetrain.setDefaultCommand(new ArcadeDrive(
@@ -87,10 +86,10 @@ public class RobotContainer {
 
     //Reverse the intake
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) < -0.25)
-      .whileActiveContinuous(new ReverseIntake(m_intaker));
+      .whileActiveContinuous(new InstantCommand(m_ballManager::outtake));
 
     new JoystickButton(m_operatorController, Button.kX.value)
-      .whenPressed(new InstantCommand(m_feeder::unjam));
+      .whenPressed(new InstantCommand(m_ballManager::unjam));
 
     // Rev the shooter for SmartShoot
     // new JoystickButton(m_operatorController, Button.kX.value)
@@ -100,7 +99,7 @@ public class RobotContainer {
     new POVButton(m_operatorController, 0)
       .whenPressed(new ConditionalCommand(
         new Climb(ClimberConstants.kSetFullyExtended, m_climber), 
-        new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood), 
+        new setShootPosition(ShooterConstants.kTargetZone, m_ballManager, m_hood), 
         m_climber::getClimbEnable));
 
     //Buddy climb height OR set shot position to Initiation Line
@@ -109,14 +108,14 @@ public class RobotContainer {
         new ParallelCommandGroup(
           new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),
           new InstantCommand(m_climber::dropBuddyClimb)),
-        new setShootPosition(ShooterConstants.kMidBumpers, m_shooter, m_hood),
+        new setShootPosition(ShooterConstants.kMidBumpers, m_ballManager, m_hood),
         m_climber::getClimbEnable));
 
     //Fully climbed height OR set shot position to Near Trench
     new POVButton(m_operatorController, 180)
       .whenPressed(new ConditionalCommand(
         new Climb(ClimberConstants.kSetFullyClimbed, m_climber),
-        new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
+        new setShootPosition(ShooterConstants.kNearTrench, m_ballManager, m_hood),
         m_climber::getClimbEnable));
 
     //Manual climb
@@ -145,11 +144,11 @@ public class RobotContainer {
 
     // SmartShoot
     new JoystickButton(m_driverController, Button.kY.value)
-      .whileHeld(new SmartShoot(m_feeder, m_shooter, m_stirrer, m_intaker));
+      .whileHeld(new SmartShoot(m_ballManager));
 
     // Limelight
     new JoystickButton(m_driverController, Button.kA.value)
-      .whenHeld(new LimelightShoot(m_drivetrain, m_feeder, m_shooter, m_stirrer, m_intaker));
+      .whenHeld(new LimelightShoot(m_drivetrain, m_ballManager));
     new JoystickButton(m_driverController, Button.kA.value)
       .whenReleased(new InstantCommand(m_drivetrain::setPipelineZero));
 
@@ -222,8 +221,8 @@ public void setTeleSettings() {
 public void printAllValues(){
   m_climber.printClimberValues();
   m_drivetrain.printDriveValues();
-  m_feeder.printFeederValues();
-  m_shooter.printShooterValues();
+  m_ballManager.printFeederValues();
+  m_ballManager.printShooterValues();
 }
 
 }
