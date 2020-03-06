@@ -34,9 +34,9 @@ import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.resetDisabledRobot;
 import frc.robot.commands.setShootPosition;
+import frc.robot.subsystems.BallManager;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
@@ -45,11 +45,8 @@ import frc.robot.subsystems.Stirrer;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
-  private final Shooter m_shooter = new Shooter();
-  private final Intaker m_intaker = new Intaker();
+  private final BallManager m_ballManager = new BallManager()
   private final Climber m_climber = new Climber();
-  private final Stirrer m_stirrer = new Stirrer();
-  private final Feeder m_feeder = new Feeder();
   private final Hood m_hood = new Hood();
   
   XboxController m_driverController = new XboxController(GeneralConstants.kDriverController);
@@ -86,7 +83,7 @@ public class RobotContainer {
 
     // Smart Intake
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) > 0.25)
-      .whileActiveContinuous(new SmartIntake(m_intaker, m_feeder, m_stirrer));
+      .whileActiveContinuous(new SmartIntake(m_ballManager));
 
     //Reverse the intake
     new Trigger(() -> m_operatorController.getY(Hand.kLeft) < -0.25)

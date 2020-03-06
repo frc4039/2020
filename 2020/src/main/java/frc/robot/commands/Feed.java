@@ -8,15 +8,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.BallManager;
 
 public class Feed extends CommandBase {
   public double m_speed;
-  public final Feeder m_feeder;
+  public final BallManager m_ballManager;
 
-  public Feed(Feeder feeder) {
-    m_feeder = feeder;
-    addRequirements(m_feeder);
+  public Feed(BallManager ballManager) {
+    m_ballManager = ballManager;
+    addRequirements(m_ballManager);
   }
 
   // Called when the command is initially scheduled.
@@ -28,18 +28,18 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed();
+    m_ballManager.feed();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.stop();
+    m_ballManager.stopFeeder();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_feeder.getOrBreakBeams();
+    return !m_ballManager.getOrBreakBeams();
   }
 }
