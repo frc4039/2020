@@ -129,18 +129,16 @@ public class RobotContainer {
         new InstantCommand(), 
         m_climber::getClimbEnable));
 
-    /*
     //Manual Climb Reverse
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kLeft) > 0.05)
       .whileActiveContinuous(new ConditionalCommand(
         new AdjustClimb(() -> -m_operatorController.getTriggerAxis(Hand.kLeft), m_climber), 
         new InstantCommand(), 
         m_climber::getClimbEnable));
-    */
 
     //Initiate climber-------------------------------------------------
-    new JoystickButton(m_operatorController, Button.kStart.value)
-      .and(new JoystickButton(m_operatorController, Button.kBack.value))
+    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
+      .and(new JoystickButton(m_operatorController, Button.kBumperRight.value))
       .whenActive(new EnableClimber(m_climber));
 
     // Driver Controls-------------------------------------------------
