@@ -131,20 +131,11 @@ public class Climber extends SubsystemBase {
   }
 
   public void setClimberPosition(double inches){
-
-    // if (enableClimb){
-    //   if(inches > ClimberConstants.kSetFullyExtended) {
-    //     offset = ClimberConstants.kOffsetDown;
-    //   } else {
-    //     offset = ClimberConstants.kOffsetUp;
-    //   }
-
     if (enableClimb) {
       m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
   
       m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
     }
-   
   }
   
   public void stop() {
