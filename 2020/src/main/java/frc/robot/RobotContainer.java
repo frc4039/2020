@@ -67,7 +67,7 @@ public class RobotContainer {
     autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Steal Auto", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Steal Auto Close", new StealAutoClose(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Backwards Auto", new TestAuto(m_shooter, m_feeder, m_stirrer, m_intaker, m_drivetrain, m_hood));
+    autoSelector.addOption("Backwards Auto", new StraightBackAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Rendezvous Auto", new RendezvousAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 

@@ -40,12 +40,14 @@ public final class Constants {
         public static final int kShooterMotor2Port = 21;
         public static final int kShooterFeederMotorPort = 25;
 
+        public static final double kFrontBumperFarRPM = 5000;
         public static final double kNearTrenchShotRPM = 5250;
         public static final double kFarTrenchShotRPM = 5500;
         public static final double kWallShotRPM = 3475;
         public static final double k10ftBackBumperShotRPM = 4350;
         public static final double k10ftMidBumperShotRPM = 4425;
         public static final double k10ftFrontBumperShotRPM = 4600;
+        public static final double kTrenchAutoRPM = 4800;
 
         public static final double kShooterFeederSpeed = 0.8;
 
@@ -55,6 +57,8 @@ public final class Constants {
         public static final int kFrontBumpers = 4;
         public static final int kMidBumpers = 5;
         public static final int kFarTrench = 6;
+        public static final int kFrontBumperFar = 7;
+        public static final int kTrenchAutoFar = 8;
 
         public static final double kF = 0.008;
         public static final double kP = 0.02;

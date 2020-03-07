@@ -54,7 +54,7 @@ public class setShootPosition extends CommandBase {
         m_shooter.setSetPoint(ShooterConstants.kNearTrenchShotRPM);
         m_hood.setPosition(HoodConstants.kNearTrenchPos);
 
-        SmartDashboard.putString("Shoot setpoint", "TrenchShot (4500)");
+        SmartDashboard.putString("Shoot setpoint", "TrenchShot (" + ShooterConstants.kNearTrenchShotRPM + ")");
 
         break;
 
@@ -74,7 +74,7 @@ public class setShootPosition extends CommandBase {
 
         break;
 
-        case ShooterConstants.kMidBumpers:
+      case ShooterConstants.kMidBumpers:
         m_shooter.setSetPoint(ShooterConstants.k10ftMidBumperShotRPM);
         m_hood.setPosition(HoodConstants.k10ftMidPos);
 
@@ -82,13 +82,25 @@ public class setShootPosition extends CommandBase {
 
         break;
 
-        case ShooterConstants.kFarTrench:
+      case ShooterConstants.kFarTrench:
         m_shooter.setSetPoint(ShooterConstants.kFarTrenchShotRPM);
         m_hood.setPosition(HoodConstants.kFarTrenchPos);
 
         SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (5500)");
 
         break;
+
+      case ShooterConstants.kFrontBumperFar:
+        m_shooter.setSetPoint(ShooterConstants.kFrontBumperFarRPM);
+        m_hood.setPosition(HoodConstants.kFarTrenchPos);
+
+        SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (" + ShooterConstants.kFrontBumperFarRPM + ")");
+
+      case ShooterConstants.kTrenchAutoFar:
+        m_shooter.setSetPoint(ShooterConstants.kTrenchAutoRPM);
+        m_hood.setPosition(HoodConstants.kFarTrenchPos);
+
+        SmartDashboard.putString("Shoot setpoint", "10FtFrontShot (" + ShooterConstants.kFrontBumperFarRPM + ")");
     }
   }
 
