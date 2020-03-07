@@ -43,28 +43,38 @@ public class StealAuto extends SequentialCommandGroup {
       // Pass config
       AutoConstants.fastConfig.setReversed(false));
   */
+//   static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
+//       // Start at the origin facing the +X direction
+//       new Pose2d(0, 0, new Rotation2d(0)),
+//       // Pass through these two interior waypoints, making an 's' curve path
+//       List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(20))),
+//       // End 3 meters straight ahead of where we started, facing forward
+//       new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
+//       // Pass config
+//       AutoConstants.fastConfig.setReversed(false));
+
   static final Trajectory farTrajectory1 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
-      List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(20))),
+      List.of(new Translation2d(Units.inchesToMeters(4 * 12), Units.inchesToMeters(0))),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
+      new Pose2d(Units.inchesToMeters(8 * 12), Units.inchesToMeters(0), new Rotation2d(Units.degreesToRadians(0))),
       // Pass config
       AutoConstants.fastConfig.setReversed(false));
 
-  static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
-      // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
-      // Pass through these two interior waypoints, making an 's' curve path
-      List.of(
-        new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(4 * 12))
-      ),
-      // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(0), Units.inchesToMeters(17.5*12),
-          new Rotation2d(Units.degreesToRadians(185))),
-      // Pass config
-      AutoConstants.fastConfig.setReversed(true));
+//   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
+//       // Start at the origin facing the +X direction
+//       new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
+//       // Pass through these two interior waypoints, making an 's' curve path
+//       List.of(
+//         new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(4 * 12))
+//       ),
+//       // End 3 meters straight ahead of where we started, facing forward
+//       new Pose2d(-Units.inchesToMeters(0), Units.inchesToMeters(17.5*12),
+//           new Rotation2d(Units.degreesToRadians(185))),
+//       // Pass config
+//       AutoConstants.fastConfig.setReversed(true));
 
   /**
    * Creates a new AutoRoutine.
@@ -74,9 +84,9 @@ public class StealAuto extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
         new setShootPosition(ShooterConstants.kFrontBumpers, shooter, hood),
-        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
-        new AutoCommand(drivetrain, farTrajectory2),
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(10),
-        new InstantCommand(drivetrain::setPipelineZero));
+        new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)));
+        // new AutoCommand(drivetrain, farTrajectory2),
+        // new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(10),
+        // new InstantCommand(drivetrain::setPipelineZero));
     }
 }
