@@ -137,8 +137,8 @@ public class RobotContainer {
         m_climber::getClimbEnable));
 
     //Initiate climber-------------------------------------------------
-    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
-      .and(new JoystickButton(m_operatorController, Button.kBumperRight.value))
+    new JoystickButton(m_operatorController, Button.kStart.value)
+      .and(new JoystickButton(m_operatorController, Button.kBack.value))
       .whenActive(new EnableClimber(m_climber));
 
     // Driver Controls-------------------------------------------------

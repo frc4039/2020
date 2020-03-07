@@ -140,7 +140,7 @@ public class Climber extends SubsystemBase {
     //   }
 
     if (enableClimb) {
-      m_Motor2.set(ControlMode.Position, inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
+      m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
   
       m_Motor1.follow(m_Motor2, FollowerType.AuxOutput1);
     }
