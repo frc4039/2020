@@ -68,6 +68,20 @@ public class TrenchAuto extends SequentialCommandGroup {
         AutoConstants.slowConfig.setReversed(true)
     );
 
+    static final Trajectory trenchTrajectory4 = TrajectoryGenerator.generateTrajectory(
+      // Start at the origin facing the +X direction
+      new Pose2d(-Units.inchesToMeters(16 * 12 + 6), -Units.inchesToMeters(65),
+      new Rotation2d(Units.degreesToRadians(180))),
+      // Pass through these two interior waypoints, making an 's' curve path
+      List.of(
+        new Translation2d(-Units.inchesToMeters(6 * 12 + 6), -Units.inchesToMeters(65))
+      ),
+      // End 3 meters straight ahead of where we started, facing forward
+      new Pose2d(-Units.inchesToMeters(6 * 12 + 6), -Units.inchesToMeters(65 - 5 * 12),
+          new Rotation2d(Units.degreesToRadians(0))),
+      // Pass config
+      AutoConstants.MediumConfig.setReversed(true));
+
   /**
    * Creates a new AutoRoutine.
    */
@@ -76,12 +90,19 @@ public class TrenchAuto extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
           new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood),
-          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3), 
+          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(2), 
         //   new AutoCommand(drivetrain, trenchTrajectory1),
           new ParallelRaceGroup(
                                    new AutoCommand(drivetrain, trenchTrajectory1),
                                    new SmartIntake(intaker, feeder, stirrer)
-                                   )
+                                   ),
+          new setShootPosition(ShooterConstants.kTrenchAutoFar, shooter, hood),
+          new ParallelRaceGroup(
+              new AutoCommand(drivetrain, trenchTrajectory4),
+              new SmartIntake(intaker, feeder, stirrer)),
+          new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker)
+
+          
         //   new setShootPosition(ShooterConstants.kFarTrench, shooter, hood)
           // new AutoCommand(drivetrain, trenchTrajectory3),
           // new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker)

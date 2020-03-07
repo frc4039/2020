@@ -67,7 +67,7 @@ public class RobotContainer {
     autoSelector.addOption("Middle Front Bumpers", new FrontBumperAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Steal Auto", new StealAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Steal Auto Close", new StealAutoClose(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
-    autoSelector.addOption("Backwards Auto", new TestAuto(m_shooter, m_feeder, m_stirrer, m_intaker, m_drivetrain, m_hood));
+    autoSelector.addOption("Backwards Auto", new StraightBackAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     autoSelector.addOption("Rendezvous Auto", new RendezvousAuto(m_shooter, m_feeder, m_stirrer, m_drivetrain, m_intaker, m_hood));
     SmartDashboard.putData("Auto Selector", autoSelector);
 
@@ -121,6 +121,9 @@ public class RobotContainer {
         new Climb(ClimberConstants.kSetFullyClimbed, m_climber),
         new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
         m_climber::getClimbEnable));
+
+    new POVButton(m_operatorController, 270)
+      .whenPressed(new setShootPosition(ShooterConstants.kFrontBumperFar, m_shooter, m_hood));
 
     //Manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)

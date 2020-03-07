@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -39,7 +40,7 @@ public class FrontBumperAuto extends SequentialCommandGroup {
       // End 3 meters straight ahead of where we started, facing forward
       new Pose2d(0, -Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
-      AutoConstants.slowConfig.setReversed(true));
+      AutoConstants.MediumConfig.setReversed(true));
 
   static final Trajectory trenchTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
@@ -49,10 +50,24 @@ public class FrontBumperAuto extends SequentialCommandGroup {
 
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(35 + 12 * 12), -Units.inchesToMeters(65),
+      new Pose2d(-Units.inchesToMeters(35 + 11 * 12), -Units.inchesToMeters(65),
           new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
       AutoConstants.MediumConfig.setReversed(false));
+
+  static final Trajectory trenchTrajectory3 = TrajectoryGenerator.generateTrajectory(
+      // Start at the origin facing the +X direction
+      new Pose2d(-Units.inchesToMeters(35 + 11 * 12), -Units.inchesToMeters(65),
+      new Rotation2d(Units.degreesToRadians(180))),
+      // Pass through these two interior waypoints, making an 's' curve path
+      List.of(
+        new Translation2d(-Units.inchesToMeters(35 + 3 * 12), -Units.inchesToMeters(65))
+      ),
+      // End 3 meters straight ahead of where we started, facing forward
+      new Pose2d(-Units.inchesToMeters(35 + 3 * 12), -Units.inchesToMeters(65 - 5 * 12),
+          new Rotation2d(Units.degreesToRadians(0))),
+      // Pass config
+      AutoConstants.MediumConfig.setReversed(true));
 
   /**
    * Creates a new AutoRoutine.
@@ -62,9 +77,16 @@ public class FrontBumperAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-          new setShootPosition(ShooterConstants.kFrontBumpers, shooter, hood),
-          new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(3),
-          new SequentialCommandGroup(new AutoCommand(drivetrain, trenchTrajectory1), new ParallelCommandGroup(
-          new AutoCommand(drivetrain, trenchTrajectory2), new SmartIntake(intaker, feeder, stirrer))));
+        new setShootPosition(ShooterConstants.kFrontBumpers, shooter, hood),
+        new SmartShoot(feeder, shooter, stirrer, intaker).withTimeout(2),
+        new AutoCommand(drivetrain, trenchTrajectory1), 
+        new ParallelRaceGroup(
+            new AutoCommand(drivetrain, trenchTrajectory2), 
+            new SmartIntake(intaker, feeder, stirrer)),
+        new setShootPosition(ShooterConstants.kFrontBumperFar, shooter, hood),
+        new ParallelRaceGroup(
+            new AutoCommand(drivetrain, trenchTrajectory3),
+            new SmartIntake(intaker, feeder, stirrer)),
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker));
   }
 }
