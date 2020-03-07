@@ -18,7 +18,7 @@ public class SmartIntake extends CommandBase {
 
   @Override
   public void initialize() {
-
+    m_ballManager.startTimer();
   }
 
   @Override
@@ -32,5 +32,6 @@ public class SmartIntake extends CommandBase {
     m_ballManager.stopIntake();
     m_ballManager.stopFeeder();
     m_ballManager.stopStirrer();
+    m_ballManager.stopTimer();
   }
 }

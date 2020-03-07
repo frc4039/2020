@@ -41,12 +41,12 @@ public class Stirrer extends SubsystemBase {
     }
   }
 
-  public void setIntakeState() {
+  public void resetIdleTimer() {
     m_timer.stop();
     m_timer.reset();
   }
 
-  public void setShootState() {
+  public void startTimer() {
     m_timer.reset();
     m_timer.start();
   }

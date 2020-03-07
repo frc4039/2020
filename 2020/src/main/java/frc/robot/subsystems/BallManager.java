@@ -103,12 +103,12 @@ public class BallManager extends SubsystemBase {
     }
   }
 
-  public void setIntakeState() {
+  public void startTimer() {
     m_timer.stop();
     m_timer.reset();
   }
 
-  public void setShootState() {
+  public void stopTimer() {
     m_timer.reset();
     m_timer.start();
   }
@@ -125,6 +125,16 @@ public class BallManager extends SubsystemBase {
     } else {
       m_stirrerMotor1.set(0);
       m_stirrerMotor2.set(StirrerConstants.kStirrerPercent2);
+    }
+  }
+
+  public void reverseAltStir() {
+    if (m_isAlternating) {
+      m_stirrerMotor1.set(-StirrerConstants.kStirrerPercent1);
+      m_stirrerMotor2.set(0);
+    } else {
+      m_stirrerMotor1.set(0);
+      m_stirrerMotor2.set(-StirrerConstants.kStirrerPercent2);
     }
   }
 
@@ -295,6 +305,8 @@ public class BallManager extends SubsystemBase {
     if (getOrBreakBeams()) {
       stir();
       feed();
+    } else {
+      reverseAltStir();
     }
   }
 }
