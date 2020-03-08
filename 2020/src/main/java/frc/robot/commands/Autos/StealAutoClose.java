@@ -35,22 +35,23 @@ public class StealAutoClose extends SequentialCommandGroup {
       // Start at the origin facing the +X direction
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
-      List.of(new Translation2d(Units.inchesToMeters(70), Units.inchesToMeters(20))),
+      List.of(
+        new Translation2d(Units.inchesToMeters(77.5), Units.inchesToMeters(0))
+      ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
+      new Pose2d(Units.inchesToMeters(105), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(60))),
       // Pass config
-      AutoConstants.fastConfig.setReversed(false));
+      AutoConstants.slowConfig.setReversed(false));
 
   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(105), Units.inchesToMeters(3), new Rotation2d(-Units.degreesToRadians(30))),
+      new Pose2d(Units.inchesToMeters(103), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(70))),
       // Pass through these two interior waypoints, making an 's' curve path
       List.of(
         new Translation2d(-Units.inchesToMeters(5 * 12), Units.inchesToMeters(4 * 12))
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(-Units.inchesToMeters(2 * 12), Units.inchesToMeters(17.5*12),
-          new Rotation2d(Units.degreesToRadians(180))),
+      new Pose2d(-Units.inchesToMeters(2.5 * 12), Units.inchesToMeters(12 * 12), new Rotation2d(Units.degreesToRadians(180))),
       // Pass config
       AutoConstants.fastConfig.setReversed(true));
 
@@ -63,7 +64,9 @@ public class StealAutoClose extends SequentialCommandGroup {
     super(
         new setShootPosition(ShooterConstants.kBackBumpers, shooter, hood),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
-        new AutoCommand(drivetrain, farTrajectory2),
+        new ParallelRaceGroup(
+            new AutoCommand(drivetrain, farTrajectory2),
+            new Intake(intaker)),
         new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(10)
         );
     }
