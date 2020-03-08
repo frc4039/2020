@@ -102,7 +102,7 @@ public class RobotContainer {
     //Fully extend climber OR set shot position to Target Zone
     new POVButton(m_operatorController, 0)
       .whenPressed(new ConditionalCommand(
-        new Climb(ClimberConstants.kSetFullyExtended, m_climber), 
+        new Climb(-ClimberConstants.kSetFullyExtended, m_climber), 
         new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood), 
         m_climber::getClimbEnable));
 
@@ -110,7 +110,7 @@ public class RobotContainer {
     new POVButton(m_operatorController, 90)
       .whenPressed(new ConditionalCommand(
         new ParallelCommandGroup(
-          new Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),
+          new Climb(-ClimberConstants.kSetBuddyClimb, m_climber),
           new InstantCommand(m_climber::dropBuddyClimb)),
         new setShootPosition(ShooterConstants.kMidBumpers, m_shooter, m_hood),
         m_climber::getClimbEnable));
@@ -118,25 +118,23 @@ public class RobotContainer {
     //Fully climbed height OR set shot position to Near Trench
     new POVButton(m_operatorController, 180)
       .whenPressed(new ConditionalCommand(
-        new Climb(ClimberConstants.kSetFullyClimbed, m_climber),
+        new Climb(-ClimberConstants.kSetFullyClimbed, m_climber),
         new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
         m_climber::getClimbEnable));
 
     //Manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
       .whileActiveContinuous(new ConditionalCommand(
-        new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kRight), m_climber), 
+        new AdjustClimb(() -> -m_operatorController.getTriggerAxis(Hand.kRight), m_climber), 
         new InstantCommand(), 
         m_climber::getClimbEnable));
 
-    /*
     //Manual Climb Reverse
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kLeft) > 0.05)
       .whileActiveContinuous(new ConditionalCommand(
-        new AdjustClimb(() -> -m_operatorController.getTriggerAxis(Hand.kLeft), m_climber), 
+        new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kLeft), m_climber), 
         new InstantCommand(), 
         m_climber::getClimbEnable));
-    */
 
     //Initiate climber-------------------------------------------------
     new JoystickButton(m_operatorController, Button.kStart.value)

@@ -149,8 +149,8 @@ public final class Constants {
         public static final int kLeftLimitSwitchPort = 2;
         public static final int kRightLimitSwitchPort = 3;
 
-        public static final double kSetFullyExtended = 33.77 + 1.675 - 1.0 -.5;
-        public static final double kSetFullyClimbed = 66; // 66.89;
+        public static final double kSetFullyExtended = 2;
+        public static final double kSetFullyClimbed = 29; // 66.89;
         public static final double kSetBuddyClimb = 20; //Must be less than 26 (60-33.77)
 
         public static final int kServoPort1 = 2;
@@ -166,7 +166,7 @@ public final class Constants {
         public static final boolean kRetracted = false;
 
         public static final double kGearRatio = 36.0;
-        public static final double kShaftDiameter = 0.885;
+        public static final double kShaftDiameter = 1.125;
 
         public static final double kNeutralDeadband = 0.0;
 
@@ -189,14 +189,14 @@ public final class Constants {
         public static final double kTurnPeakOutput = 1.0;
 
         public static final double kOffsetDown = 2.75-4; //positive brings left down
-        public static final double kOffsetUp = 0;
+        public static final double kOffset = 1;
 
         // motor 1: left
         
-		public static final int kMotor1SoftLimitReverse = -68;
-		public static final int kMotor2SoftLimitReverse = -68;
-		public static final int kMotor1SoftLimitForward = 0;
-		public static final int kMotor2SoftLimitForward = 0;
+		public static final int kMotor1SoftLimitReverse = 0;
+		public static final int kMotor2SoftLimitReverse = 0;
+		public static final int kMotor1SoftLimitForward = 31;
+		public static final int kMotor2SoftLimitForward = 31;
     }
 
     public static final class HoodConstants {
