@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -34,6 +35,8 @@ public class Climber extends SubsystemBase {
   private double offset = 0;
 
   private boolean enableClimb = false;
+
+  private Timer m_timer = new Timer();
 
   public Climber() {
 
@@ -180,7 +183,9 @@ public class Climber extends SubsystemBase {
   }
 
   public void initiateClimb() {
-    enableClimb = true;
+    if (m_timer.getMatchTime() < 30.0) {
+      enableClimb = true;
+    }
   }
 
   public boolean getClimbEnable() {
