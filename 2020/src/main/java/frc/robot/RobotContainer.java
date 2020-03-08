@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -217,6 +218,7 @@ public void setTeleSettings() {
   m_drivetrain.setRampRate();
   m_drivetrain.setBrakeMode();
   m_climber.zeroClimber();
+  m_drivetrain.setPipelineZero();
 }
 
 public void printAllValues(){
@@ -224,7 +226,7 @@ public void printAllValues(){
   m_drivetrain.printDriveValues();
   m_feeder.printFeederValues();
   m_shooter.printShooterValues();
-
+  SmartDashboard.putString("Selected Auto", autoSelector.getSelected().getName());
 }
 
 }

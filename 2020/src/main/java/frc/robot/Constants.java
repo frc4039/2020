@@ -97,7 +97,7 @@ public final class Constants {
         public static final boolean kStirrerInversion1 = false;
         public static final boolean kStirrerInversion2 = true;
 
-        public static final double kAlternatingTime = 4.00;
+        public static final double kAlternatingTime = 2.00;
     }
 
     public static final class VisionConstants {
@@ -137,7 +137,7 @@ public final class Constants {
         public static final double kFeederGearRatio = 20;
         public static final double kFeederRotation = 0.375;
 
-        public static final double kAdjustBallTwoPos = 8;
+        public static final double kAdjustBallTwoPos = 4;
 		//public static final double kAdjustBallTwoPos = kFeederTicksPerRev * kFeederGearRatio * kFeederRotation;
     }
 
