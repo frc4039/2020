@@ -49,9 +49,9 @@ public class Climber extends SubsystemBase {
     m_Motor1.setInverted(true);
     m_Motor2.setInverted(false);
 
-    m_Motor1.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
+    m_Motor1.configPeakOutputForward(1.0, ClimberConstants.kTimeoutMs);
     m_Motor1.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
-    m_Motor2.configPeakOutputForward(0, ClimberConstants.kTimeoutMs);
+    m_Motor2.configPeakOutputForward(1.0, ClimberConstants.kTimeoutMs);
     m_Motor2.configPeakOutputReverse(-1.0, ClimberConstants.kTimeoutMs);
     
     m_Motor1.configReverseSoftLimitThreshold((int) inchesToTicks(ClimberConstants.kMotor1SoftLimitReverse));
@@ -131,11 +131,12 @@ public class Climber extends SubsystemBase {
   public void setClimberPosition(double inches){
 
     if (enableClimb){
-      if(inches > ClimberConstants.kSetFullyExtended) {
-        offset = ClimberConstants.kOffsetDown;
-      } else {
-        offset = ClimberConstants.kOffset;
-      }
+      // if(inches > ClimberConstants.kSetFullyExtended) {
+      //   offset = ClimberConstants.kOffsetDown;
+      // } else {
+      //   offset = ClimberConstants.kOffset;
+      // }
+      SmartDashboard.putNumber("Climber inches", inches);
   
       m_Motor2.set(ControlMode.Position, -inchesToTicks(inches), DemandType.AuxPID, inchesToTicks(offset));
   

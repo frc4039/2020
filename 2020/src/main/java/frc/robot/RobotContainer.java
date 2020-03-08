@@ -96,32 +96,34 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kX.value)
       .whenPressed(new InstantCommand(m_feeder::unjam));
 
+    new JoystickButton(m_operatorController, Button.kY.value)
+      .whenPressed(
+        new Climb(-ClimberConstants.kSetFullyExtended, m_climber));
+
+    // new JoystickButton(m_operatorController, Button.kB.value)
+    //   .whenPressed(
+    //     new ParallelCommandGroup(
+    //       new Climb(-ClimberConstants.kSetBuddyClimb, m_climber), 
+    //       new InstantCommand(m_climber::dropBuddyClimb)),
+    //     new InstantCommand(), m_climber::getClimbEnable));
+
+    new JoystickButton(m_operatorController, Button.kA.value)
+      .whenPressed(new Climb(-ClimberConstants.kSetFullyClimbed, m_climber));
     // Rev the shooter for SmartShoot
     // new JoystickButton(m_operatorController, Button.kX.value)
     //   .toggleWhenPressed(new Shoot(m_shooter).withTimeout(5));
     
     //Fully extend climber OR set shot position to Target Zone
     new POVButton(m_operatorController, 0)
-      .whenPressed(new ConditionalCommand(
-        new Climb(-ClimberConstants.kSetFullyExtended, m_climber), 
-        new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood), 
-        m_climber::getClimbEnable));
+      .whenPressed(new setShootPosition(ShooterConstants.kTargetZone, m_shooter, m_hood));
 
     //Buddy climb height OR set shot position to Initiation Line
     new POVButton(m_operatorController, 90)
-      .whenPressed(new ConditionalCommand(
-        new ParallelCommandGroup(
-          new Climb(-ClimberConstants.kSetBuddyClimb, m_climber),
-          new InstantCommand(m_climber::dropBuddyClimb)),
-        new setShootPosition(ShooterConstants.kMidBumpers, m_shooter, m_hood),
-        m_climber::getClimbEnable));
+      .whenPressed(new setShootPosition(ShooterConstants.kMidBumpers, m_shooter, m_hood));
 
     //Fully climbed height OR set shot position to Near Trench
     new POVButton(m_operatorController, 180)
-      .whenPressed(new ConditionalCommand(
-        new Climb(-ClimberConstants.kSetFullyClimbed, m_climber),
-        new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
-        m_climber::getClimbEnable));
+      .whenPressed(new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood));
 
     //Manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)

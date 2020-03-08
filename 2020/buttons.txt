@@ -1,7 +1,9 @@
 Operator Controller, X Button (Press): InstantCommand (m_feeder::unjam)
-Operator Controller, D-Pad Up whenPressed(new ConditionalCommand: Climb(-ClimberConstants.kSetFullyExtended, m_climber), new setShootPosition (ShooterConstants.kTargetZone, m_climber::getClimbEnable)
-Operator Controller, D-Pad Left whenPressed(new ConditionalCommand(new ParallelCommandGroup: Climb(-ClimberConstants.kSetBuddyClimb, m_climber),new InstantCommand(m_climber::dropBuddyClimb)),new setShootPosition (ShooterConstants.kMidBumpers, m_climber::getClimbEnable)
-Operator Controller, D-Pad Down whenPressed(new ConditionalCommand: Climb(-ClimberConstants.kSetFullyClimbed, m_climber),new setShootPosition (ShooterConstants.kNearTrench, m_climber::getClimbEnable)
+Operator Controller, Y Button (Press): Climb (-ClimberConstants.kSetFullyExtended)
+Operator Controller, A Button (Press): Climb (-ClimberConstants.kSetFullyClimbed)
+Operator Controller, D-Pad Up (Press): setShootPosition (ShooterConstants.kTargetZone)
+Operator Controller, D-Pad Left (Press): setShootPosition (ShooterConstants.kMidBumpers)
+Operator Controller, D-Pad Down (Press): setShootPosition (ShooterConstants.kNearTrench)
 Operator Controller, Start).and(new JoystickButton(m_operatorController, Back Button (When activated): EnableClimber
 Driver Controller, Y Button (Hold): SmartShoot
 Driver Controller, A Button (Hold, interruptable): LimelightShoot

@@ -54,7 +54,7 @@ public class SmartShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_stirrer.setIntakeState();
+    m_stirrer.setIdleState();
     m_feeder.stop();
     m_stirrer.stop();
     m_shooter.stop();

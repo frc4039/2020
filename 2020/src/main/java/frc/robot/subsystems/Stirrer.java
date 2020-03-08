@@ -41,7 +41,7 @@ public class Stirrer extends SubsystemBase {
     }
   }
 
-  public void setIntakeState() {
+  public void setIdleState() {
     m_timer.stop();
     m_timer.reset();
   }
@@ -65,6 +65,18 @@ public class Stirrer extends SubsystemBase {
       m_stirrerMotor2.set(StirrerConstants.kStirrerPercent2);
     }
   }
+
+  public void reverseAltStir() {
+    if (m_isAlternating) {
+      m_stirrerMotor1.set(-StirrerConstants.kStirrerPercent1);
+      m_stirrerMotor2.set(0);
+    } else {
+      m_stirrerMotor1.set(0);
+      m_stirrerMotor2.set(-StirrerConstants.kStirrerPercent2);
+    }
+  }
+  
+  
 
   public void stop() {
     m_stirrerMotor1.set(0);

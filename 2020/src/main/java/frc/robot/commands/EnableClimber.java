@@ -28,7 +28,6 @@ public class EnableClimber extends CommandBase {
   @Override
   public void initialize() {
     m_climber.initiateClimb();
-    SmartDashboard.putBoolean("Climbed", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
