@@ -26,6 +26,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autos.*;
 import frc.robot.commands.AdjustBallTwo;
 import frc.robot.commands.AdjustClimb;
+import frc.robot.commands.AltStir;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Climb;
 import frc.robot.commands.EnableClimber;
@@ -100,12 +101,11 @@ public class RobotContainer {
       .whenPressed(
         new Climb(-ClimberConstants.kSetFullyExtended, m_climber));
 
-    // new JoystickButton(m_operatorController, Button.kB.value)
-    //   .whenPressed(
-    //     new ParallelCommandGroup(
-    //       new Climb(-ClimberConstants.kSetBuddyClimb, m_climber), 
-    //       new InstantCommand(m_climber::dropBuddyClimb)),
-    //     new InstantCommand(), m_climber::getClimbEnable));
+    new JoystickButton(m_operatorController, Button.kB.value)
+      .whenPressed(
+        new ParallelCommandGroup(
+          new Climb(-ClimberConstants.kSetBuddyClimb, m_climber), 
+          new InstantCommand(m_climber::dropBuddyClimb)));
 
     new JoystickButton(m_operatorController, Button.kA.value)
       .whenPressed(new Climb(-ClimberConstants.kSetFullyClimbed, m_climber));
@@ -138,6 +138,9 @@ public class RobotContainer {
         new AdjustClimb(() -> m_operatorController.getTriggerAxis(Hand.kLeft), m_climber), 
         new InstantCommand(), 
         m_climber::getClimbEnable));
+
+    new JoystickButton(m_operatorController, Button.kBumperRight.value)
+      .whenPressed(new AltStir(m_stirrer, m_feeder));
 
     //Initiate climber-------------------------------------------------
     new JoystickButton(m_operatorController, Button.kStart.value)

@@ -58,16 +58,16 @@ public class StealAuto extends SequentialCommandGroup {
       new Pose2d(0, 0, new Rotation2d(0)),
       // Pass through these two interior waypoints, making an 's' curve path
       List.of(
-        new Translation2d(Units.inchesToMeters(77.5), Units.inchesToMeters(0))
+        new Translation2d(Units.inchesToMeters(76.5), Units.inchesToMeters(0))
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(60))),
+      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(55))),
       // Pass config
       AutoConstants.slowConfig.setReversed(false));
 
   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(60))),
+      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(55))),
       // Pass through these two interior waypoints, making an 's' curve path
       List.of(
         new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(4 * 12))
@@ -76,7 +76,7 @@ public class StealAuto extends SequentialCommandGroup {
       new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(11.5*12),
           new Rotation2d(Units.degreesToRadians(185))),
       // Pass config
-      AutoConstants.MediumConfig.setReversed(true));
+      AutoConstants.fastConfig.setReversed(true));
 
   /**
    * Creates a new AutoRoutine.
@@ -88,6 +88,6 @@ public class StealAuto extends SequentialCommandGroup {
         new setShootPosition(ShooterConstants.kFrontBumpers, shooter, hood),
         new ParallelRaceGroup(new AutoCommand(drivetrain, farTrajectory1), new Intake(intaker)),
         new AutoCommand(drivetrain, farTrajectory2),
-        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(3.5));
+        new LimelightShoot(drivetrain, feeder, shooter, stirrer, intaker).withTimeout(10));
     }
 }

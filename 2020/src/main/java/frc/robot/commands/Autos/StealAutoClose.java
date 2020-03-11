@@ -39,13 +39,13 @@ public class StealAutoClose extends SequentialCommandGroup {
         new Translation2d(Units.inchesToMeters(77.5), Units.inchesToMeters(0))
       ),
       // End 3 meters straight ahead of where we started, facing forward
-      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(60))),
+      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(55))),
       // Pass config
       AutoConstants.slowConfig.setReversed(false));
 
   static final Trajectory farTrajectory2 = TrajectoryGenerator.generateTrajectory(
       // Start at the origin facing the +X direction
-      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(60))),
+      new Pose2d(Units.inchesToMeters(108), -Units.inchesToMeters(61), new Rotation2d(-Units.degreesToRadians(55))),
       // Pass through these two interior waypoints, making an 's' curve path
       List.of(
         new Translation2d(-Units.inchesToMeters(5 * 12), Units.inchesToMeters(4 * 12))
