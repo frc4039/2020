@@ -2,6 +2,8 @@ Operator Controller, X Button (Press): InstantCommand (m_feeder::unjam)
 Operator Controller, D-Pad Up whenPressed(new ConditionalCommand: Climb(ClimberConstants.kSetFullyExtended, m_climber), new setShootPosition (ShooterConstants.kTargetZone, m_climber::getClimbEnable)
 Operator Controller, D-Pad Left whenPressed(new ConditionalCommand(new ParallelCommandGroup: Climb(m_climber.distanceFromGroundToInches(ClimberConstants.kSetBuddyClimb), m_climber),new InstantCommand(m_climber::dropBuddyClimb)),new setShootPosition (ShooterConstants.kMidBumpers, m_climber::getClimbEnable)
 Operator Controller, D-Pad Down whenPressed(new ConditionalCommand: Climb(ClimberConstants.kSetFullyClimbed, m_climber),new setShootPosition (ShooterConstants.kNearTrench, m_climber::getClimbEnable)
+Operator Controller, Right Bumper Button (Press): increaseHood
+Operator Controller, Left Bumper Button (Press): decreaseHood
 Operator Controller, Start Button (When activated): EnableClimber
 Driver Controller, Y Button (Hold): SmartShoot
 Driver Controller, A Button (Hold, interruptable): LimelightShoot

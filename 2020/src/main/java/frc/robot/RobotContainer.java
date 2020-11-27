@@ -32,6 +32,8 @@ import frc.robot.commands.LimelightShoot;
 import frc.robot.commands.ReverseIntake;
 import frc.robot.commands.SmartIntake;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.decreaseHood;
+import frc.robot.commands.increaseHood;
 import frc.robot.commands.resetDisabledRobot;
 import frc.robot.commands.setShootPosition;
 import frc.robot.subsystems.Climber;
@@ -122,6 +124,14 @@ public class RobotContainer {
         new setShootPosition(ShooterConstants.kNearTrench, m_shooter, m_hood),
         m_climber::getClimbEnable));
 
+    //increase hood position
+    new JoystickButton(m_operatorController, Button.kBumperRight.value)
+      .whenPressed(new increaseHood(m_hood));
+
+    //decrease hood position
+    new JoystickButton(m_operatorController, Button.kBumperLeft.value)
+      .whenPressed(new decreaseHood(m_hood));
+      
     //Manual climb
     new Trigger(() -> m_operatorController.getTriggerAxis(Hand.kRight) > 0.05)
       .whileActiveContinuous(new ConditionalCommand(
@@ -227,6 +237,7 @@ public void printAllValues(){
   m_drivetrain.printDriveValues();
   m_feeder.printFeederValues();
   m_shooter.printShooterValues();
+  m_hood.printHoodValues();
 }
 
 }

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.HoodConstants;
@@ -35,8 +36,16 @@ public class Hood extends SubsystemBase {
     m_servo2.setPosition(pos);
   }
 
-   public void stop(){
+  public double getPosition(){
+    return m_servo1.getPosition();
+  }
+
+  public void stop(){
      m_servo1.stopMotor();
      m_servo2.stopMotor();
+  }
+
+  public void printHoodValues() {
+    SmartDashboard.putNumber("Hood Position", getPosition());
   }
 }
