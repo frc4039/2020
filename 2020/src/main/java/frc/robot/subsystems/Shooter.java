@@ -4,7 +4,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -17,14 +17,14 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
 
-  private TalonSRX m_shooterMotor1;
-  private TalonSRX m_shooterMotor2;
+  private TalonFX m_shooterMotor1;
+  private TalonFX m_shooterMotor2;
   private CANSparkMax m_shooterFeederMotor;
   private double m_rpmSetPoint;
 
   public Shooter() {
-    m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
-    m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
+    m_shooterMotor1 = new TalonFX(ShooterConstants.kShooterMotor1Port);
+    m_shooterMotor2 = new TalonFX(ShooterConstants.kShooterMotor2Port);
     
     m_shooterMotor1.configFactoryDefault();
     m_shooterMotor2.configFactoryDefault();
