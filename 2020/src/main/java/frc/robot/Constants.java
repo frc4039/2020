@@ -36,8 +36,8 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int kShooterMotor1Port = 20;
-        public static final int kShooterMotor2Port = 21;
+        public static final int kShooterMotor1Port = 39;
+        public static final int kShooterMotor2Port = 40;
         public static final int kShooterFeederMotorPort = 25;
 
         public static final double kFrontBumperFarRPM = 5000;
@@ -60,7 +60,7 @@ public final class Constants {
         public static final int kFrontBumperFar = 7;
         public static final int kTrenchAutoFar = 8;
 
-        public static final double kF = 0.008;
+        public static final double kF = 0.032;
         public static final double kP = 0.02;
 
         public static final int kPIDLoopIdx = 0; 

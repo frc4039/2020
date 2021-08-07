@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.revrobotics.CANSparkMax;
@@ -17,14 +18,14 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
 
-  private TalonSRX m_shooterMotor1;
-  private TalonSRX m_shooterMotor2;
+  private TalonFX m_shooterMotor1;
+  private TalonFX m_shooterMotor2;
   private CANSparkMax m_shooterFeederMotor;
   private double m_rpmSetPoint;
 
   public Shooter() {
-    m_shooterMotor1 = new TalonSRX(ShooterConstants.kShooterMotor1Port);
-    m_shooterMotor2 = new TalonSRX(ShooterConstants.kShooterMotor2Port);
+    m_shooterMotor1 = new TalonFX(ShooterConstants.kShooterMotor1Port);
+    m_shooterMotor2 = new TalonFX(ShooterConstants.kShooterMotor2Port);
     
     m_shooterMotor1.configFactoryDefault();
     m_shooterMotor2.configFactoryDefault();
@@ -32,7 +33,7 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1.setInverted(ShooterConstants.kShooterInversion1);
     m_shooterMotor2.setInverted(ShooterConstants.kShooterInversion2);
     
-    m_shooterMotor1.setSensorPhase(false);
+    m_shooterMotor1.setSensorPhase(true);
         
     m_shooterMotor2.follow(m_shooterMotor1);
 
@@ -80,11 +81,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public double RPMtoTicks(double rpm) {
-    return rpm * ShooterConstants.kGearRatio * 4096 / 600.0;
+    return rpm * ShooterConstants.kGearRatio * 1024 / 600.0;
   }
 
   public double TicksToRPM(double ticks) {
-    return ticks * 600 / 4096 / ShooterConstants.kGearRatio;
+    return ticks * 600 / 1024 / ShooterConstants.kGearRatio;
   }
 
   public void printShooterValues() {
@@ -92,7 +93,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public double returnCurrentRPM() {
-    return TicksToRPM(m_shooterMotor1.getSelectedSensorVelocity());
+    // Ben A. - m_shooterMotor1 always gives zero for the sensor value. Not sure why.
+    return TicksToRPM(m_shooterMotor2.getSelectedSensorVelocity());
   }
 
   public double getSetpoint() {
